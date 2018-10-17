@@ -12,7 +12,7 @@
             <input type="text" name="nombre" value="0">
             <br>
             <label>Comentarios sobre esta pagina web:</label>
-            <textarea name="comment" value="0"></textarea>
+            <textarea name="comment"></textarea>
             <input type="submit" name="enviar" value="procesar">
         </form>
     </body>

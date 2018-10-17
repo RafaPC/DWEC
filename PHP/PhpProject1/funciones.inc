@@ -26,3 +26,20 @@ function divisores($numero) {
         }
     }
 }
+
+
+function es_primo2($numero){
+	$esPrimo = true;
+	if($numero==1 || $numero==2){
+			$esPrimo = true;
+        }else{
+			for ($i = $numero - 1; $i > 1; $i--) {
+				if ($numero % $i == 0) {
+					$esPrimo = false;
+					$i==1;
+				}
+			}
+		}
+		return $esPrimo;
+}
+

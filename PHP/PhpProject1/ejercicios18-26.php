@@ -16,14 +16,50 @@
             números son positivos, que el primero es mayor que el segundo y que el divisor
             es distinto de 0. Dar mensajes de error adecuados en función del fallo. Hacer el
             ejercicio utilizando @ y die.</h3>
-        <?php ?>
+        <?php
+        //$dividendo = random(-10,10);
+        //$divisor = random(-10,10);
+        $dividendo = 3;
+        $divisor = 1;
+        echo "$dividendo./.$divisor";
+        
+		@($dividendo > 0 && $divisor > 0) or  
+        die('Los numero tienen que ser positivos');
+        
+		@($dividendo > $divisor) or  
+        die('El dividendo tiene que ser mayor que el divisor');
+		
+		($divisor !== 0) or
+        die('El divisor no puede ser 0');
+            
+		$resultado = @$dividendo / $divisor;
+        echo "Resultado = $resultado";    
+        ?>
 
         <p>------------------------------------</p>
         <h1>Ejercicio 20 </h1><h3> Dados dos números calcular el módulo de dos números enteros: si el resultado
             es 0, indicar división exacta, si el resultado es 1, indicar sobra 1, si el resultado
             es 2 indicar sobran 2. En cualquier otro caso indicar sobran más de 2. Utilizar
             un switch.</h3>
-        <?php ?>
+        <?php
+        $num1 = rand(-10, 10);
+        $num2 = rand(-10, 10);
+        echo "$num1%$num2<br>";
+        $resultado = $num1 % $num2;
+        switch ($resultado) {
+            case 0:
+                echo 'Division exacta.';
+                break;
+            case 1:
+                echo 'Sobra uno.';
+                break;
+            case 2:
+                echo 'Sobran dos';
+                break;
+            default:
+                echo 'Sobran mas de dos.';
+        }
+        ?>
 
         <p>------------------------------------</p>
         <h1>Ejercicio 21 </h1><h3> Dado un array inicializado con 10 números reales y calcular y visualizar su
@@ -115,32 +151,38 @@
             funciones.inc, y que haga llamadas a estas funciones del archivo. En concreto
             visualizar los 10 primeros numerous primos.</h3>
         <?php
-        
-        
+        include "../inc/funciones.inc.php";
+		echo 'Numeros primos: ';
+		for($i=1,$contador=0;$contador<10;$i++){
+		if(es_primo($i)){
+		echo "$i, ";
+		$contador++;
+		}
+		}
         ?>
 
         <p>------------------------------------</p>
         <h1>Ejercicio 26 </h1><h3> Hallar los 20 primeros múltiplos de 5 y de 7</h3>
-        <?php
-        $contador;
-        echo '<h4>Múltiplos de 5: </h4><p>';
-        for ($i = 5, $contador = 0; $contador < 20; $i++) {
-            if (($i % 5) == 0) {
-                echo "$i, ";
-                $contador++;
-            }
-        }
-        echo '</p>';
+		<?php
+		$contador;
+		echo '<h4>Múltiplos de 5: </h4><p>';
+		for ($i = 5, $contador = 0; $contador < 20; $i++) {
+			if (($i % 5) == 0) {
+				echo "$i, ";
+				$contador++;
+			}
+		}
+		echo '</p>';
 
-        echo '<h4>Múltiplos de 7: </h4><p>';
-        for ($i = 7, $contador = 0; $contador < 20; $i++) {
-            if (($i % 7) == 0) {
-                echo "$i, ";
-                $contador++;
-            }
-        }
-        echo '</p>';
-        ?>
+		echo '<h4>Múltiplos de 7: </h4><p>';
+		for ($i = 7, $contador = 0; $contador < 20; $i++) {
+			if (($i % 7) == 0) {
+				echo "$i, ";
+				$contador++;
+			}
+		}
+		echo '</p>';
+		?>
 
     </body>
 </html>

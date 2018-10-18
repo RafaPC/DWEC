@@ -16,6 +16,11 @@ body, html {
 *{
     box-sizing: border-box;
 }
+.separador{
+    display: block;
+    background-image: linear-gradient(to right, rgba(0,0,100,1),rgba(0,0,0,0.6), rgba(0,0,100,1));
+    height: 20px;
+}
 
 .row{
     display: block;
@@ -182,7 +187,7 @@ body{
     background-image: url("http://iesmoncada.edu.gva.es/wp-content/gallery/ies/DSCI0023.JPG");
 
     /* Full height */
-    height: 50%; 
+    height: 70%; 
 
     /* Center and scale the image nicely */
     background-position: center;
@@ -192,7 +197,7 @@ body{
 .caption{
     position: absolute;
     left: 0;
-    top: 27%;
+    top: 35%;
     width: 100%;
     text-align: center;
     color: #000;

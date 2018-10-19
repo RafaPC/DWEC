@@ -11,6 +11,7 @@ and open the template in the editor.
 body, html {
     height: 100%;
     margin: 0;
+    height: 1500px;
 }
 
 *{
@@ -18,10 +19,22 @@ body, html {
 }
 .separador{
     display: block;
-    background-image: linear-gradient(to right, rgba(0,0,100,1),rgba(0,0,0,0.6), rgba(0,0,100,1));
-    height: 20px;
+    /*background-image: linear-gradient(to right, rgba(0,0,100,1),rgba(0,0,0,0.6), rgba(0,0,100,1));
+    */
+    height: 48px;
 }
-
+/*
+*
+*
+*
+*
+*
+*
+*/
+.cosa{
+    height: 48px;
+    background-color: white;
+}
 .row{
     display: block;
     clear: left;
@@ -32,7 +45,6 @@ body, html {
     word-wrap: break-word;
     align-content: center;
     text-align: center;
-    min-height: 310px;
 }
 .col-1 {width: 8.33%;}
 .col-2 {width: 16.66%;}
@@ -68,7 +80,14 @@ body, html {
     border: 1px solid black;
 }
 
-
+/*
+*
+*
+*
+*
+*
+*
+*/
 
 
 
@@ -76,15 +95,26 @@ body, html {
 body{
     margin: 0;
 }
+
+.maincontainer{
+    height: 100%;
+    width: 80%;
+    border-right: 1px solid black;
+    border-left: 1px solid black;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: auto;
+}
 .topnav {
     overflow: hidden;
-    background-color: #33ccff;
+    background-color: #ffffff;
+    /*background-image: linear-gradient(to right, rgba(0,0,100,1),rgba(0,0,0,0.6), rgba(0,0,100,1));
+    */
 }
 
 .topnav a {
     float: left;
     display: block;
-    color: #f2f2f2;
+    color: #000000;
     text-align: center;
     padding: 14px 16px;
     text-decoration: none;
@@ -99,6 +129,19 @@ body{
 
 .topnav .icon {
     display: none;
+}
+
+.sticky{
+    position: fixed;
+    top: 0;
+    width:100%;
+}
+
+.content{
+    padding: 16px;
+}
+.sticky + .content{
+    padding-top: 60px;
 }
 
 .dropdown {
@@ -179,15 +222,22 @@ body{
         text-align: left;
     }
 }
-
+/*
+*
+*
+*
+*
+*
+*
+*/
 
 
 .bg {
     /* The image used */
-    background-image: url("http://iesmoncada.edu.gva.es/wp-content/gallery/ies/DSCI0023.JPG");
+    background-image: url("resources/portadacortada.jpg");
 
     /* Full height */
-    height: 70%; 
+    height: 700px; 
 
     /* Center and scale the image nicely */
     background-position: center;
@@ -197,7 +247,7 @@ body{
 .caption{
     position: absolute;
     left: 0;
-    top: 35%;
+    top: 37%;
     width: 100%;
     text-align: center;
     color: #000;

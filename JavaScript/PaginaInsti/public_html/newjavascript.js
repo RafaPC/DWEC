@@ -6,6 +6,21 @@
 
 
 /* Toggle between adding and removing the "responsive" class to topnav when the user clicks on the icon */
+
+
+window.onscroll = function() {funcionsticky();};
+
+var navbar = document.getElementById("navbar");
+var sticky = navbar.offsetTop;
+
+function funcionsticky() {
+  if (window.pageYOffset >= sticky) {
+    navbar.classList.add("sticky");
+  } else {
+    navbar.classList.remove("sticky");
+  }
+}
+
 function myFunction() {
     var x = document.getElementById("myTopnav");
     if (x.className === "topnav") {
@@ -14,16 +29,3 @@ function myFunction() {
         x.className = "topnav";
     }
 } 
-
-window.onscroll = function() {stickyNavbar();};
-
-var navbar = document.getElementById("navbar");
-var sticky = navbar.offsetTop;
-
-function stickyNavbar() {
-  if (window.pageYOffset >= sticky) {
-    navbar.classList.add("sticky");
-  } else {
-    navbar.classList.remove("sticky");
-  }
-}

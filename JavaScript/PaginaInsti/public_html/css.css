@@ -31,10 +31,6 @@ body, html {
 *
 *
 */
-.cosa{
-    height: 48px;
-    background-color: white;
-}
 .row{
     display: block;
     clear: left;

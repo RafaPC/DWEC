@@ -12,70 +12,36 @@
             //enseñar formulario
             ?>
             <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
-                <label>Desde el número:</label>
-                <input type="text" name="nstart" value="0">
-                <br>
-                <label>Hasta el número:</label>
-                <input type="text" name="nend" value="0">
-                <br>
-                <input type="submit" name="enviar" value="Ver tabla">
-				<div>
+                <div>
                     <h1>Radio</h1>
-                    <label>Sexo</label>
-                    <input type="radio" name="sexo" value="m" checked>Mujer
-                    <input type="radio" name="sexo" value="h">Hombre
+                    <label>Categorias</label>
+                    <input type="radio" name="peliculas" value="p" checked>Peliculas
+                    <input type="radio" name="animales" value="a">Animales
                 </div>
+				<input type="submit" name="enviar" value="Ver tabla">	
             </form>
             <?php
         } else {
             ?>	
-            <h3>Aquí se accede al fichero seleccionado y se ejecuta toda la vaina</h3>
+            <h3>Aparece el ahorcado con otro form (puede) con un textarea donde poner cada letra</h3>
             <?php
             $multiplicandoStart = $_POST['nstart'];
             $multiplicandoEnd = $_POST['nend'];
             $colorAzul = true;
             ?>
-            <table>
-                <thead>
-                <tr>
-                    <th class="cabecera">x</th>
-                    <?php
-                    for ($i = 1; $i <= 10; $i++) {
-                        echo "<th>$i</th>";
-                    }
-                    echo '</tr></thead>';
-                    for ($multiplicando = $multiplicandoStart; $multiplicando < $multiplicandoEnd + 1; $multiplicando++) {
-                        echo ('<tr>');
-                        echo "<td>$multiplicando</td>";
-                        for ($multiplicador = 1; $multiplicador < 11; $multiplicador++) {
-                            $variable = $multiplicando * $multiplicador;
-                            if($colorAzul){
-                                echo "<td class=\"azul\">$variable</td>";
-                                $colorAzul = false;
-                            }else{
-                                echo "<td class=\"amarillo\">$variable</td>";
-                                $colorAzul = true;
-                            }
-                        }
-                        echo ('</tr>');
-                    }
-                    ?>
-            </table>
         <?php } ?>
 		
 		<?php
         $arrayPalabras = [];
-        $contador = 0;
 		$man = fopen('../ficheros_ahorcado/pelis.txt', 'r');
         while (!feof($man)) {
             $linea = fgets($man);
             if (!empty($linea) && ord($linea) != 13) {
-                $contador++;
 				array_push($arrayPalabras, $linea);
             }
         }
         fclose($man);
-        $numPalabra = rand(0,$contador-1);
+        $numPalabra = rand(0,count($arrayPalabras));
 		echo "$arrayPalabras[$numPalabra]";
         ?>
     </body>

@@ -39,6 +39,12 @@ body, html {
     display: block;
     clear: left;
 }
+.rowflex{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+}
 [class*="col-"] {
     display: inline-block;
     float: left;

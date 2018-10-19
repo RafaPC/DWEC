@@ -163,26 +163,18 @@
 
         <p>------------------------------------</p>
         <h1>Ejercicio 26 </h1><h3> Hallar los 20 primeros múltiplos de 5 y de 7</h3>
-		<?php
+        <h4>Múltiplos de 5 y 7: </h4><p>	
+                <?php
 		$contador;
-		echo '<h4>Múltiplos de 5: </h4><p>';
 		for ($i = 5, $contador = 0; $contador < 20; $i++) {
-			if (($i % 5) == 0) {
+			if ($i % 5 == 0&& $i % 7 == 0) {
 				echo "$i, ";
 				$contador++;
 			}
 		}
-		echo '</p>';
-
-		echo '<h4>Múltiplos de 7: </h4><p>';
-		for ($i = 7, $contador = 0; $contador < 20; $i++) {
-			if (($i % 7) == 0) {
-				echo "$i, ";
-				$contador++;
-			}
-		}
-		echo '</p>';
+		
 		?>
+        </p>
 
     </body>
 </html>

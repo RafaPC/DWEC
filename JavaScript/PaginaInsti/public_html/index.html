@@ -15,11 +15,26 @@ and open the template in the editor.
     <body>
         <header>
             <div class="row">
-                <img src="resources/logofinal.png" alt="logo" height="100">
+                <div class="col-1">
+                    <img src="resources/logofinal.png" alt="logo" height="100">
+                </div><div class="col-10">&nbsp;</div>
+                <div class="col-1" id="intranet">
+                    <button>
+                        <i class="fa fa-lock"></i>
+                        Intranet
+                    </button>
+                    <div class="intranet-dropdown-content">
+                        <form>
+                            <input type="text" name="user">
+                            <input type="password" name="password">
+                        </form>
+                    </div>
+                </div>
+
             </div>
-            <nav>
-                <div id="navbar">
-                    <div class="row">
+            <div class="row">
+                <nav>
+                    <div id="navbar">
                         <div class="col-1">&nbsp;</div>
                         <div class="col-10">
                             <a href="#home" class="active">Home</a>
@@ -39,8 +54,8 @@ and open the template in the editor.
                             <a href="#about">About</a>                        
                         </div>
                     </div>
-                </div>
-            </nav>
+                </nav>
+            </div>
         </header>
         <div class="row">
             <div class="bg">
@@ -53,28 +68,52 @@ and open the template in the editor.
             </div>
         </div>
         <div class="row">
+            <div class="col-12">
+                <div class="tituloactualidad">Actualidad</div>
+            </div>
+        </div>
+        <div class="row" id="actualidad">
             <div class="col-2">&nbsp;</div>
-            <div class="col-10">
-
+            <div class="col-2 noticia noticia1">
+                <div class="row"><img src="resources/imagenprueba.jpg" alt="imagen de prueba" height="200" width="200"></div>
+                <div class="row">
+                    <div class="titulo">Titulo y esas cosas</div>
+                    <div class="subtitulo">Y aquí iría el texto explicando un poco mas</div>
+                </div>
+            </div>
+            <div class="col-1">&nbsp;</div>
+            <div class="col-2 noticia noticia2">
+                <div class="row"><img src="resources/imagenprueba.jpg" alt="imagen de prueba" height="200" width="200"></div>
+                <div class="row">
+                    <div class="titulo">Titulo y esas cosas</div>
+                    <div class="subtitulo">Y aquí iría el texto explicando un poco mas</div>
+                </div>
+            </div>
+            <div class="col-1">&nbsp;</div>
+            <div class="col-2 noticia noticia3">
+                <div class="row"><img src="resources/imagenprueba.jpg" alt="imagen de prueba" height="200" width="200"></div>
+                <div class="row">
+                    <div class="titulo">Titulo y esas cosas</div>
+                    <div class="subtitulo">Y aquí iría el texto explicando un poco mas</div>
+                </div>
             </div>
             <div class="col-2">&nbsp;</div>
-        </div>
-        <div>TODO write content
+
         </div>
         <script>
             window.onscroll = function () {
-                myFunction();
+            myFunction();
             };
 
             var navbar = document.getElementById("navbar");
             var sticky = navbar.offsetTop;
 
             function myFunction() {
-                if (window.pageYOffset >= sticky) {
-                    navbar.classList.add("sticky")
-                } else {
-                    navbar.classList.remove("sticky");
-                }
+            if (window.pageYOffset >= sticky) {
+            navbar.classList.add("sticky")
+            } else {
+            navbar.classList.remove("sticky");
+            }
             }
         </script>
         <!--script>
@@ -87,5 +126,28 @@ and open the template in the editor.
                 }
             }
         </script-->
+        <script>
+            /* When the user clicks on the button, 
+            toggle between hiding and showing the dropdown content */
+            function myFunction() {
+            document.getElementById("myDropdown").classList.toggle("show");
+            }
+
+            // Close the dropdown menu if the user clicks outside of it
+            window.onclick = function(event) {
+            if (!event.target.matches('.dropbtn')) {
+
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            var i;
+            for (i = 0; i < dropdowns.length; i++) {
+            var openDropdown = dropdowns[i];
+            if (openDropdown.classList.contains('show')) {
+            openDropdown.classList.remove('show');
+            }
+            }
+            }
+            }
+
+        </script>
     </body>
 </html>

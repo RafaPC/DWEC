@@ -6,30 +6,63 @@
         <meta name="author" content="Rafael Prieto Ciprián">
     </head>
     <body>
-        <h1>Ejercicio 18 </h1><h3> Hacer un programa que reciba un número de mes de la url (método GET) y
-            visualice a qué trimestre pertenece o error en caso de que no sea un mes
-            válido. Utilizar un switch, con el número mínimo de breaks posibles.</h3>
-        <?php ?>
+        <h1>Ejercicio 18 </h1><h3> Hacer un programa que reciba un numero de mes de la url (metodo GET) y
+            visualice a que trimestre pertenece o error en caso de que no sea un mes
+            valido. Utilizar un switch, con el numero minimo de breaks posibles.</h3>
+        <?php 
+        if(!isset($_GET['mes'])){
+            echo '<p>No se ha recibido el mes</p>';
+        }else{
+            $mes = $_GET['mes'];         
+            switch($mes){
+                case 1:
+                case 2:
+                case 3:
+                    echo 'Primer trimestre';
+                    break;
+                
+                case 4:
+                case 5:
+                case 6:
+                    echo 'Segundo trimestre';
+                    break;
+                
+                case 7:
+                case 8:
+                case 9:
+                    echo 'Tercer trimestre';
+                    break;
+                
+                case 10:
+                case 11:
+                case 12:
+                    echo 'Cuarto trimestre';
+                    break;
+                default:
+                    echo 'Mes introducido no valido';
+                    break;
+            }
+        }
+        ?>
 
         <p>------------------------------------</p>
-        <h1>Ejercicio 19 </h1><h3> Dado dos números, calcular la división entera, comprobando primero que los
-            números son positivos, que el primero es mayor que el segundo y que el divisor
-            es distinto de 0. Dar mensajes de error adecuados en función del fallo. Hacer el
+        <h1>Ejercicio 19 </h1><h3> Dado dos numeros, calcular la division entera, comprobando primero que los
+            numeros son positivos, que el primero es mayor que el segundo y que el divisor
+            es distinto de 0. Dar mensajes de error adecuados en funcion del fallo. Hacer el
             ejercicio utilizando @ y die.</h3>
         <?php
-        //$dividendo = random(-10,10);
-        //$divisor = random(-10,10);
-        $dividendo = 3;
-        $divisor = 1;
-        echo "$dividendo./.$divisor";
+        $dividendo = rand(-5,5);
+        $divisor = rand(-5,5);
+        
+        echo "$dividendo/$divisor<br>";
         
 		@($dividendo > 0 && $divisor > 0) or  
-        die('Los numero tienen que ser positivos');
+        die('Los numeros tienen que ser positivos');
         
 		@($dividendo > $divisor) or  
         die('El dividendo tiene que ser mayor que el divisor');
 		
-		($divisor !== 0) or
+		@($divisor !== 0) or
         die('El divisor no puede ser 0');
             
 		$resultado = @$dividendo / $divisor;
@@ -37,9 +70,9 @@
         ?>
 
         <p>------------------------------------</p>
-        <h1>Ejercicio 20 </h1><h3> Dados dos números calcular el módulo de dos números enteros: si el resultado
-            es 0, indicar división exacta, si el resultado es 1, indicar sobra 1, si el resultado
-            es 2 indicar sobran 2. En cualquier otro caso indicar sobran más de 2. Utilizar
+        <h1>Ejercicio 20 </h1><h3> Dados dos numeros calcular el modulo de dos numeros enteros: si el resultado
+            es 0, indicar division exacta, si el resultado es 1, indicar sobra 1, si el resultado
+            es 2 indicar sobran 2. En cualquier otro caso indicar sobran mas de 2. Utilizar
             un switch.</h3>
         <?php
         $num1 = rand(-10, 10);
@@ -62,7 +95,7 @@
         ?>
 
         <p>------------------------------------</p>
-        <h1>Ejercicio 21 </h1><h3> Dado un array inicializado con 10 números reales y calcular y visualizar su
+        <h1>Ejercicio 21 </h1><h3> Dado un array inicializado con 10 numeros reales y calcular y visualizar su
             media. (Uso de for)</h3>
         <?php
         $array = array();
@@ -78,12 +111,12 @@
         ?>
 
         <p>------------------------------------</p>
-        <h1>Ejercicio 22 </h1><h3> Utilizando el bucle for y un break. Calcula si un número es primo o no.
-            Nota: Recuerda que un número es primo si no tiene divisores, en el momento
-            en que encuentres un divisor ya no será primo y podrás cortar la ejecución.</h3>
+        <h1>Ejercicio 22 </h1><h3> Utilizando el bucle for y un break. Calcula si un numero es primo o no.
+            Nota: Recuerda que un numero es primo si no tiene divisores, en el momento
+            en que encuentres un divisor ya no sera primo y podras cortar la ejecucion.</h3>
         <?php
         $numero22 = rand(1, 100);
-        echo "<h4>Número: </h4><p>$numero22</p>";
+        echo "<h4>Numero: </h4><p>$numero22</p>";
 
         for ($i = $numero22 - 1; $i > 0; $i--) {
             if ($i == 1 || $numero22 == 2) {
@@ -96,10 +129,10 @@
         ?>
 
         <p>------------------------------------</p>
-        <h1>Ejercicio 23 </h1><h3> Calcula los divisores de un número entero positivo.</h3>
+        <h1>Ejercicio 23 </h1><h3> Calcula los divisores de un numero entero positivo.</h3>
         <?php
         $numero23 = rand(1, 100);
-        echo "<h4>Número: </h4><p>$numero23</p>";
+        echo "<h4>Numero: </h4><p>$numero23</p>";
         echo "<p>Divisores: ";
         for ($i = $numero23; $i > 0; $i--) {
 
@@ -114,7 +147,7 @@
         ?>
 
         <p>------------------------------------</p>
-        <h1>Ejercicio 24 </h1><h3> Dado un par de números (ejemplo 7 y 4), y una operación +, -, * y / (ejemplo
+        <h1>Ejercicio 24 </h1><h3> Dado un par de numeros (ejemplo 7 y 4), y una operacion +, -, * y / (ejemplo
             +), calcular el resultado (ejemplo 11). Utilizar switch.</h3>
         <?php
         $numero24_1 = rand(1, 20);
@@ -122,9 +155,9 @@
         $arrayOperaciones = ['+', '-', '*', '/'];
         $operacion = $arrayOperaciones[array_rand($arrayOperaciones)];
         $resultado;
-        echo "<p>Número 1: $numero24_1<br>
-		Número 2: $numero24_2<br>
-		Operación: $operacion</p>";
+        echo "<p>Numero 1: $numero24_1<br>
+		Numero 2: $numero24_2<br>
+		Operacion: $operacion</p>";
 
         switch ($operacion) {
 
@@ -147,11 +180,11 @@
 
         <p>------------------------------------</p>
         <h1>Ejercicio 25 </h1><h3> En un archivo funciones.inc incluir las funciones definidas es_primo() (ejercicio
-            4) y divisores() (ejercicio5). Realizar una página php que incluya este archivo
+            4) y divisores() (ejercicio5). Realizar una pagina php que incluya este archivo
             funciones.inc, y que haga llamadas a estas funciones del archivo. En concreto
-            visualizar los 10 primeros numerous primos.</h3>
+            visualizar los 10 primeros numeross primos.</h3>
         <?php
-        include "../inc/funciones.inc.php";
+        include "funciones.inc.php";
 		echo 'Numeros primos: ';
 		for($i=1,$contador=0;$contador<10;$i++){
 		if(es_primo($i)){
@@ -162,8 +195,8 @@
         ?>
 
         <p>------------------------------------</p>
-        <h1>Ejercicio 26 </h1><h3> Hallar los 20 primeros múltiplos de 5 y de 7</h3>
-        <h4>Múltiplos de 5 y 7: </h4><p>	
+        <h1>Ejercicio 26 </h1><h3> Hallar los 20 primeros multiplos de 5 y de 7</h3>
+        <h4>Multiplos de 5 y 7: </h4><p>	
                 <?php
 		$contador;
 		for ($i = 5, $contador = 0; $contador < 20; $i++) {

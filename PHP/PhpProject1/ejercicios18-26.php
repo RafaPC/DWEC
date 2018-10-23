@@ -200,7 +200,7 @@
                 <?php
 		$contador;
 		for ($i = 5, $contador = 0; $contador < 20; $i++) {
-			if ($i % 5 == 0&& $i % 7 == 0) {
+			if ($i % 5 == 0 && $i % 7 == 0) {
 				echo "$i, ";
 				$contador++;
 			}

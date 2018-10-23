@@ -1,10 +1,8 @@
 <?php
 include_once "header.php";
-session_start();
-
-//if(isset($_SESSION['nombre'])){
-if (session_is_registered('nombre')) {
-    $nombre = $_SESSION['nombre'];
+@session_start();
+if (isset($_SESSION['username'])) {
+    $nombre = $_SESSION['username'];
     echo "Hola $nombre, cuanto tiempo";
 } else {
     echo mb_convert_encoding('<h1>&#9760;', 'UTF-8', 'HTML-ENTITIES');

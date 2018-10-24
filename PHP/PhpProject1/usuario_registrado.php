@@ -1,6 +1,9 @@
+
+<html>
+<body>
 <?php
 include_once "header.php";
-@session_start();
+session_start();
 if (isset($_SESSION['username'])) {
     $nombre = $_SESSION['username'];
     echo "Hola $nombre, cuanto tiempo";
@@ -10,3 +13,5 @@ if (isset($_SESSION['username'])) {
     echo mb_convert_encoding('&#9760;', 'UTF-8', 'HTML-ENTITIES') . '</h1>';
 }
 ?>
+</body>
+</html>

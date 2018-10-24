@@ -1,22 +1,31 @@
 <!DOCTYPE html>
 <html>
-    <?php
+    <body>
+	<?php
     include_once "header.php";
     
     $validado = true;
     if (isset($_POST['enviar'])) {
         $nombre = $_POST['username'];
         $contra = $_POST['password'];
-        trim($nombre);
-        trim($contra);
-        if (strlen($nombre) == 0) {
+		
+		$nombre = trim($nombre);
+        $contra = trim($contra);
+        
+		$nombre = stripslashes($nombre);
+		$contra = stripslashes($contra);
+	
+		$nombre = htmlspecialchars($nombre);
+		$contra = htmlspecialchars($contra);
+		
+		if (strlen($nombre) == 0) {
             echo 'Tienes que escribir el nombre';
             $validado = false;
-        } else if (strlen($contra) == 0) {
-            echo 'Tienes que escribir la contraseÃ±a';
+        } else if (!strlen($contra) > 0) {
+            echo 'Tienes que escribir la contraseña';
             $validado = false;
         } else if($contra !== 'nohay2sin3'){
-            echo 'ContraseÃ±a incorrecta';
+            echo 'Contraseña incorrecta';
             $validado = false;
         }
 
@@ -35,7 +44,7 @@
     <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
         <label>Nombre:</label>
         <input type="text" name="username" value="">
-        <label>ContraseÃ±a:</label>
+        <label>Contraseña:</label>
         <input type="password" name="password" value="">
         <input type="submit" name="enviar" value="procesar">
     </form>
@@ -43,4 +52,5 @@
     <?php
     }
     ?>
+	</body>
 </html>

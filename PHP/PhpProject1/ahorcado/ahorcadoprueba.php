@@ -15,8 +15,8 @@
                 <div>
                     <h1>Radio</h1>
                     <label>Categorias</label>
-                    <input type="radio" name="peliculas" value="p" checked>Peliculas
-                    <input type="radio" name="animales" value="a">Animales
+                    <input type="radio" name="categoria" value="peliculas" checked>Peliculas
+                    <input type="radio" name="categoria" value="animales">Animales
                 </div>
 				<input type="submit" name="enviar" value="Ver tabla">	
             </form>

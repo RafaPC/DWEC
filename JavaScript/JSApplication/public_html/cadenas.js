@@ -3,13 +3,15 @@
 
 //Número fijo de madrid
 /*var cadena = "";
-cadena = prompt("Introduce cadena: ",0);
-var expreg = new RegExp(/^91[0-9]{7}$/g);
-///var expreg = new RegExp("^91[0-9]{7}$","g");
-if(expreg.test(cadena)){
-    alert("Ha funcionado");
-    document.write("Ha funcionado");
-}*/
+ cadena = prompt("Introduce cadena: ",0);
+ var expreg = new RegExp(/^91[0-9]{7}$/g);
+ ///var expreg = new RegExp("^91[0-9]{7}$","g");
+ if(expreg.test(cadena)){
+ alert("Ha funcionado");
+ document.write("Ha funcionado");
+ }*/
+
+
 
 //DNI
 //var cadena = "";
@@ -43,7 +45,56 @@ if(expreg.test(cadena)){
 //document.write(texto);
 
 
-alert(Math.floor(Math.random() * (25 - 7 + 1) + 7));
+//alert(Math.floor(Math.random() * (25 - 7 + 1) + 7));
+//
+//alert(random(7, 25));
+
+var grados = 180;
+var variable = setInterval("funcion()",200);
+var cambio = 1;
+function funcion(){
+    var sombra = Math.sin(grados/60);
+    document.title = sombra;
+    grados += cambio;
+    if(grados===360){
+        cambio = -1;
+    }else if(grados===180){
+        cambio = 1;
+    }
+
+}
+
+
+/**function random(min, max) {
+
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+
+document.write("<a href=\"javascript:pararCronometro()\">Parar cronometro</a>");
+
+
+var segundos = 0;
+var sumar = true;
+var intervaloSegundos = setInterval("tituloSegundos()", 500);
+
+function tituloSegundos() {
+    document.title = segundos;
+    if (sumar) {
+        segundos++;
+    }else{
+        segundos--;
+    }
+    if (segundos === 10) {
+        sumar = false;
+    } else if (segundos === 0) {
+        sumar = true;
+    }
+}
+
+function pararCronometro() {
+    clearInterval(intervaloSegundos);
+    alert("Contador parado");
+}
 
 
 
@@ -62,12 +113,8 @@ alert(Math.floor(Math.random() * (25 - 7 + 1) + 7));
 
 
 
-
-
-
-
 /*var cadena = "";
-cadena = prompt("Introduce cadena: ","");
-for(var i = 0; i<cadena.length;i++){
-    document.write(cadena.substr(i,1) + "<br>");
-}*/
+ cadena = prompt("Introduce cadena: ","");
+ for(var i = 0; i<cadena.length;i++){
+ document.write(cadena.substr(i,1) + "<br>");
+ }*/

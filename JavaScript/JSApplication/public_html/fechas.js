@@ -12,7 +12,7 @@ var fechaInicial;
 
 function iniciarCronometro() {
     fechaInicial = new Date();
-    intervaloCronometro = setInterval("tituloSegundos()", 1000);
+    intervaloCronometro = setInterval("tituloSegundos()", 100);
 }
 function tituloSegundos() {
     var fechaActual = new Date();

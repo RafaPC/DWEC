@@ -38,6 +38,7 @@ img{
 .caracterPalabra{
     display: inline-block;
     width: 30px;
+	font-size: 25px;
     border-bottom: 3px solid black;
 }
 .botonUtilizado{

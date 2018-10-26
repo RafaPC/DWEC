@@ -12,7 +12,7 @@
         <meta name="author" content="Rafael Prieto Ciprián">
     </head>
     <body>
-        <?php
+        <?php        
         if($_SERVER["REQUEST_METHOD"] == "POST"){
 		$tipo = $_POST['tipo'];
 		print "$tipo";

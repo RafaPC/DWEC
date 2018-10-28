@@ -3,14 +3,20 @@
     <head>
         <meta charset="UTF-8">
         <title>Ejercicios PHP</title>
-        <meta name="author" content="Rafael Prieto CipriÃƒÂ¡n">
+        <meta name="author" content="Rafael Prieto CipriÃ¡n">
         <link href="cssahorcado.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <?php
-        $arrayFotos = ['foto1.png', 'foto2.png', 'foto3.png', 'foto4.png', 'foto5.png', 'foto6.png', 'foto7.png'];
+        require_once 'teclado.php';
         session_start();
-        if(isset($_POST['reiniciar'])){
+
+        $arrayFotos = ['foto1.png', 'foto2.png', 'foto3.png', 'foto4.png', 'foto5.png', 'foto6.png', 'foto7.png'];
+        
+        if (!isset($_SESSION['letrasUtilizadas'])) {
+            iniciar();
+        }
+        if (isset($_POST['reiniciar'])) {
             session_unset();
         }
         if (!isset($_SESSION['fotoActual'])) {
@@ -19,10 +25,9 @@
         if (isset($_POST['enviar'])) {
             $_SESSION['categoria'] = $_POST['categoria'];
         }
-        if (!isset($_SESSION['perdido'])) {
-            $_SESSION['perdido'] = false;
-        }
         ?>
+        
+        
         <h1>AHORCADO</h1>
         <?php
         if (!isset($_SESSION['categoria'])) {
@@ -46,7 +51,7 @@
             $categoria = $_SESSION['categoria'];
             $arrayPalabras = [];
             //Meter todas las palabras del fichero en un array
-            $man = fopen('ficheros_ahorcado/' . $categoria . '.txt', 'r');
+            $man = @fopen('ficheros_ahorcado/' . $categoria . '.txt', 'r') or die ('No se ha encontrado el fichero');
             while (!feof($man)) {
                 $linea = fgets($man);
                 if (!empty($linea) && ord($linea) != 13) {
@@ -68,69 +73,72 @@
                         </span>
                         <?php
                     }
-                    ?>
-                </div>
-                <?php
-                include 'teclado.php';
-                ?>
-            </div>
-            <?php
-        } else {
-            if (isset($_POST['letra'])) {
-                $_SESSION['letrasUtilizadas'][$_POST['letra']] = true;
-                $_SESSION['letraElegida'] = $_POST['letra'];
+                    echo '</div>';
+                    require_once 'teclado.php';
+                    escribirTeclado(false,false);
+                    echo '</div>';
+                } else {
+                    if (isset($_POST['letra'])) {
+                        $_SESSION['letrasUtilizadas'][$_POST['letra']] = true;
+                        $_SESSION['letraElegida'] = $_POST['letra'];
 
-                $posicionLetra = strpos($_SESSION['palabra'], $_SESSION['letraElegida']);
+                        $posicionLetra = strpos($_SESSION['palabra'], $_SESSION['letraElegida']);
 
-                if (!is_numeric($posicionLetra)) {
-                    $_SESSION['fotoActual'] ++;
-                }
-            }
-
-            $perdido = false;
-            if ($_SESSION['fotoActual'] === 6) {
-                $_SESSION['perdido'] = true;
-                //Pongo todas las letras de la palabra a true para que se complete
-                $abecedario = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-                for ($i = 0; $i < 26; $i++) {
-                    $_SESSION['letrasUtilizadas'][$abecedario[$i]] = true;
-                }
-            }
-//Coger el carÃ¡cter que se haya utilizado y completarlo en la palabra si existe
-
-            echo 'Foto actual = ' . $_SESSION['fotoActual'];
-            //Coger la longitud y eso para escribir todos los huecos
-            $longitudPalabra = strlen(trim($_SESSION['palabra']));
-            echo 'Foto = ' . $_SESSION['fotoActual'];
-            if ($perdido) {
-                echo '<h1>HAS PERDIDO</h1>';
-            }
-            ?>
-
-            <div id="palabrayteclado">
-                <div id="palabra">
-                    <?php
-                    for ($i = 0; $i < $longitudPalabra; $i++) {
-                        ?>
-                        <span class="caracterPalabra">
-                            <?php
-                            //Por cada caracter recorre el array de letras utilizadas por si alguna coincide
-                            //Saco el caracter actual de la palabra
-                            $letraActual = substr($_SESSION['palabra'], $i, 1);
-                            if ($_SESSION['letrasUtilizadas'][$letraActual] == true) {
-                                echo "$letraActual";
-                            }
-                            ?>
-                        </span>
-                        <?php
+                        if (!is_numeric($posicionLetra)) {
+                            $_SESSION['fotoActual'] ++;
+                        }
                     }
-                    ?></div><?php
-                include 'teclado.php';
+
+
+                    //Compruebo si ha ganado
+                    $contador = 0;
+                    $perdido = false; 
+                    $ganado = false;
+                    $longitudPalabra = strlen(trim($_SESSION['palabra']));
+                    for ($i = 0; $i < $longitudPalabra; $i++) {
+                        $letraActual = substr($_SESSION['palabra'], $i, 1);
+                        if ($_SESSION['letrasUtilizadas'][$letraActual] == true) {
+                            $contador++;
+                        }
+                    }
+                    if ($contador === strlen($_SESSION['palabra'])) {
+                        echo '<h1>HAS GANADO</h1>';
+                        rellenarLetras();
+                        $ganado = true;
+                    }
+
+                    //Compruebo si ha perdido
+                    if ($_SESSION['fotoActual'] === 6) {
+                        echo '<h1>HAS PERDIDO</h1>';
+                        $perdido = true;
+                        rellenarLetras();
+                    }
+                    ?>
+
+                    <div id="palabrayteclado">
+                        <div id="palabra">
+                            <?php
+                            for ($i = 0; $i < $longitudPalabra; $i++) {
+                                ?>
+                                <span class="caracterPalabra">
+                                    <?php
+                                    //Por cada caracter recorre el array de letras utilizadas por si alguna coincide
+                                    //Saco el caracter actual de la palabra
+                                    $letraActual = substr($_SESSION['palabra'], $i, 1);
+                                    if ($_SESSION['letrasUtilizadas'][$letraActual] == true) {
+                                        echo "$letraActual";
+                                    }
+                                    ?>
+                                </span>
+                                <?php
+                            }
+                            ?></div><?php
+                        escribirTeclado($perdido, $ganado);
+                        ?>
+                    </div>
+                    <?php
+                }
                 ?>
-            </div>
-            <?php
-        }
-        ?>
-        <img src="fotos/<?php echo $arrayFotos[$_SESSION['fotoActual']]; ?>" alt="foto" width="200" height="200"/>
-    </body>
-</html>
+                <img src="fotos/<?php echo $arrayFotos[$_SESSION['fotoActual']]; ?>" alt="foto" width="200" height="200"/>
+                </body>
+                </html>

@@ -46,7 +46,7 @@
                 </div>
             </form>
             <?php
-        } else if (!isset($_SESSION['palabra'])) {
+        } else if (!isset($_SESSION['pa a'])) {
             //Abrir el fichero de la categoria que se ha elegido
             $categoria = $_SESSION['categoria'];
             $arrayPalabras = [];
@@ -54,6 +54,8 @@
             $man = @fopen('ficheros_ahorcado/' . $categoria . '.txt', 'r') or die ('No se ha encontrado el fichero');
             while (!feof($man)) {
                 $linea = fgets($man);
+                //Como se guardan cada una en una línea en el fichero, si no se hace el trim se quedan con un espacio al final
+                $linea = trim($linea);
                 if (!empty($linea) && ord($linea) != 13) {
                     array_push($arrayPalabras, $linea);
                 }

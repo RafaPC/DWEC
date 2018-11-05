@@ -5,6 +5,8 @@
  * and open the template in the editor.
  */
 
+include 'header.php';
+
 class Figura {
 
     protected $nombre;
@@ -106,3 +108,6 @@ class Cuadrado extends Figura {
     $circulo->getNombre();
     
     ?>
+
+</body>
+</html>

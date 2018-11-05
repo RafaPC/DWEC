@@ -5,6 +5,8 @@
  * and open the template in the editor.
  */
 
+include 'header.php';
+
 class Figura {
 
     protected $nombre;
@@ -51,7 +53,7 @@ class Figura {
         echo 'Color: ' . $this->color . '<br>';
         echo 'Esta rellena: ' . $this->esRellena . '<br>';
     }
-    
+
 }
 
 class Circulo extends Figura {
@@ -83,7 +85,7 @@ class Cuadrado extends Figura {
     public function getLado() {
         return $this->lado;
     }
-    
+
     public function setLado($lado) {
         $this->lado = $lado;
     }
@@ -91,14 +93,13 @@ class Cuadrado extends Figura {
     public function getArea() {
         return pow($this->lado, 2);
     }
-    
+
     public function __construct($lado) {
         $this->lado = $lado;
     }
 
-    }
+}
+?>
 
-    $circulo = new Circulo(3);
-    $circulo->getNombre();
-    
-    ?>
+</body>
+</html>

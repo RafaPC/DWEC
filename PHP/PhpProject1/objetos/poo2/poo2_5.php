@@ -4,6 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+include 'header.php';
 
 abstract class Figura {
 
@@ -113,14 +114,14 @@ class Cuadrado extends Figura {
         $this->lado = $lado;
     }
 
-    }
+}
 
-    class Rectangulo extends Figura {
-
-
-    }
-
-
-    $rectangulo = new Rectangulo('rectangulo','','');
+class Rectangulo extends Figura {
     
-    ?>
+}
+
+$rectangulo = new Rectangulo('rectangulo', '', '');
+?>
+
+</body>
+</html>

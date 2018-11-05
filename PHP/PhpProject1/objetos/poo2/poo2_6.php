@@ -4,6 +4,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+include 'header.php';
 
 abstract class Figura {
 
@@ -144,5 +145,7 @@ class Cuadrado extends Figura implements Imprimible {
 
     $cuadrado = new Cuadrado('cuadrado', 'purple', true, 200);
     $cuadrado->imprime();
-    
     ?>
+
+</body>
+</html>

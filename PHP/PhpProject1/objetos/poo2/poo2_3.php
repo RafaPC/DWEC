@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-abstract class Figura {
+class Figura {
 
     protected $nombre;
     protected $color;
@@ -51,8 +51,7 @@ abstract class Figura {
         echo 'Color: ' . $this->color . '<br>';
         echo 'Esta rellena: ' . $this->esRellena . '<br>';
     }
-
-    abstract public function getArea();
+    
 }
 
 class Circulo extends Figura {
@@ -76,18 +75,16 @@ class Circulo extends Figura {
     }
 
     public function showInfo() {
-        parent::showInfo();
         echo 'Radio: ' . $this->radio;
     }
 
-    public function __construct($nombre, $color, $esRellena, $radio) {
-        parent::__construct($nombre);
+    public function __construct($radio) {
         $this->radio = $radio;
     }
 
 }
 
-class Cuadrado extends Figura implements Imprimible {
+class Cuadrado extends Figura {
 
     private $lado;
 
@@ -95,6 +92,10 @@ class Cuadrado extends Figura implements Imprimible {
         return $this->lado;
     }
 
+    function setNombre($nombre) {
+        $this->nombre = $nombre;
+    }
+    
     public function setLado($lado) {
         $this->lado = $lado;
     }
@@ -104,45 +105,16 @@ class Cuadrado extends Figura implements Imprimible {
     }
 
     public function showInfo() {
-        parent::showInfo();
         echo 'Lado: ' . $this->lado . '\n';
     }
 
-    public function __construct($nombre, $color, $esRellena, $lado) {
-        parent::__construct($nombre, $color, $esRellena);
+    public function __construct($lado) {
         $this->lado = $lado;
     }
 
-    public function imprime() {
-        ?><div style="width:<?php echo $this->lado; ?>; height:<?php
-        echo $this->lado;
-
-        if ($this->esRellena) {
-            ?>
-                 ;background-color:<?php echo $this->color ?>">
-                <?php
-            } else {
-                ?> ;border: 5px dotted <?php echo $this->color; ?>"> <?php
-            }
-            echo '</div>';
-        }
-
     }
 
-    class Rectangulo extends Figura {
-
-        public function getArea() {
-            
-        }
-
-    }
-
-    interface Imprimible {
-
-        public function imprime();
-    }
-
-    $cuadrado = new Cuadrado('cuadrado', 'purple', true, 200);
-    $cuadrado->imprime();
+    $cuadrado = new Cuadrado('cuadrado','red',true,3);
+    $cuadrado->setNombre('cuadrado');
     
     ?>

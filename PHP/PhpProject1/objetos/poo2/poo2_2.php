@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-abstract class Figura {
+class Figura {
 
     protected $nombre;
     protected $color;
@@ -21,7 +21,7 @@ abstract class Figura {
         return $this->nombre;
     }
 
-    final function setNombre($nombre) {
+    function setNombre($nombre) {
         $this->nombre = $nombre;
     }
 
@@ -51,8 +51,7 @@ abstract class Figura {
         echo 'Color: ' . $this->color . '<br>';
         echo 'Esta rellena: ' . $this->esRellena . '<br>';
     }
-
-    abstract public function getArea();
+    
 }
 
 class Circulo extends Figura {
@@ -75,26 +74,20 @@ class Circulo extends Figura {
         return 'circulo';
     }
 
-    public function showInfo() {
-        parent::showInfo();
-        echo 'Radio: ' . $this->radio;
-    }
-
-    public function __construct($nombre, $color, $esRellena, $radio) {
-        parent::__construct($nombre);
+    public function __construct($radio) {
         $this->radio = $radio;
     }
 
 }
 
-class Cuadrado extends Figura implements Imprimible {
+class Cuadrado extends Figura {
 
     private $lado;
 
     public function getLado() {
         return $this->lado;
     }
-
+    
     public function setLado($lado) {
         $this->lado = $lado;
     }
@@ -102,47 +95,14 @@ class Cuadrado extends Figura implements Imprimible {
     public function getArea() {
         return pow($this->lado, 2);
     }
-
-    public function showInfo() {
-        parent::showInfo();
-        echo 'Lado: ' . $this->lado . '\n';
-    }
-
-    public function __construct($nombre, $color, $esRellena, $lado) {
-        parent::__construct($nombre, $color, $esRellena);
+    
+    public function __construct($lado) {
         $this->lado = $lado;
     }
 
-    public function imprime() {
-        ?><div style="width:<?php echo $this->lado; ?>; height:<?php
-        echo $this->lado;
-
-        if ($this->esRellena) {
-            ?>
-                 ;background-color:<?php echo $this->color ?>">
-                <?php
-            } else {
-                ?> ;border: 5px dotted <?php echo $this->color; ?>"> <?php
-            }
-            echo '</div>';
-        }
-
     }
 
-    class Rectangulo extends Figura {
-
-        public function getArea() {
-            
-        }
-
-    }
-
-    interface Imprimible {
-
-        public function imprime();
-    }
-
-    $cuadrado = new Cuadrado('cuadrado', 'purple', true, 200);
-    $cuadrado->imprime();
+    $circulo = new Circulo(3);
+    $circulo->getNombre();
     
     ?>

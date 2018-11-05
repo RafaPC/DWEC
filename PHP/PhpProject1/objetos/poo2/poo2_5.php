@@ -87,7 +87,7 @@ class Circulo extends Figura {
 
 }
 
-class Cuadrado extends Figura implements Imprimible {
+class Cuadrado extends Figura {
 
     private $lado;
 
@@ -113,36 +113,14 @@ class Cuadrado extends Figura implements Imprimible {
         $this->lado = $lado;
     }
 
-    public function imprime() {
-        ?><div style="width:<?php echo $this->lado; ?>; height:<?php
-        echo $this->lado;
-
-        if ($this->esRellena) {
-            ?>
-                 ;background-color:<?php echo $this->color ?>">
-                <?php
-            } else {
-                ?> ;border: 5px dotted <?php echo $this->color; ?>"> <?php
-            }
-            echo '</div>';
-        }
-
     }
 
     class Rectangulo extends Figura {
 
-        public function getArea() {
-            
-        }
 
     }
 
-    interface Imprimible {
 
-        public function imprime();
-    }
-
-    $cuadrado = new Cuadrado('cuadrado', 'purple', true, 200);
-    $cuadrado->imprime();
+    $rectangulo = new Rectangulo('rectangulo','','');
     
     ?>

@@ -5,7 +5,7 @@
  * and open the template in the editor.
  */
 
-abstract class Figura {
+class Figura {
 
     protected $nombre;
     protected $color;
@@ -51,8 +51,7 @@ abstract class Figura {
         echo 'Color: ' . $this->color . '<br>';
         echo 'Esta rellena: ' . $this->esRellena . '<br>';
     }
-
-    abstract public function getArea();
+    
 }
 
 class Circulo extends Figura {
@@ -81,13 +80,13 @@ class Circulo extends Figura {
     }
 
     public function __construct($nombre, $color, $esRellena, $radio) {
-        parent::__construct($nombre);
+        parent::__construct($nombre, $color, $esRellena);
         $this->radio = $radio;
     }
 
 }
 
-class Cuadrado extends Figura implements Imprimible {
+class Cuadrado extends Figura {
 
     private $lado;
 
@@ -113,36 +112,11 @@ class Cuadrado extends Figura implements Imprimible {
         $this->lado = $lado;
     }
 
-    public function imprime() {
-        ?><div style="width:<?php echo $this->lado; ?>; height:<?php
-        echo $this->lado;
-
-        if ($this->esRellena) {
-            ?>
-                 ;background-color:<?php echo $this->color ?>">
-                <?php
-            } else {
-                ?> ;border: 5px dotted <?php echo $this->color; ?>"> <?php
-            }
-            echo '</div>';
-        }
-
     }
 
-    class Rectangulo extends Figura {
-
-        public function getArea() {
-            
-        }
-
-    }
-
-    interface Imprimible {
-
-        public function imprime();
-    }
-
-    $cuadrado = new Cuadrado('cuadrado', 'purple', true, 200);
-    $cuadrado->imprime();
+    $circulo = new Circulo('circulo','red',true,3);
+    $cuadrado = new Cuadrado('cuadrado','red',true,3);
+    $circulo->showInfo();
+    $cuadrado->showInfo();
     
     ?>

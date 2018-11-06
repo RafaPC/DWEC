@@ -25,7 +25,6 @@ class CabeceraPagina {
              text-align: <?php echo $this->ladoCentrado ?>">Titulo</div>
              <?php
          }
-
      }
 
      class Dato {
@@ -128,5 +127,3 @@ class CabeceraPagina {
             ?>
         </body>
     </html>
-
-

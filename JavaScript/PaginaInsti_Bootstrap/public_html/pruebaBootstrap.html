@@ -109,20 +109,7 @@
         <button type="button" class="btn btn-warning">Warning</button>
         <button type="button" class="btn btn-danger">Danger</button>
         <button type="button" class="btn btn-link">Link</button>   
-        <button type="button" class="btn btn-info btn-block">Boton de informacion que ocupa todo el ancho</button> 
-        <div class="btn-group-vertical">
-            <button type="button" class="btn btn-primary">Grupo</button>
-            <button type="button" class="btn btn-primary">de botones</button>
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-                    vertical
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">con</a>
-                    <a class="dropdown-item" href="#">dropdown</a>
-                </div>
-            </div>
-        </div>
+        <button type="button" class="btn btn-info btn-block">Boton de informacion que ocupa todo el ancho</button>
         <h1>Esto es un h1 con un <span class="badge badge-secondary">distintivo</span></h1>
         <button type="button" class="btn btn-primary">
             Boton con distintivo <span class="badge badge-light">4</span>
@@ -182,15 +169,296 @@
             <a href="#" class="list-group-item disabled">Disabled item</a>
             <a href="#" class="list-group-item active">Third item</a>
         </div>
-        <p>Lista de grupos con colores contextuales y distintivos</p>
+        <p>Lista de grupos con colores contextuales</p>
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action list-group-item-success d-flex  justify-content-between align-items-center">Success item</a>
-            <a href="#" class="list-group-item list-group-item-action list-group-item-info justify-content-between">Info item  <span class="badge badge-primary badge-pill">12</span></a>
+            <a href="#" class="list-group-item list-group-item-action list-group-item-success">Success item</a>
+            <a href="#" class="list-group-item list-group-item-action list-group-item-info">Info item  <span class="badge badge-primary badge-pill">12</span></a>
             <a href="#" class="list-group-item list-group-item-action list-group-item-warning">Warning item  <span class="badge badge-primary badge-pill">12</span></a>
             <a href="#" class="list-group-item list-group-item-action list-group-item-danger">Danger item</a>
             <a href="#" class="list-group-item list-group-item-action list-group-item-dark">Dark item</a>
         </div> 
+        <p>Carta básica con header y footer</p>
+        <div class="card">
+            <div class="card-header">Header</div>
+            <div class="card-body">Content</div>
+            <div class="card-footer">Footer</div>
+        </div>
+        <p>Carta con foto</p>
+        <div class="card" style="width:400px">
+            <img class="card-img-top" src="resources/img_avatar1.png" alt="Card image">
+            <div class="card-body">
+                <h4 class="card-title">John Doe</h4>
+                <p class="card-text">Some example text.</p>
+                <a href="#" class="btn btn-primary">See Profile</a>
+            </div>
+        </div>
+        <p>Dropdown con divisor</p>
+        <div class="dropdown">
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Dropdown button
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" href="#">Link 1</a>
+                <a class="dropdown-item active" href="#">Link 2</a>
+                <a class="dropdown-item disabled" href="#">Link 3</a>
+                <div class="dropdown-divider"></div>
+                <div class="dropdown-header">Dropdown header</div>
+                <a class="dropdown-item" href="#">Another link</a>
+            </div>
+        </div>
+        <p>Grupo vertical de botones</p>
+        <div class="btn-group-vertical">
+            <button type="button" class="btn btn-primary">Grupo</button>
+            <button type="button" class="btn btn-primary">de botones</button>
+            <div class="btn-group">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    vertical
+                </button>
+                <div class="dropdown-menu">
+                    <a class="dropdown-item" href="#">con</a>
+                    <a class="dropdown-item" href="#">dropdown</a>
+                </div>
+            </div>
+        </div>
+        <p>Colapsable básico</p>
+        <button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#demo">Simple collapsible</button>
+        <div id="demo" class="collapse">
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit,
+            sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+        </div>
+        <p>Acordeón</p>
+        <div id="accordion">
 
+            <div class="card">
+                <div class="card-header">
+                    <a class="card-link" data-toggle="collapse" href="#collapseOne">
+                        Collapsible Group Item #1
+                    </a>
+                </div>
+                <div id="collapseOne" class="collapse show" data-parent="#accordion">
+                    <div class="card-body">
+                        Lorem ipsum..
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseTwo">
+                        Collapsible Group Item #2
+                    </a>
+                </div>
+                <div id="collapseTwo" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        Lorem ipsum..
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <a class="collapsed card-link" data-toggle="collapse" href="#collapseThree">
+                        Collapsible Group Item #3
+                    </a>
+                </div>
+                <div id="collapseThree" class="collapse" data-parent="#accordion">
+                    <div class="card-body">
+                        Lorem ipsum..
+                    </div>
+                </div>
+            </div>
+
+        </div> 
+        <p>Navbar de pildoras alineada al centro con elementos disableds y actives</p>
+        <ul class="nav nav-pills nav-tabs justify-content-center">
+            <li class="nav-item">
+                <a class="nav-link active" href="#">Activo</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link disabled" href="#">Disabled</a>
+            </li>
+        </ul> 
+        <p>Nav toggleable</p>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link active" data-toggle="tab" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu1">Menu 1</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="tab" href="#menu2">Menu 2</a>
+            </li>
+        </ul>
+
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div class="tab-pane container active" id="home">Texto del home</div>
+            <div class="tab-pane container fade" id="menu1">Texto del menu1</div>
+            <div class="tab-pane container fade" id="menu2">Texto del menu2</div>
+        </div>
+        <p>Navbar fijo</p>
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
+            <a class="navbar-brand" href="#">Logo</a>
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+            </ul>
+        </nav>
+        <p>Formulario apilado</p>
+        <form action="/action_page.php">
+            <div class="form-group">
+                <label for="email">Email address:</label>
+                <input type="email" class="form-control" id="email">
+            </div>
+            <div class="form-group">
+                <label for="pwd">Password:</label>
+                <input type="password" class="form-control" id="pwd">
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox"> Remember me
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form> 
+        <p>Formulario en una línea con márgenes</p>
+        <form class="form-inline" action="/action_page.php">
+            <label for="email" class="mr-sm-2">Email address:</label>
+            <input type="email" class="form-control mb-2 mr-sm-2" id="email">
+            <label for="pwd" class="mr-sm-2">Password:</label>
+            <input type="password" class="form-control mb-2 mr-sm-2" id="pwd">
+            <div class="form-check mb-2 mr-sm-2">
+                <label class="form-check-label">
+                    <input class="form-check-input" type="checkbox"> Remember me
+                </label>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Submit</button>
+        </form> 
+        <p>Lista para seleccionar</p>
+        <div class="form-group">
+            <label for="sel1">Select list:</label>
+            <select class="form-control" id="sel1">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+            </select>
+        </div> 
+        <p>Inputs con ayudas</p>
+        <form>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">@</span>
+                </div>
+                <input type="text" class="form-control" placeholder="Username">
+            </div>
+
+            <div class="input-group mb-3">
+                <input type="text" class="form-control" placeholder="Your Email">
+                <div class="input-group-append">
+                    <span class="input-group-text">@example.com</span>
+                </div>
+            </div>
+        </form> 
+        <p>Inputs con botones</p>
+        <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <button class="btn btn-outline-secondary" type="button">Basic Button</button>
+            </div>
+            <input type="text" class="form-control" placeholder="Some text">
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Search">
+            <div class="input-group-append">
+                <button class="btn btn-success" type="submit">Go</button>
+            </div>
+        </div>
+
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" placeholder="Something clever..">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button">OK</button>
+                <button class="btn btn-danger" type="button">Cancel</button>
+            </div>
+        </div> 
+        <p>Formularios personalizados de bootstrap</p>
+        <form>
+            <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
+                <label class="custom-control-label" for="customCheck">Check this custom checkbox</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="customRadio" name="example" value="customEx">
+                <label class="custom-control-label" for="customRadio">Custom radio 1</label>
+            </div>
+            <div class="custom-control custom-radio custom-control-inline">
+                <input type="radio" class="custom-control-input" id="customRadio2" name="example" value="customEx">
+                <label class="custom-control-label" for="customRadio2">Custom radio 2</label>
+            </div> 
+            <div>
+                <select name="cars" class="custom-select-sm">
+                    <option selected>Custom Select Menu</option>
+                    <option value="volvo">Volvo</option>
+                    <option value="fiat">Fiat</option>
+                    <option value="audi">Audi</option>
+                </select>
+            </div>
+            <label for="customRange">Custom range</label>
+            <input type="range" class="custom-range" id="customRange" name="points1">
+            <div class="custom-file">
+                <input type="file" class="custom-file-input" id="customFile">
+                <label class="custom-file-label" for="customFile">Choose file</label>
+            </div>
+        </form> 
+        <div id="demo" class="carousel slide mx-auto" data-ride="carousel">
+                <ul class="carousel-indicators">
+                    <li data-target="#demo" data-slide-to="0" class="active"></li>
+                    <li data-target="#demo" data-slide-to="1"></li>
+                    <li data-target="#demo" data-slide-to="2"></li>
+                </ul>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="resources/la.jpg" alt="Los Angeles" width="1100" height="500">
+                        <div class="carousel-caption">
+                            <h3>Los Angeles</h3>
+                            <p>We had such a great time in LA!</p>
+                        </div>   
+                    </div>
+                    <div class="carousel-item">
+                        <img src="resources/chicago.jpg" alt="Chicago" width="1100" height="500">
+                        <div class="carousel-caption">
+                            <h3>Chicago</h3>
+                            <p>Thank you, Chicago!</p>
+                        </div>   
+                    </div>
+                    <div class="carousel-item">
+                        <img src="resources/ny.jpg" alt="New York" width="1100" height="500">
+                        <div class="carousel-caption">
+                            <h3>New York</h3>
+                            <p>We love the Big Apple!</p>
+                        </div>   
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#demo" data-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </a>
+                <a class="carousel-control-next" href="#demo" data-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </a>
+        </div>
         <!--div class="container">
             <div class="row">
                 <div class="col order-last">

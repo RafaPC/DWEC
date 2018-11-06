@@ -25,6 +25,7 @@ class CabeceraPagina {
              text-align: <?php echo $this->ladoCentrado ?>">Titulo</div>
              <?php
          }
+
      }
 
      class Dato {
@@ -109,6 +110,32 @@ class CabeceraPagina {
 
         }
 
+        class Menu {
+
+            private $arrayOpciones = [];
+
+            const VERTICAL = 'vertical';
+            const HORIZONTAL = 'horizontal';
+
+            private function mostrarVertical() {
+                
+            }
+
+            private function mostrarHorizontal() {
+                
+            }
+
+            public function mostrar($orientacion) {
+                //self::VERTICAL;
+                if ($orientacion === $this->VERTICAL) {
+                    $this->mostrarVertical();
+                } else if ($orientacion === $this->HORIZONTAL) {
+                    $this->mostrarHorizontal();
+                }
+            }
+
+        }
+
         $newCabecera = new CabeceraPagina('right', 'green', 'red');
         $tabla = new Tabla(5, 5);
         $tabla->cargarDato('dato', 2, 2, 'red', 'black');
@@ -122,8 +149,8 @@ class CabeceraPagina {
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
         </head>
         <body>
-            <?php
-            echo $newCabecera->mostrarTitulo();
-            ?>
+<?php
+echo $newCabecera->mostrarTitulo();
+?>
         </body>
     </html>

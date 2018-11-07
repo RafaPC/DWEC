@@ -118,20 +118,30 @@ class CabeceraPagina {
             const HORIZONTAL = 'horizontal';
 
             private function mostrarVertical() {
-                
+                foreach($this->arrayOpciones as $valor){
+                    echo "<a style=\"float:left; clear: left; margin-top: 8px\"href=\"#\">$valor</a>";
+                }
             }
 
             private function mostrarHorizontal() {
-                
+                echo '<div>';
+                foreach($this->arrayOpciones as $valor){
+                    echo "<a style=\"margin-left: 8px\" href=\"#\">$valor</a>";
+                }
+                echo '</div>';
             }
 
             public function mostrar($orientacion) {
                 //self::VERTICAL;
-                if ($orientacion === $this->VERTICAL) {
+                if ($orientacion === self::VERTICAL) {
                     $this->mostrarVertical();
-                } else if ($orientacion === $this->HORIZONTAL) {
+                } else if ($orientacion === self::HORIZONTAL) {
                     $this->mostrarHorizontal();
                 }
+            }
+            
+            public function añadirOpcion($opcion){
+                array_push($this->arrayOpciones, $opcion);
             }
 
         }
@@ -139,7 +149,7 @@ class CabeceraPagina {
         $newCabecera = new CabeceraPagina('right', 'green', 'red');
         $tabla = new Tabla(5, 5);
         $tabla->cargarDato('dato', 2, 2, 'red', 'black');
-        $tabla->escribirTabla();
+        
         ?>
         <!DOCTYPE>
     <html lang="es">
@@ -150,7 +160,15 @@ class CabeceraPagina {
         </head>
         <body>
 <?php
+$tabla->escribirTabla();
 echo $newCabecera->mostrarTitulo();
+$menu = new Menu();
+$menu->añadirOpcion('opcion1');
+$menu->añadirOpcion('opcion2');
+$menu->añadirOpcion('opcion3');
+$menu->mostrar('horizontal');
+$menu->mostrar('vertical');
+
 ?>
         </body>
     </html>

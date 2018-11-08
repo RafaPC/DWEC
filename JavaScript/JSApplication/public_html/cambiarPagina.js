@@ -33,17 +33,20 @@ var index = cadena.indexOf("&");
 if (index !== -1) {
     var nuevaCadena = cadena.slice(0, index) + cadena.slice(index + 1);
 }
-
+//Aqui ya vale la cadena
 index = nuevaCadena.indexOf("?");
 
-var valores = nuevaCadena.slice(index + 1);
+var clavesyValores = nuevaCadena.slice(index + 1);
 
-document.writeln(valores);
-var arrayClavesValor = valores.split("&");
+document.writeln(clavesyValores);
+var arrayClavesValor = clavesyValores.split("&");
 
 var arrayFinal = [];
 for (var i = 0; i < arrayClavesValor.length; i++) {
+    //En proceso
     document.writeln(clave + arrayClavesValor[clave]);
     var claveValor = arrayClavesValor[0];
+    var claveValor = arrayClavesValor[i].split('=');
+    arrayFinal[claveValor[0]] = claveValor[1];
 
 }

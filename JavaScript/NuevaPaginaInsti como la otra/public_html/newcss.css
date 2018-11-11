@@ -16,9 +16,9 @@ body{
 
 /* Style the navbar */
 .topnav {
-    margin-left: 20%;
-    clear: left;
-    float: left;
+    display: flex;
+    flex-direction: row;
+    margin-left: 4%;
     overflow: hidden;
     width: 80%;
 }
@@ -26,24 +26,38 @@ body{
 button{
     color: white;
 }
+
 /* Navbar links */
 .topnav a {
     float: left;
     display: block;
     color: white;
     text-align: center;
-    padding: 27px 16px;
+    padding: 23px 16px;
     text-decoration: none;
     font-size: 23px;
 }
 
+#barraNav{
+    flex-grow: 3;
+}
+
+#filaFotos{
+    display: flex;
+    flex-direction: row;
+}
+
 #logotierno{
-    float: left;
+    flex-grow: 8;
 }
 
 #logoeducamadrid{
+    height: 140px;
+    width: 210px;
     float:right;
     margin-right: 3%;
+    margin-top: 0%;
+    flex-grow: 1;
 }
 
 /* Navbar links on mouse-over */
@@ -70,7 +84,10 @@ button{
 
 /* Style the input container */
 .topnav .login-container {
-    float: right;
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
 }
 
 /* Style the input field inside the navbar */
@@ -89,13 +106,15 @@ button{
     padding: 6px;
     margin-top: 8px;
     margin-right: 16px;
-    background: #ddd;
+    background: #666666;
     font-size: 17px;
     border: none;
     cursor: pointer;
 }
-.topnav dropdown, dropbtn, button{
 
+.topnav .login-container button:hover {
+    background: #333333;
+    color: white;
 }
 
 .topnav dropdown, dropbtn, button:hover{
@@ -103,14 +122,11 @@ button{
     background-color: #ae1212;
 }
 
-.topnav .login-container button:hover {
-    background: #ccc;
-}
-
 /* Add responsiveness - On small screens, display the navbar vertically instead of horizontally */
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 800px) {
     .topnav .login-container {
         float: none;
+        flex-wrap: wrap;
     }
     .topnav a, .topnav input[type=text], .topnav .login-container button {
         float: none;
@@ -135,10 +151,10 @@ button{
     font-size: 23px;    
     border: none;
     outline: none;
-    padding: 14px 16px;
+    padding: 0px 16px;
     background-color: inherit;
     font-family: inherit;
-    margin: 0;
+    margin-top: 0px;
 }
 
 .dropdown-content {
@@ -151,6 +167,7 @@ button{
 }
 
 .dropdown-content a {
+    clear: left;
     float: none;
     color: white;
     padding: 12px 16px;
@@ -184,6 +201,7 @@ button{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+    
 }
 
 .caption{
@@ -215,25 +233,92 @@ button{
 }
 
 .bgimagen {
-    float: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 
     /* The image used */
     background-image: url("resources/portadacortada.jpg");
 
     /* Full height */
-    height: 970px;
     width: 100%;
 
     /* Center and scale the image nicely */
-    background-position: center;
+    /*background-position: center;
     background-repeat: no-repeat;
-    background-size: cover;
+    background-size: auto;*/
+    position: absolute;
+    background-repeat: repeat;
+    min-height: 970px;
 }
 
 .bgcolor{
-    float: left;
+    display: flex;
+    flex-direction: column;
     background-color: rgba(0,0,0,0.1);
     background-image: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.2));
-    height: 230px;
     width: 100%;
+}
+
+
+.dropdown{
+    padding: 27px 16px;
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 27px 16px;
+    text-decoration: none;
+    font-size: 23px;
+}
+
+.filaCuadros{
+    margin: 0 10% 0% 10%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.cuadro{
+    margin-top: 4%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.3), 4px 4px 8px 0px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.6);
+    border-radius: 0px 0px 3px 3px;
+    height: 380px;
+    float:left;
+    width: 300px;
+    background-color: rgba(255,250,230,0.7);
+}
+.imagenCuadro{
+    box-shadow: -5px -5px 15px 2px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    height: 55%;    
+    border-bottom: 5px solid #00cccc;
+}
+
+.titulo{
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+
+.texto{
+    font-size: 18px;
+    margin-left: 6%;
+}
+
+#rowFooter{
+    height: 60px;
+    width: 100%;
+    background-image:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.4),rgba(0,0,0,0.5));
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+#rowFooter div{
+    margin-top: 20px;
+    display: inline-block;
+    font-size: 22px;
 }

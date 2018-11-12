@@ -24,10 +24,21 @@ body{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    
+
     min-height: 970px;
 }
 
 #navbarColor{
     color: white;
+}
+
+.negro{
+    background-image: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.2));
+}
+
+.noMargin{
+    padding: 0;
+}
+.footer{
+    height: 100%;
 }

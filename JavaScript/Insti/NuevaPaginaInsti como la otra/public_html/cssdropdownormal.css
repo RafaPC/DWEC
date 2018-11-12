@@ -1,0 +1,333 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 08-nov-2018, 12:44:44
+    Author     : Daw2
+*/
+
+* {box-sizing: border-box;}
+
+body{
+    margin: 0px;
+}
+
+/* Style the navbar */
+.topnav {
+    display: flex;
+    flex-direction: row;
+    margin-left: 4%;
+    overflow: hidden;
+    width: 80%;
+}
+
+button{
+    color: white;
+}
+
+/* Navbar links */
+.topnav a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 23px 16px;
+    text-decoration: none;
+    font-size: 23px;
+}
+
+#barraNav{
+    flex-grow: 3;
+}
+
+#filaFotos{
+    display: flex;
+    flex-direction: row;
+}
+
+#logotierno{
+    flex-grow: 8;
+}
+
+#logoeducamadrid{
+    height: 140px;
+    width: 210px;
+    float:right;
+    margin-right: 3%;
+    margin-top: 0%;
+    flex-grow: 1;
+}
+
+/* Navbar links on mouse-over */
+.topnav a:hover {
+    background-color: #ae1212;
+}
+.topnav dropdown-content a:hover{
+    background-color: green;
+}
+
+.topnav dropdown dropdown-content a:hover{
+    background-color: green;
+}
+
+.topnav a dropbtn:hover{
+    background-color: #ddd;
+}
+
+/* Active/current link */
+.topnav a.active {
+    background-color: #0095DB;
+    color: white;
+}
+
+/* Style the input container */
+.topnav .login-container {
+    display: flex;
+    flex-grow: 1;
+    justify-content: flex-start;
+    flex-wrap: nowrap;
+}
+
+/* Style the input field inside the navbar */
+.topnav input[type=text] {
+    padding: 6px;
+    margin-top: 8px;
+    font-size: 17px;
+    border: none;
+    width: 140px; /* adjust as needed (as long as it doesn't break the topnav) */
+    cursor: text;
+}
+
+/* Style the button inside the input container */
+.topnav .login-container button {
+    float: right;
+    padding: 6px;
+    margin-top: 8px;
+    margin-right: 16px;
+    background: #666666;
+    font-size: 17px;
+    border: none;
+    cursor: pointer;
+}
+
+.topnav .login-container button:hover {
+    background: #333333;
+    color: white;
+}
+
+.topnav dropdown, dropbtn, button:hover{
+    cursor: pointer;
+    background-color: #ae1212;
+}
+
+/* Add responsiveness - On small screens, display the navbar vertically instead of horizontally */
+@media screen and (max-width: 800px) {
+    .topnav .login-container {
+        float: none;
+        flex-wrap: wrap;
+    }
+    .topnav a, .topnav input[type=text], .topnav .login-container button {
+        float: none;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+        padding: 14px;
+    }
+
+    .topnav input[type=text] {
+        border: 1px solid #ccc; 
+    }
+}
+
+.dropdown {
+    float: left;
+    overflow: hidden;
+}
+
+.dropdown .dropbtn {
+    font-size: 23px;    
+    border: none;
+    outline: none;
+    padding: 0px 16px;
+    background-color: inherit;
+    font-family: inherit;
+    margin-top: 0px;
+}
+
+.dropdown-content {
+    /*
+    sgdsdg
+    gsdazgds
+    g<dsg<sd
+    g
+    d<gdg<g<
+    d<g
+    */
+    margin-top: 20px;
+    display: none;
+    position: absolute;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    background-color: rgba (0,0,0,0);
+}
+
+.dropdown-content a {
+    clear: left;
+    float: none;
+    color: white;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+    font-size: 21px;
+    background-color: rgba(0,0,0,0.7);
+}
+
+.lastContent{
+    border-radius: 0px 0px 15px 15px;
+}
+.dropdown-content a:hover {
+    background-color: green;    
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+
+.bg {
+    /* The image used */
+    background-image: url("resources/portadacortada.jpg");
+
+    /* Full height */
+    height: 500px; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    
+}
+
+.caption{
+    position: relative;
+    left: 0;
+    top: 42%;
+    width: 100%;
+    text-align: center;
+    color: #000;
+}
+
+.caption span.border{
+    background-color: #111;
+    color: #fff;
+    padding:18px;
+    font-size: 25px;
+    letter-spacing: 10px;
+}
+
+.headerbg{
+    /* The image used */
+    background-image: url("resources/bookshelf.jpg");
+
+    /* Full height */
+    height: 150px; 
+
+    /* Center and scale the image nicely */
+    background-position: center;
+}
+
+.bgimagen {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    /* The image used */
+    background-image: url("resources/portadacortada.jpg");
+
+    /* Full height */
+    width: 100%;
+
+    /* Center and scale the image nicely */
+    /*background-position: center;
+    background-repeat: no-repeat;
+    background-size: auto;*/
+    position: absolute;
+    background-repeat: repeat;
+    min-height: 970px;
+}
+
+.bgcolor{
+    display: flex;
+    flex-direction: column;
+    background-color: rgba(0,0,0,0.1);
+    background-image: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.2));
+    width: 100%;
+}
+
+
+.dropdown{
+    padding: 27px 16px;
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 27px 16px;
+    text-decoration: none;
+    font-size: 23px;
+}
+
+.filaCuadros{
+    margin: 0 10% 0% 10%;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+.cuadro{
+    margin-top: 4%;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.3), 4px 4px 8px 0px rgba(0,0,0,0.1);
+    border: 1px solid rgba(0,0,0,0.6);
+    border-radius: 0px 0px 3px 3px;
+    height: 380px;
+    float:left;
+    width: 300px;
+    background-color: rgba(255,250,230,0.7);
+}
+.imagenCuadro{
+    box-shadow: -5px -5px 15px 2px rgba(0, 0, 0, 0.3);
+    width: 100%;
+    height: 55%;    
+    border-bottom: 5px solid #00cccc;
+}
+
+.titulo{
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    display: block;
+}
+
+.texto{
+    font-size: 18px;
+    margin-left: 6%;
+}
+
+#rowFooter{
+    height: 60px;
+    width: 100%;
+    background-image:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.4),rgba(0,0,0,0.5));
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+#rowFooter div{
+    margin-top: 20px;
+    display: inline-block;
+    font-size: 22px;
+}

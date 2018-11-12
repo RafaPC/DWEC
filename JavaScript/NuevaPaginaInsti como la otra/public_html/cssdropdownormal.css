@@ -21,6 +21,7 @@ body{
     margin-left: 4%;
     overflow: hidden;
     width: 80%;
+    margin-top: 20px;
 }
 
 button{
@@ -29,16 +30,16 @@ button{
 
 /* Navbar links */
 .topnav a {
-    float: left;
-    display: block;
     color: white;
     text-align: center;
-    padding: 23px 16px;
+    padding: 27px 16px;
     text-decoration: none;
     font-size: 23px;
 }
 
 #barraNav{
+    display: flex;
+    flex-direction: row;
     flex-grow: 3;
 }
 
@@ -64,9 +65,7 @@ button{
 .topnav a:hover {
     background-color: #ae1212;
 }
-.topnav dropdown-content a:hover{
-    background-color: green;
-}
+
 
 .topnav dropdown dropdown-content a:hover{
     background-color: green;

@@ -8,6 +8,7 @@ and open the template in the editor.
     <head>
         <meta charset="UTF-8">
         <title></title>
+        <link href="newCascadeStyleSheet.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <?php
@@ -31,7 +32,7 @@ and open the template in the editor.
         }
         ?>
 
-        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) ?>">
+        <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
             <label>Jugador 1:</label>
             <input type="text" name="jugador1" value="jugador1">
 

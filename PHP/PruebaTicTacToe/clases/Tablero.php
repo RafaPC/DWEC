@@ -23,8 +23,12 @@ class Tablero {
         $this->ficha2 = $ficha2;
         for ($fila = 0; $fila < 3; $fila++) {
             for ($columna = 0; $columna < 3; $columna++) {
-                $this->tablero[$fila][$columna] = 
-                        "<a "?>echo htmlspecialchars($_SERVER["PHP_SELF"])<?php "class=\"espacioBlanco\" ></a>";
+                $posicion = "?fila=".$fila."&col=".$columna;
+                
+                $this->tablero[$fila][$columna] = /* ?><!--a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>" class="espacioBlanco"></a><?php ; */
+                
+                        //"<a href=\"". 'htmlspecialchars($_SERVER["PHP_SELF"])' ."\" class=\"espacioBlanco\">a</a>";
+                "<a href=\"http://localhost/PruebaTicTacToe/index.php".$posicion."\"><img src=\"\" alt=\"\" class=\"espacioBlanco\"></a>";
             }
         }
     }

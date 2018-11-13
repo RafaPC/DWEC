@@ -32,6 +32,7 @@ class Ficha {
 
     public function etiquetaImg($alt, $alto, $ancho, $imagen) {
         $etiqueta = "<img alt=\"$alt\" height=\"$alto\" width=\"$ancho\" src=\"$imagen\">";
+        echo $etiqueta;
         return $etiqueta;
     }
 

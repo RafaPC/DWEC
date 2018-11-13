@@ -13,10 +13,17 @@
  */
 class Tablero {
 
+    public $tablero = [[],[],[]];
+    
     private $ficha1;
     private $ficha2;
     private $turno = 1;
 
+    public function __construct(Ficha $ficha1, Ficha $ficha2){
+        $this->ficha1 = $ficha1;
+        $this->ficha2 = $ficha2;
+}
+    
     public function getFicha() {
         if ($this->turno == 1) {
             return $this->ficha1;

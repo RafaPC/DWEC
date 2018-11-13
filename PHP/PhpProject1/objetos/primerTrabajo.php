@@ -118,14 +118,14 @@ class CabeceraPagina {
             const HORIZONTAL = 'horizontal';
 
             private function mostrarVertical() {
-                foreach($this->arrayOpciones as $valor){
+                foreach ($this->arrayOpciones as $valor) {
                     echo "<a style=\"float:left; clear: left; margin-top: 8px\"href=\"#\">$valor</a>";
                 }
             }
 
             private function mostrarHorizontal() {
                 echo '<div>';
-                foreach($this->arrayOpciones as $valor){
+                foreach ($this->arrayOpciones as $valor) {
                     echo "<a style=\"margin-left: 8px\" href=\"#\">$valor</a>";
                 }
                 echo '</div>';
@@ -139,36 +139,40 @@ class CabeceraPagina {
                     $this->mostrarHorizontal();
                 }
             }
-            
-            public function añadirOpcion($opcion){
+
+            public function añadirOpcion($opcion) {
                 array_push($this->arrayOpciones, $opcion);
             }
 
         }
 
+        //Aqu
         $newCabecera = new CabeceraPagina('right', 'green', 'red');
         $tabla = new Tabla(5, 5);
         $tabla->cargarDato('dato', 2, 2, 'red', 'black');
-        
+        $tabla->cargarDato('otrodato', 3, 3, 'pink', 'green');
+
+        $menu = new Menu();
+        $menu->añadirOpcion('opcion1');
+        $menu->añadirOpcion('opcion2');
+        $menu->añadirOpcion('opcion3');
         ?>
-        <!DOCTYPE>
+        <!DOCTYPE html>
     <html lang="es">
         <head>
             <title>TODO supply a title</title>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>Titulo</title>
         </head>
         <body>
-<?php
-$tabla->escribirTabla();
-echo $newCabecera->mostrarTitulo();
-$menu = new Menu();
-$menu->añadirOpcion('opcion1');
-$menu->añadirOpcion('opcion2');
-$menu->añadirOpcion('opcion3');
-$menu->mostrar('horizontal');
-$menu->mostrar('vertical');
+            <?php
+            $tabla->escribirTabla();
+            echo $newCabecera->mostrarTitulo();
 
-?>
+
+            $menu->mostrar('horizontal');
+            $menu->mostrar('vertical');
+            ?>
         </body>
     </html>

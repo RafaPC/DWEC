@@ -61,6 +61,19 @@ button{
     flex-grow: 1;
 }
 
+#idiomas{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    margin-right: 30px;
+}
+
+.bandera{
+    height: 30px;
+    width: 50px;
+    margin-top: 20px;
+}
+
 /* Navbar links on mouse-over */
 .topnav a:hover {
     background-color: #ae1212;
@@ -329,4 +342,15 @@ button{
     margin-top: 20px;
     display: inline-block;
     font-size: 22px;
+}
+
+@media only screen and (max-width: 1000px){
+    .topnav a{
+       display: block;
+    }
+    #barraNav{
+        display: block;
+    }
+
+    
 }

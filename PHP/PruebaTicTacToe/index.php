@@ -17,49 +17,74 @@ and open the template in the editor.
         require 'clases/Jugador.php';
         require 'clases/Tablero.php';
         require 'filtrado.php';
+        session_start();
+        if (isset($_SESSION['juegoEmpezado'])) {
+            if (isset($_POST['fila'])) {
+                $fila = $_POST['fila'];
+                $col = $_POST['col'];
+                $fichaTurno = $_SESSION['tablero']->getFicha();
+                
 
-        $juegoEmpezado = true;
-        if (isset($_POST['jugador1'])) {
-            //Todas las comprobaciones pertinentes
+
+
+//$_SESSION['tablero'][$fila][$col] = $fichaTurno->etiquetaImg("imagen", 50, 50);
+            }
+        } else {
+            $todoCorrecto = true;
+            if (isset($_POST['jugador1'])) {
+                //Todas las comprobaciones pertinentes
+            }
+
+            if ($todoCorrecto) {
+                //La imagen vendrá de más arriba porque puede cambiar depende de cual se haya seleccionado más arriba
+                //Aqui se entra solo al principio de la partida
+                $ficha1 = new Ficha("Nombre1", "resources/foto1.jpg");
+                $ficha2 = new Ficha("Nombre2", "resources/foto2.jpg");
+                $tablero = new Tablero($ficha1, $ficha2);
+                $_SESSION['tablero'] = $tablero;
+                $_SESSION['juegoEmpezado'] = true;
+            }
         }
 
-        if ($juegoEmpezado) {
-            //La imagen vendrá de más arriba porque puede cambiar depende de cual se haya seleccionado más arriba
-            $ficha1 = new Ficha("Nombre1", "resources/foto1.png");
-            $ficha2 = new Ficha("Nombre2", "resources/foto2.png");
-            $tablero = new Tablero($ficha1, $ficha2);
+        //La imagen vendrÃ¡ de mÃ¡s arriba porque puede cambiar depende de cual se haya seleccionado mÃ¡s arriba
 
-            echo '<table>';
-            for ($fila = 0; $fila < 3; $fila++) {
-                echo '<tr>';
-                for ($columna = 0; $columna < 3; $columna++) {
-                    echo '<td>';
-                    echo $tablero->tablero[$fila][$columna];
-                    echo '</td>';
+
+        echo '<table>';
+        for ($fila = 0; $fila < 3; $fila++) {
+            echo '<tr>';
+            for ($columna = 0; $columna < 3; $columna++) {
+                echo '<td>';
+                if (isset($_SESSION['fila'])) {
+                    if($_SESSION['fila'] === $fila && $_SESSION['col'] === $columna) {
+                        echo $_SESSION['tablero']->getFicha()->etiquetaImg("imagen",50,50);
+                    }
+                } else {
+                    echo ($_SESSION['tablero']->tablero[$fila][$columna]);
                 }
-                echo '</tr>';
+                echo '</td>';
             }
-            echo '</table>';
-        } else {
-            ?>
+            echo '</tr>';
+        }
+        echo '</table>';
 
-            <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-                <label>Jugador 1:</label>
-                <input type="text" name="jugador1" value="jugador1">
+        $_SESSION['tablero']->cambioTurno();
+        ?>
 
-                <label>Jugador 2:</label>
-                <input type="text" name="jugador2" value="jugador2">
+        <!--form method="post" action="<?php //echo htmlspecialchars($_SERVER["PHP_SELF"]);    ?>">
+            <label>Jugador 1:</label>
+            <input type="text" name="jugador1" value="jugador1">
 
-                <a href="" class=""></a>
-                <img src="resources/foto1.png" alt="ficha1" height="150" width="150">
-                <input type="radio" name="ficha" value="ficha1"><label>Foto 1</label>
+            <label>Jugador 2:</label>
+            <input type="text" name="jugador2" value="jugador2">
 
-                <img src="resources/foto1.png" alt="ficha1" height="150" width="150">
-                <input type="radio" name="ficha" value="ficha2"><label>Foto 2</label>
+            <img src="resources/foto1.png" alt="ficha1" height="150" width="150">
+            <input type="radio" name="ficha" value="ficha1"><label>Foto 1</label>
+
+            <img src="resources/foto1.png" alt="ficha1" height="150" width="150">
+            <input type="radio" name="ficha" value="ficha2"><label>Foto 2</label>
 
 
-                <input type="submit" name="enviar" value="procesar">
-            </form>
-        <?php } ?>
+            <input type="submit" name="enviar" value="procesar">
+        </form-->
     </body>
 </html>

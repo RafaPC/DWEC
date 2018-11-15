@@ -30,9 +30,9 @@ class Ficha {
         $this->imagen = $imagen;
     }
 
-    public function etiquetaImg($alt, $alto, $ancho, $imagen) {
-        $etiqueta = "<img alt=\"$alt\" height=\"$alto\" width=\"$ancho\" src=\"$imagen\">";
-        echo $etiqueta;
+    public function etiquetaImg($alt, $alto, $ancho) {
+        $etiqueta = "<img alt=\"$alt\" height=\"$alto\" width=\"$ancho\" src=\"$this->getImagen()\">";
+        //echo $etiqueta;
         return $etiqueta;
     }
 

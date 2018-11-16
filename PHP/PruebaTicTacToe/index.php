@@ -19,16 +19,13 @@ and open the template in the editor.
         require 'filtrado.php';
         session_start();
         if (isset($_SESSION['juegoEmpezado'])) {
-            if (isset($_POST['fila'])) {
-                $fila = $_POST['fila'];
-                $col = $_POST['col'];
+			if (isset($_GET['fila'])) {
+				$fila = $_GET['fila'];
+                $col = $_GET['col'];
                 $fichaTurno = $_SESSION['tablero']->getFicha();
-                
-
-
-
-//$_SESSION['tablero'][$fila][$col] = $fichaTurno->etiquetaImg("imagen", 50, 50);
-            }
+                $_SESSION['tablero']->tablero[$fila][$col] = $fichaTurno->etiquetaImg("imagen", 100, 100);
+				//var_dump($_SESSION['tablero']);
+			}
         } else {
             $todoCorrecto = true;
             if (isset($_POST['jugador1'])) {
@@ -36,7 +33,7 @@ and open the template in the editor.
             }
 
             if ($todoCorrecto) {
-                //La imagen vendrá de más arriba porque puede cambiar depende de cual se haya seleccionado más arriba
+                //La imagen vendr� de m�s arriba porque puede cambiar depende de cual se haya seleccionado m�s arriba
                 //Aqui se entra solo al principio de la partida
                 $ficha1 = new Ficha("Nombre1", "resources/foto1.jpg");
                 $ficha2 = new Ficha("Nombre2", "resources/foto2.jpg");
@@ -46,7 +43,7 @@ and open the template in the editor.
             }
         }
 
-        //La imagen vendrÃ¡ de mÃ¡s arriba porque puede cambiar depende de cual se haya seleccionado mÃ¡s arriba
+        //La imagen vendrá de más arriba porque puede cambiar depende de cual se haya seleccionado más arriba
 
 
         echo '<table>';
@@ -54,13 +51,9 @@ and open the template in the editor.
             echo '<tr>';
             for ($columna = 0; $columna < 3; $columna++) {
                 echo '<td>';
-                if (isset($_SESSION['fila'])) {
-                    if($_SESSION['fila'] === $fila && $_SESSION['col'] === $columna) {
-                        echo $_SESSION['tablero']->getFicha()->etiquetaImg("imagen",50,50);
-                    }
-                } else {
+				
                     echo ($_SESSION['tablero']->tablero[$fila][$columna]);
-                }
+                
                 echo '</td>';
             }
             echo '</tr>';

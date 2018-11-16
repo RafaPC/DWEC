@@ -25,6 +25,7 @@ and open the template in the editor.
                 $col = $_POST['col'];
                 $fichaTurno = $_SESSION['tablero']->getFicha();
                 $_SESSION['tablero'][$fila][$col] = $fichaTurno->etiquetaImg("imagen", 50, 50);
+                var_dump($_SESSION['tablero']);
             }
         } else {
             $todoCorrecto = true;
@@ -58,9 +59,11 @@ and open the template in the editor.
             echo '</tr>';
         }
         echo '</table>';
+
+        $_SESSION['tablero']->cambioTurno();
         ?>
 
-        <!--form method="post" action="<?php //echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+        <!--form method="post" action="<?php //echo htmlspecialchars($_SERVER["PHP_SELF"]);  ?>">
             <label>Jugador 1:</label>
             <input type="text" name="jugador1" value="jugador1">
 

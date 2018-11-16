@@ -17,11 +17,11 @@ class Ficha {
     private $nombre;
     private $imagen;
 
-    function getNombre() {
+    public function getNombre() {
         return $this->nombre;
     }
 
-    function getImagen() {
+    public function getImagen() {
         return $this->imagen;
     }
 
@@ -31,7 +31,8 @@ class Ficha {
     }
 
     public function etiquetaImg($alt, $alto, $ancho) {
-        $etiqueta = "<img alt=\"$alt\" height=\"$alto\" width=\"$ancho\" src=\"$this->getImagen()\">";
+        $imagen = $this->getImagen();
+        $etiqueta = "<img alt=\"$alt\" height=\"$alto\" width=\"$ancho\" src=\"$imagen\">";
         //echo $etiqueta;
         return $etiqueta;
     }

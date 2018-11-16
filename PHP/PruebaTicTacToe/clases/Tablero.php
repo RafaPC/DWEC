@@ -29,6 +29,10 @@ class Tablero {
                 
                         //"<a href=\"". 'htmlspecialchars($_SERVER["PHP_SELF"])' ."\" class=\"espacioBlanco\">a</a>";
                 "<a href=\"http://localhost/PruebaTicTacToe/index.php".$posicion."\"><img src=\"\" alt=\"\" class=\"espacioBlanco\"></a>";
+            
+                
+                //Ahí arriba creo que se puede quitar la imagen vacia
+                
             }
         }
     }

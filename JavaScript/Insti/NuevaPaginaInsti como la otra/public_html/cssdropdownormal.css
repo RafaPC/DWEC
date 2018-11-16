@@ -20,7 +20,7 @@ body{
     flex-direction: row;
     margin-left: 4%;
     overflow: hidden;
-    width: 80%;
+    width: 100%;
     margin-top: 20px;
 }
 
@@ -46,6 +46,7 @@ button{
 #filaFotos{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
 }
 
 #logotierno{
@@ -99,17 +100,21 @@ button{
     display: flex;
     flex-grow: 1;
     justify-content: flex-start;
-    flex-wrap: nowrap;
 }
 
 /* Style the input field inside the navbar */
-.topnav input[type=text] {
+.topnav input{
     padding: 6px;
     margin-top: 8px;
     font-size: 17px;
+    height: 36px;
     border: none;
-    width: 140px; /* adjust as needed (as long as it doesn't break the topnav) */
+    width: 120px; /* adjust as needed (as long as it doesn't break the topnav) */
     cursor: text;
+    -webkit-transition: width .35s ease-in-out;
+}
+.topnav input:focus{
+    width: 180px;
 }
 
 /* Style the button inside the input container */
@@ -122,36 +127,49 @@ button{
     font-size: 17px;
     border: none;
     cursor: pointer;
+    height: 37px;
 }
 
+/* Colorea el boton de login al poner el cursor encima */
 .topnav .login-container button:hover {
     background: #333333;
     color: white;
 }
 
+/* Pone el cursor como pointer al pasarlo por encima de un elemento que desplega un dropdown*/
 .topnav dropdown, dropbtn, button:hover{
     cursor: pointer;
     background-color: #ae1212;
 }
 
 /* Add responsiveness - On small screens, display the navbar vertically instead of horizontally */
-@media screen and (max-width: 800px) {
+/* Controla el formulario cuando la página está por debajo de 800 de ancho*/
+@media screen and (max-width: 833px) {
     .topnav .login-container {
+        display: flex;
         float: none;
         flex-wrap: wrap;
     }
-    .topnav a, .topnav input[type=text], .topnav .login-container button {
+    .topnav a, .topnav input, .topnav .login-container button {
+        -webkit-transition: width .0s ease-in-out;
+        transition: width .0s ease-in-out;
+
         float: none;
         display: block;
         text-align: left;
         width: 100%;
         margin: 0;
         padding: 14px;
+        height: 45px;
     }
 
     .topnav input[type=text] {
         border: 1px solid #ccc; 
     }
+    
+    .topnav input:focus{
+    width: 244px;
+}
 }
 
 .dropdown {
@@ -222,7 +240,7 @@ button{
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    
+
 }
 
 .caption{
@@ -344,13 +362,13 @@ button{
     font-size: 22px;
 }
 
-@media only screen and (max-width: 1000px){
+@media only screen and (max-width: 833px){
     .topnav a{
-       display: block;
+        display: block;
     }
     #barraNav{
         display: block;
     }
 
-    
+
 }

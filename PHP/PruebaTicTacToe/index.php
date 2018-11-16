@@ -33,7 +33,7 @@ and open the template in the editor.
             }
 
             if ($todoCorrecto) {
-                //La imagen vendr� de m�s arriba porque puede cambiar depende de cual se haya seleccionado m�s arriba
+                //La imagen vendrá de más arriba porque puede cambiar depende de cual se haya seleccionado más arriba
                 //Aqui se entra solo al principio de la partida
                 $ficha1 = new Ficha("Nombre1", "resources/foto1.jpg");
                 $ficha2 = new Ficha("Nombre2", "resources/foto2.jpg");
@@ -43,7 +43,7 @@ and open the template in the editor.
             }
         }
 
-        //La imagen vendrá de más arriba porque puede cambiar depende de cual se haya seleccionado más arriba
+        //La imagen vendrÃ¡ de mÃ¡s arriba porque puede cambiar depende de cual se haya seleccionado mÃ¡s arriba
 
 
         echo '<table>';

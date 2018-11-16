@@ -31,7 +31,7 @@ class Tablero {
                 "<a href=\"http://localhost/PruebaTicTacToe/index.php".$posicion."\"><img src=\"\" alt=\"\" class=\"espacioBlanco\"></a>";
             
                 
-                //Ahí arriba creo que se puede quitar la imagen vacia
+                //AhÃ­ arriba creo que se puede quitar la imagen vacia
                 
             }
         }

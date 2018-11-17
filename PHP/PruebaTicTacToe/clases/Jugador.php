@@ -34,7 +34,7 @@ class Jugador {
         $this->puntos += $puntos;
     }
     
-    public function __construct($nombre, $ficha) {
+    public function __construct($nombre, Ficha $ficha) {
         $this->nombre = $nombre;
         $this->ficha = $ficha;
     }

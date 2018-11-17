@@ -19,13 +19,13 @@ and open the template in the editor.
         require 'filtrado.php';
         session_start();
         if (isset($_SESSION['juegoEmpezado'])) {
-			if (isset($_GET['fila'])) {
-				$fila = $_GET['fila'];
-                $col = $_GET['col'];
+            if (isset($_GET['fila'])) {
+                $fila = $_GET['fila'];
+                $columna = $_GET['col'];
                 $fichaTurno = $_SESSION['tablero']->getFicha();
-                $_SESSION['tablero']->tablero[$fila][$col] = $fichaTurno->etiquetaImg("imagen", 100, 100);
-				//var_dump($_SESSION['tablero']);
-			}
+                $_SESSION['tablero']->tablero[$fila][$columna] = $fichaTurno->etiquetaImg("imagen", 100, 100);
+                //var_dump($_SESSION['tablero']);
+            }
         } else {
             $todoCorrecto = true;
             if (isset($_POST['jugador1'])) {
@@ -38,6 +38,7 @@ and open the template in the editor.
                 $ficha1 = new Ficha("Nombre1", "resources/foto1.jpg");
                 $ficha2 = new Ficha("Nombre2", "resources/foto2.jpg");
                 $tablero = new Tablero($ficha1, $ficha2);
+                $tablero->iniciar();
                 $_SESSION['tablero'] = $tablero;
                 $_SESSION['juegoEmpezado'] = true;
             }
@@ -45,25 +46,17 @@ and open the template in the editor.
 
         //La imagen vendrÃ¡ de mÃ¡s arriba porque puede cambiar depende de cual se haya seleccionado mÃ¡s arriba
 
-
-        echo '<table>';
-        for ($fila = 0; $fila < 3; $fila++) {
-            echo '<tr>';
-            for ($columna = 0; $columna < 3; $columna++) {
-                echo '<td>';
-				
-                    echo ($_SESSION['tablero']->tablero[$fila][$columna]);
-                
-                echo '</td>';
+        $_SESSION['tablero']->mostrar();
+        if (isset($_GET['fila'])) {
+            $ganado = $_SESSION['tablero']->verificar($fila, $columna);
+            if ($ganado) {
+                echo 'HAS GANADO';
             }
-            echo '</tr>';
         }
-        echo '</table>';
-
         $_SESSION['tablero']->cambioTurno();
         ?>
 
-        <!--form method="post" action="<?php //echo htmlspecialchars($_SERVER["PHP_SELF"]);    ?>">
+        <!--form method="post" action="<?php //echo htmlspecialchars($_SERVER["PHP_SELF"]);      ?>">
             <label>Jugador 1:</label>
             <input type="text" name="jugador1" value="jugador1">
 

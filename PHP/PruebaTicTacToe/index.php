@@ -35,6 +35,11 @@ and open the template in the editor.
             if (isset($_POST['jugador1'])) {
                 //Todas las comprobaciones pertinentes
                 //Si todo correcto
+                $jugador1 = $_POST['jugador1'];
+                $jugador2 = $_POST['jugador2'];
+                if(isset($_POST['ficha'])){
+                    $todoCorrecto = false;
+                }
                 $todoCorrecto = true;
             }
 

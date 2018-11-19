@@ -23,24 +23,62 @@ and open the template in the editor.
         }
 
         if (isset($_SESSION['juegoEmpezado'])) {
+            $fichaActual = $_SESSION['tablero']->getFicha();
+            $nombreJugador = "";
+
+            //Si es el turno de la ficha del jugador 1, el turno es del jugador 1, si no del jugador 2
+            if ($_SESSION['jugador1']->getFicha() === $fichaActual) {
+                $nombreJugador = $_SESSION['jugador1']->getNombre();
+            } else {
+                $nombreJugador = $_SESSION['jugador2']->getNombre();
+            }
+            echo "<h1>$nombreJugador</h1>";
+
+
             if (isset($_GET['fila'])) {
                 $fila = $_GET['fila'];
-                $columna = $_GET['col'];
-                $fichaTurno = $_SESSION['tablero']->getFicha();
-                $_SESSION['tablero']->tablero[$fila][$columna] = $fichaTurno->etiquetaImg("imagen", 100, 100);
-                //var_dump($_SESSION['tablero']);
+                $columna = $_GET['columna'];
+                $_SESSION['tablero']->ponerFicha($fila, $columna);
+            }
+
+            $_SESSION['tablero']->mostrar();
+            $ganado = false;
+            if (isset($_GET['fila'])) {
+                echo 'Aqui entra';
+                $ganado = $_SESSION['tablero']->verificar($fila, $columna);
+                echo "Ganado = $ganado";
+                if ($ganado) {
+                    echo 'HAS GANADO';
+                    //Si es el turno de la ficha del jugador1, le suma punto
+                    //Si no, suma punto al jugador2
+                    if ($_SESSION['tablero']->getFicha() == $_SESSION['jugador1']->getFicha()) {
+                        $_SESSION['jugador1']->sumarPuntos();
+                    } else {
+                        $_SESSION['jugador2']->sumarPuntos();
+                    }
+                }
+            }
+            if (!$ganado) {
+                $_SESSION['tablero']->cambioTurno();
+            } else {
+                echo '<h1>Ha ganado ' . $_SESSION['tablero']->getFicha()->getNombre() . '</h1>';
+                ?>
+                <a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?nuevoJuego=x" ?>">Empezar otra partida</a>
+                <?php
             }
         } else {
-            $todoCorrecto = true;
-            if (isset($_POST['jugador1'])) {
+            $todoCorrecto = false;
+            if (isset($_POST['enviar'])) {
                 //Todas las comprobaciones pertinentes
                 //Si todo correcto
                 $jugador1 = $_POST['jugador1'];
                 $jugador2 = $_POST['jugador2'];
-                if(isset($_POST['ficha'])){
+                if (isset($_POST['ficha'])) {
+                    $todoCorrecto = true;
+                } else {
                     $todoCorrecto = false;
+                    echo '<h1>Selecciona una ficha</h1>';
                 }
-                $todoCorrecto = true;
             }
 
             if ($todoCorrecto) {
@@ -50,12 +88,13 @@ and open the template in the editor.
                 $ficha1 = new Ficha("Señor_cangrejo", "resources/foto1.jpg");
                 $ficha2 = new Ficha("Ayudante_de_santaclaus", "resources/foto2.jpg");
 
-                if ($_GET['ficha'] === 'ficha1') {
-                    $jugador1 = new Jugador($_GET['jugador1'], $ficha1);
-                    $jugador2 = new Jugador($_GET['jugador2'], $ficha2);
+                
+                if ($_POST['ficha'] === 'ficha1') {
+                    $jugador1 = new Jugador($_POST['jugador1'], $ficha1);
+                    $jugador2 = new Jugador($_POST['jugador2'], $ficha2);
                 } else {
-                    $jugador1 = new Jugador($_GET['jugador1'], $ficha2);
-                    $jugador2 = new Jugador($_GET['jugador2'], $ficha1);
+                    $jugador1 = new Jugador($_POST['jugador1'], $ficha2);
+                    $jugador2 = new Jugador($_POST['jugador2'], $ficha1);
                 }
                 $_SESSION['jugador1'] = $jugador1;
                 $_SESSION['jugador2'] = $jugador2;
@@ -64,51 +103,35 @@ and open the template in the editor.
                 $tablero->iniciar();
                 $_SESSION['tablero'] = $tablero;
                 $_SESSION['juegoEmpezado'] = true;
-            }
-        }
+                
+                //Coger los huecos vacios y cambiar el a
+                //       echo "<h1>$jugador1->getNombre()</h1>";
+                $_SESSION['tablero']->mostrar();
+            } else {
+                ?>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+                    <div>
+                        <label>Jugador 1:</label>
+                        <input type="text" name="jugador1" value="jugador1">
 
-        //La imagen vendrÃ¡ de mÃ¡s arriba porque puede cambiar depende de cual se haya seleccionado mÃ¡s arriba
+                        <label>Jugador 2:</label>
+                        <input type="text" name="jugador2" value="jugador2">
+                    </div>
+                    <div>La foto elegida ser� la del jugador1, la otra la del jugador2</div>
+                    <div>
+                        <img src="resources/foto1.jpg" alt="ficha1" height="150" width="150">
+                        <input type="radio" name="ficha" value="ficha1"><label>Foto 1</label>
 
-        $_SESSION['tablero']->mostrar();
-        $ganado = false;
-        if (isset($_GET['fila'])) {
-            $ganado = $_SESSION['tablero']->verificar($fila, $columna);
-            if ($ganado) {
-                echo 'HAS GANADO';
-                //Si es el turno de la ficha del jugador1, le suma punto
-                //Si no, suma punto al jugador2
-                if($_SESSION['tablero']->getFicha() == $_SESSION['jugador1']->getFicha()) {
-                    
-                }else{
-                    $_SESSION['jugador2']->sumarPuntos();
-                }
+                        <img src="resources/foto2.jpg" alt="ficha2" height="150" width="150">
+                        <input type="radio" name="ficha" value="ficha2"><label>Foto 2</label>
+                    </div>
+                    <input type="submit" name="enviar" value="procesar">
+                </form>
+                <?php
             }
-        }
-        if (!$ganado) {
-            $_SESSION['tablero']->cambioTurno();
-        } else {
-            echo '<h1>Ha ganado ' . $_SESSION['tablero']->getFicha()->getNombre() . '</h1>';
-            ?>
-            <a href="http://localhost/PruebaTicTacToe/index.php?nuevoJuego=x">Empezar otra partida</a>
-            <?php
         }
         ?>
 
-        <!--form method="post" action="<?php //echo htmlspecialchars($_SERVER["PHP_SELF"]);         ?>">
-            <label>Jugador 1:</label>
-            <input type="text" name="jugador1" value="jugador1">
 
-            <label>Jugador 2:</label>
-            <input type="text" name="jugador2" value="jugador2">
-
-            <img src="resources/foto1.jpg" alt="ficha1" height="150" width="150">
-            <input type="radio" name="ficha" value="ficha1"><label>Foto 1</label>
-
-            <img src="resources/foto2.jpg" alt="ficha2" height="150" width="150">
-            <input type="radio" name="ficha" value="ficha2"><label>Foto 2</label>
-
-
-            <input type="submit" name="enviar" value="procesar">
-        </form-->
     </body>
 </html>

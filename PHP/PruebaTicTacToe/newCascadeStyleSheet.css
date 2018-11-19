@@ -18,8 +18,8 @@ body{
 }
 a{
     display: inline-block;
-    width: 100px;
-    height: 100px;
+    width: 150px;
+    height: 150px;
     background-color: rgba(255,0,0,0.6);
 }
 table, td{

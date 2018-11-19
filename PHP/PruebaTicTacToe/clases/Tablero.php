@@ -44,25 +44,20 @@ class Tablero {
         //Poner el tablero a 0
         for ($fila = 0; $fila < 3; $fila++) {
             for ($columna = 0; $columna < 3; $columna++) {
-                //Creo los parámetros en formato get
+                //Creo los parÃ¡metros en formato get
                 $posicion = "?fila=" . $fila . "&columna=" . $columna;
-
                 $this->tablero[$fila][$columna] = "<a href=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . $posicion . "\"><img src=\"\" alt=\"\" class=\"espacioBlanco\"></a>";
-
             }
         }
     }
 
     public function mostrar() {
-
         echo '<table>';
         for ($fila = 0; $fila < 3; $fila++) {
             echo '<tr>';
             for ($columna = 0; $columna < 3; $columna++) {
                 echo '<td>';
-
                 echo ($this->tablero[$fila][$columna]);
-
                 echo '</td>';
             }
             echo '</tr>';
@@ -73,17 +68,14 @@ class Tablero {
     public function ponerFicha($fila, $columna, Ficha $ficha = null) {
         //Si no se introduce una ficha se pone la del turno actual
         if ($ficha == null) {
-            $this->tablero[$fila][$columna] = $this->getFicha()->etiquetaImg("imagen",150,150);
+            $this->tablero[$fila][$columna] = $this->getFicha()->etiquetaImg("imagen", 150, 150);
         } else {
-            $this->tablero[$fila][$columna] = $ficha->etiquetaImg("imagen",150,150);
+            $this->tablero[$fila][$columna] = $ficha->etiquetaImg("imagen", 150, 150);
         }
     }
 
     public function verificar($fila, $columna) {
-
         $tresEnRaya = false;
-
-
         $tresEnRaya = $this->comprobarRow($fila);
         if ($tresEnRaya === false) {
             $tresEnRaya = $this->comprobarCol($columna);
@@ -91,7 +83,6 @@ class Tablero {
         if ($tresEnRaya === false) {
             $tresEnRaya = $this->comprobarDiagonal();
         }
-
         return $tresEnRaya;
     }
 
@@ -103,7 +94,6 @@ class Tablero {
                 $tresEnRaya = false;
             }
         }
-
         return $tresEnRaya;
     }
 
@@ -115,7 +105,6 @@ class Tablero {
                 $tresEnRaya = false;
             }
         }
-
         return $tresEnRaya;
     }
 
@@ -137,6 +126,19 @@ class Tablero {
             }
         }
         return $tresEnRaya;
+    }
+
+    public function rellenarEspacios() {
+        $img1 = $this->ficha1->etiquetaImg("imagen", 150, 150);
+        $img2 = $this->ficha2->etiquetaImg("imagen", 150, 150);
+
+        for ($fila = 0; $fila < 3; $fila++) {
+            for ($columna = 0; $columna < 3; $columna++) {
+                if ($this->tablero[$fila][$columna] !== $img1 && $this->tablero[$fila][$columna] !== $img2) {
+                    $this->tablero[$fila][$columna] = "<a href=\"\"><img src=\"\" alt=\"\" class=\"espacioBlanco\"></a>";
+                }
+            }
+        }
     }
 
 }

@@ -22,6 +22,12 @@ and open the template in the editor.
             $_SESSION['tablero']->iniciar();
         }
         if (isset($_SESSION['juegoEmpezado'])) {
+            $puntuacion1 = $_SESSION['jugador1']->getPuntos();
+            $puntuacion2 = $_SESSION['jugador2']->getPuntos();
+            $nombre1 = $_SESSION['jugador1']->getNombre();
+            $nombre2 = $_SESSION['jugador2']->getNombre();
+            echo "$nombre1: $puntuacion1  - $nombre2: $puntuacion2";
+
             $fichaActual = $_SESSION['tablero']->getFicha();
 
             if (isset($_GET['fila'])) {
@@ -36,8 +42,8 @@ and open the template in the editor.
                 if ($ganado) {
                     echo 'HAS GANADO';
                     //Coger los huecos vacios y cambiar el a
-					$_SESSION['tablero']->rellenarEspacios();
-					//Si es el turno de la ficha del jugador1, le suma punto
+                    $_SESSION['tablero']->rellenarEspacios();
+                    //Si es el turno de la ficha del jugador1, le suma punto
                     //Si no, suma punto al jugador2
                     if ($_SESSION['tablero']->getFicha() == $_SESSION['jugador1']->getFicha()) {
                         $_SESSION['jugador1']->sumarPuntos();
@@ -61,7 +67,6 @@ and open the template in the editor.
             } else {
                 echo '<h1>Ha ganado ' . $_SESSION['tablero']->getFicha()->getNombre() . '</h1>';
                 $_SESSION['tablero']->mostrar();
-                
                 ?>
                 <a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?nuevoJuego=x" ?>">Empezar otra partida</a>
                 <?php
@@ -69,7 +74,7 @@ and open the template in the editor.
         } else {
             $todoCorrecto = false;
             if (isset($_POST['enviar'])) {
-				echo '<h1>'.$_POST['ficha'].'<h1>';
+                echo '<h1>' . $_POST['ficha'] . '<h1>';
                 //Todas las comprobaciones pertinentes
                 //Si todo correcto
                 $jugador1 = $_POST['jugador1'];
@@ -82,11 +87,15 @@ and open the template in the editor.
                 }
             }
             if ($todoCorrecto) {
-                //La imagen vendrá de más arriba porque puede cambiar depende de cual se haya seleccionado más arriba
+                //La imagen vendrÃ¡ de mÃ¡s arriba porque puede cambiar depende de cual se haya seleccionado mÃ¡s arriba
                 //Aqui se entra solo al principio de la partida
-                $ficha1 = new Ficha("Señor_cangrejo", "resources/foto1.jpg");
+                $ficha1 = new Ficha("SeÃ±or_cangrejo", "resources/foto1.jpg");
                 $ficha2 = new Ficha("Ayudante_de_santaclaus", "resources/foto2.jpg");
 
+
+                $_SESSION['jugador1'] = $jugador1;
+                $_SESSION['jugador2'] = $jugador2;
+                $tablero = new Tablero($ficha1, $ficha2);
 
                 if ($_POST['ficha'] === 'ficha1') {
                     $jugador1 = new Jugador($_POST['jugador1'], $ficha1);
@@ -95,14 +104,12 @@ and open the template in the editor.
                     $jugador1 = new Jugador($_POST['jugador1'], $ficha2);
                     $jugador2 = new Jugador($_POST['jugador2'], $ficha1);
                 }
-                $_SESSION['jugador1'] = $jugador1;
-                $_SESSION['jugador2'] = $jugador2;
-                $tablero = new Tablero($ficha1, $ficha2);
+
                 $tablero->iniciar();
                 $_SESSION['tablero'] = $tablero;
                 $_SESSION['juegoEmpezado'] = true;
 
-                
+
 
                 $fichaActual = $_SESSION['tablero']->getFicha();
                 $nombreJugador = "";
@@ -125,7 +132,7 @@ and open the template in the editor.
                         <label>Jugador 2:</label>
                         <input type="text" name="jugador2" value="jugador2">
                     </div>
-                    <div>La foto elegida ser� la del jugador1, la otra la del jugador2</div>
+                    <div>La foto elegida será la del jugador1, la otra la del jugador2</div>
                     <div>
                         <img src="resources/foto1.jpg" alt="ficha1" height="150" width="150">
                         <input type="radio" name="ficha" value="ficha1" checked><label>Foto 1</label>

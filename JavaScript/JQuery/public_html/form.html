@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>TODO supply a title</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="form.js" type="text/javascript"></script>
+        <script src="jquery-3.3.1.js" type="text/javascript"></script>
+        <script>
+            function reset() {
+                document.forms['miformulario'].reset();
+            }
+        </script>
+        <script>
+            
+    $(document).ready(function () {
+                $("#botonSubmit").click(function (evento) {
+                    evento.preventDefault();
+                    var nombre = $('#inputNombre').val();
+                    $("#cajaNombre").load("form2.php", {nombre: nombre});
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div>TODO write content</div>
+        <form name="miformulario" method="post" action="respuesta.php">
+            <div>
+                <label>DNI</label>
+                <input type="text" name="dni" value="dni">
+            </div>
+            <div>
+                <label>Nombre</label>
+                <input type="text" name="nombre" value="nombre" id="inputNombre">
+            </div>
+            <div id="cajaNombre"></div>
+            <a href="javascript:reset()">
+                <img src="foto2.jpg" alt="foto" height="100" width="100">
+            </a>
+            <input type="submit" value="mandar" id="botonSubmit"> 
+        </form> 
+    </body>
+
+</html>

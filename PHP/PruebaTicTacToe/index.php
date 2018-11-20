@@ -35,7 +35,9 @@ and open the template in the editor.
                 $ganado = $_SESSION['tablero']->verificar($fila, $columna);
                 if ($ganado) {
                     echo 'HAS GANADO';
-                    //Si es el turno de la ficha del jugador1, le suma punto
+                    //Coger los huecos vacios y cambiar el a
+					$_SESSION['tablero']->rellenarEspacios();
+					//Si es el turno de la ficha del jugador1, le suma punto
                     //Si no, suma punto al jugador2
                     if ($_SESSION['tablero']->getFicha() == $_SESSION['jugador1']->getFicha()) {
                         $_SESSION['jugador1']->sumarPuntos();
@@ -59,7 +61,7 @@ and open the template in the editor.
             } else {
                 echo '<h1>Ha ganado ' . $_SESSION['tablero']->getFicha()->getNombre() . '</h1>';
                 $_SESSION['tablero']->mostrar();
-                $_SESSION['tablero']->rellenarEspacios();
+                
                 ?>
                 <a href="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]) . "?nuevoJuego=x" ?>">Empezar otra partida</a>
                 <?php
@@ -67,6 +69,7 @@ and open the template in the editor.
         } else {
             $todoCorrecto = false;
             if (isset($_POST['enviar'])) {
+				echo '<h1>'.$_POST['ficha'].'<h1>';
                 //Todas las comprobaciones pertinentes
                 //Si todo correcto
                 $jugador1 = $_POST['jugador1'];
@@ -79,10 +82,11 @@ and open the template in the editor.
                 }
             }
             if ($todoCorrecto) {
-                //La imagen vendrÃ¡ de mÃ¡s arriba porque puede cambiar depende de cual se haya seleccionado mÃ¡s arriba
+                //La imagen vendrá de más arriba porque puede cambiar depende de cual se haya seleccionado más arriba
                 //Aqui se entra solo al principio de la partida
-                $ficha1 = new Ficha("SeÃ±or_cangrejo", "resources/foto1.jpg");
+                $ficha1 = new Ficha("Señor_cangrejo", "resources/foto1.jpg");
                 $ficha2 = new Ficha("Ayudante_de_santaclaus", "resources/foto2.jpg");
+
 
                 if ($_POST['ficha'] === 'ficha1') {
                     $jugador1 = new Jugador($_POST['jugador1'], $ficha1);
@@ -98,7 +102,7 @@ and open the template in the editor.
                 $_SESSION['tablero'] = $tablero;
                 $_SESSION['juegoEmpezado'] = true;
 
-                //Coger los huecos vacios y cambiar el a
+                
 
                 $fichaActual = $_SESSION['tablero']->getFicha();
                 $nombreJugador = "";
@@ -121,7 +125,7 @@ and open the template in the editor.
                         <label>Jugador 2:</label>
                         <input type="text" name="jugador2" value="jugador2">
                     </div>
-                    <div>La foto elegida será la del jugador1, la otra la del jugador2</div>
+                    <div>La foto elegida ser� la del jugador1, la otra la del jugador2</div>
                     <div>
                         <img src="resources/foto1.jpg" alt="ficha1" height="150" width="150">
                         <input type="radio" name="ficha" value="ficha1" checked><label>Foto 1</label>

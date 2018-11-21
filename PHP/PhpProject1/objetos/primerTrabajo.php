@@ -113,20 +113,26 @@ class CabeceraPagina {
         class Menu {
 
             private $arrayOpciones = [];
+            private $arrayEnlaces = [];
 
             const VERTICAL = 'vertical';
             const HORIZONTAL = 'horizontal';
 
             private function mostrarVertical() {
-                foreach ($this->arrayOpciones as $valor) {
-                    echo "<a style=\"float:left; clear: left; margin-top: 8px\"href=\"#\">$valor</a>";
+                for ($i = 0; $i < count($this->arrayOpciones); $i++) {
+                    $valor = $this->arrayOpciones[$i];
+                    $enlace = $this->arrayEnlaces[$i];
+                    echo "<a style=\"float:left; clear: left; margin-top: 8px\"href=\"$enlace\">$valor</a>";
                 }
             }
 
             private function mostrarHorizontal() {
+
                 echo '<div>';
-                foreach ($this->arrayOpciones as $valor) {
-                    echo "<a style=\"margin-left: 8px\" href=\"#\">$valor</a>";
+                for ($i = 0; $i < count($this->arrayOpciones); $i++) {
+                    $valor = $this->arrayOpciones[$i];
+                    $enlace = $this->arrayEnlaces[$i];
+                    echo "<a style=\"margin-left: 8px\" href=\"$enlace\">$valor</a>";
                 }
                 echo '</div>';
             }
@@ -140,8 +146,9 @@ class CabeceraPagina {
                 }
             }
 
-            public function añadirOpcion($opcion) {
+            public function añadirOpcion($opcion, $enlace) {
                 array_push($this->arrayOpciones, $opcion);
+                array_push($this->arrayEnlaces, $enlace);
             }
 
         }
@@ -153,9 +160,9 @@ class CabeceraPagina {
         $tabla->cargarDato('otrodato', 3, 3, 'pink', 'green');
 
         $menu = new Menu();
-        $menu->añadirOpcion('opcion1');
-        $menu->añadirOpcion('opcion2');
-        $menu->añadirOpcion('opcion3');
+        $menu->añadirOpcion('opcion1', 'https://www.google.es');
+        $menu->añadirOpcion('opcion2', 'https://www.google.es');
+        $menu->añadirOpcion('opcion3', 'https://www.google.es');
         ?>
         <!DOCTYPE html>
     <html lang="es">

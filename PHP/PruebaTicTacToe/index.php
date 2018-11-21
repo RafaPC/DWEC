@@ -132,7 +132,7 @@ and open the template in the editor.
                         <label>Jugador 2:</label>
                         <input type="text" name="jugador2" value="jugador2">
                     </div>
-                    <div>La foto elegida será la del jugador1, la otra la del jugador2</div>
+                    <div>La foto elegida sera la del jugador1, la otra la del jugador2</div>
                     <div>
                         <img src="resources/foto1.jpg" alt="ficha1" height="150" width="150">
                         <input type="radio" name="ficha" value="ficha1" checked><label>Foto 1</label>
@@ -146,7 +146,5 @@ and open the template in the editor.
             }
         }
         ?>
-
-
     </body>
 </html>

@@ -44,7 +44,7 @@ class Tablero {
         //Poner el tablero a 0
         for ($fila = 0; $fila < 3; $fila++) {
             for ($columna = 0; $columna < 3; $columna++) {
-                //Creo los parámetros en formato get
+                //Creo los parÃ¡metros en formato get
                 $posicion = "?fila=" . $fila . "&columna=" . $columna;
                 $this->tablero[$fila][$columna] = "<a href=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . $posicion . "\"><img src=\"\" alt=\"\" class=\"espacioBlanco\"></a>";
             }

@@ -87,29 +87,12 @@ and open the template in the editor.
                 $jugador1 = $_POST['jugador1'];
                 $jugador2 = $_POST['jugador2'];
                 $jugador1 = filtrado($jugador1);
-                $jugador2 = filtrado($jugador2);
+                $jugador2 = filtrado($jugador2);               
 
-                //AQUI CAMBIAR COSAS
-                //
-                //
-                //
-                
-                
-                echo 'aquisi';
-                print $jugador1;
-                print $jugador2;
                 if ($jugador1 === null || $jugador2 === null) {
-                    echo 'wrong';
+                    echo '<h1>Tienes que escribir el nombre de los jugadores</h1>';
                 } else {
                     $todoCorrecto = true;
-                }
-                if ($todoCorrecto === true) {
-                    if (isset($_POST['ficha'])) {
-                        $todoCorrecto = true;
-                    } else {
-                        $todoCorrecto = false;
-                        echo '<h1>Selecciona una ficha</h1>';
-                    }
                 }
             }
             if ($todoCorrecto) {

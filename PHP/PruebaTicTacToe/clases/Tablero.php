@@ -44,7 +44,7 @@ class Tablero {
         //Poner el tablero a 0
         for ($fila = 0; $fila < 3; $fila++) {
             for ($columna = 0; $columna < 3; $columna++) {
-                //Creo los parÃ¡metros en formato get
+                //Creo los parámetros en formato get
                 $posicion = "?fila=" . $fila . "&columna=" . $columna;
                 $this->tablero[$fila][$columna] = "<a href=\"" . htmlspecialchars($_SERVER["PHP_SELF"]) . $posicion . "\"><img src=\"\" alt=\"\" class=\"espacioBlanco\"></a>";
             }
@@ -139,6 +139,21 @@ class Tablero {
                 }
             }
         }
+    }
+	
+	public function estaLleno() {
+        $img1 = $this->ficha1->etiquetaImg("imagen", 150, 150);
+        $img2 = $this->ficha2->etiquetaImg("imagen", 150, 150);
+		$lleno = true;
+        
+		for ($fila = 0; $fila < 3 && $lleno===true; $fila++) {
+            for ($columna = 0; $columna < 3 && $lleno===true; $columna++) {
+                if ($this->tablero[$fila][$columna] !== $img1 && $this->tablero[$fila][$columna] !== $img2) {
+                    $lleno = false;
+                }
+            }
+        }
+		return $lleno;
     }
 
 }

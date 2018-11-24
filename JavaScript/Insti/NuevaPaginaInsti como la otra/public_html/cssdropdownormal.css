@@ -24,10 +24,6 @@ body{
     margin-top: 20px;
 }
 
-button{
-    color: white;
-}
-
 /* Navbar links */
 .topnav a {
     color: white;
@@ -89,12 +85,6 @@ button{
     background-color: #ddd;
 }
 
-/* Active/current link */
-.topnav a.active {
-    background-color: #0095DB;
-    color: white;
-}
-
 /* Style the input container */
 .topnav .login-container {
     display: flex;
@@ -128,6 +118,7 @@ button{
     border: none;
     cursor: pointer;
     height: 37px;
+    color: white;
 }
 
 /* Colorea el boton de login al poner el cursor encima */
@@ -201,6 +192,7 @@ button{
 }
 
 
+
 /* Add responsiveness - On small screens, display the navbar vertically instead of horizontally */
 /* Controla el formulario cuando la página está por debajo de 800 de ancho*/
 @media screen and (max-width: 833px) {
@@ -219,7 +211,6 @@ button{
         width: 100%;
         margin: 0;
         padding: 14px;
-        height: 45px;
     }
 
     .topnav input[type=text] {
@@ -243,6 +234,10 @@ button{
         padding: 14px;
         margin: 0px 0px;
     }
+    
+    .topnav .login-container button {
+    padding: 10px;
+}
 }
 
 
@@ -394,4 +389,22 @@ button{
         background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4),rgba(0,0,0,0.5));
     }
 
+}
+
+/*
+REVISAR
+ESTO
+POR
+FAVOR
+
+ Active/current link */
+.topnav a.active{
+    background-color: #0095DB;
+    color: white;
+}
+
+.topnav .active{
+     background-color: #0095DB;
+    color: white;
+    cursor: pointer;
 }

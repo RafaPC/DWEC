@@ -370,5 +370,16 @@ button{
         display: block;
     }
 
+}
+
+@media only screen and (max-width: 833px){
+    
+#rowFooter div{
+    font-size: 19px;
+}
+
+#rowFooter{
+    background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4),rgba(0,0,0,0.5));
+}
 
 }

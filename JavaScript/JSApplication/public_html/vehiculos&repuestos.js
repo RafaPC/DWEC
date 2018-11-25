@@ -12,9 +12,13 @@ class Repuesto {
         this.pcp = pcp;
         this.pvp = pvp;
         this.meses_vida = meses_vida;
-        this.ganancia = function ganancia() {
+//        this.ganancia = function ganancia() {
+//            return (this.pvp - this.pcp);
+//        };
+       
+        function ganancia() {
             return (this.pvp - this.pcp);
-        };
+        }
     }
 }
 

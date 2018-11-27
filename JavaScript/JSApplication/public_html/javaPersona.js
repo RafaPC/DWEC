@@ -3,22 +3,24 @@ class Persona {
     constructor(nombre, direccion) {
         this.nombre = nombre;
         this.direccion = direccion;
-        this.imprimirDatos = function imprimirDatos() {
+    }
+    
+    imprimirDatos() {
             document.write("Nombre: " + this.nombre);
             document.write("Dirección: " + this.direccion);
         };
-    }
 }
 
 class Calificaciones{
     constructor(asignatura, nota){
        this.asignatura = asignatura;
        this.nota = nota;
-       this.imprimirDatos = function imprimirDatos() {
+    }
+    
+    imprimirDatos() {
             document.write("Asignatura: " + this.asignatura);
             document.write("Nota: " + this.nota);
         };
-    }
 }
 
 

@@ -15,11 +15,15 @@ class Repuesto {
 //        this.ganancia = function ganancia() {
 //            return (this.pvp - this.pcp);
 //        };
-       
-        function ganancia() {
+    }
+    
+    ganancia() {
             return (this.pvp - this.pcp);
         }
-    }
+        
+        get meses_vida(){
+            return this.meses_vida;
+        }
 }
 
 class Vehiculo {

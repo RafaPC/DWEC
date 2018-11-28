@@ -29,42 +29,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
         mysqli_select_db($conex, "dwes")
                 or die("No se ha podido seleccionar la base de datos");
-        //consulta
-        $consulta = mysqli_query($conex, "SELECT * FROM usuarios WHERE login = '$nombre'");
-        $numFilas = mysqli_num_rows($consulta);
+		//consulta
+		$consulta = mysqli_query($conex, "SELECT * FROM usuarios WHERE login = '$nombre'");
+		$numFilas = mysqli_num_rows($consulta);
+		echo 'por aqui ha pasado bien';
+		if($numFilas >= 1){
+			$usuarioExiste = true;
+			$sacarForm = true;
+		}else{
+			$consulta = mysqli_query($conex, "INSERT INTO usuarios (login, clave) VALUES ('$nombre', '$contraseña');");
+			$numFilas = mysqli_num_rows($consulta);
+			if($numFilas === 1){
+				echo '<h1>Todo OK :)</h1>';
+			}
+		}
 
-        if ($numFilas >= 1) {
-            $usuarioExiste = true;
-            $sacarForm = true;
-        } else {
-            $consulta = mysqli_query($conex, "INSERT INTO `usuarios` (`login`, `clave`) VALUES ('$nombre', '$contraseña');");
-            $numFilas = mysqli_num_rows($consulta);
-            if ($numFilas === 1) {
-                echo '<h1>Todo OK :)</h1>';
-            }
-        }
-
-        //cerrar conex
+		//cerrar conex
         mysqli_close($conex);
+		
+		/*//abrir conexion
+        $conex = mysqli_connect("localhost", "root", "1234")
+                or die("No se ha podido conectar...");
 
-        /* //abrir conexion
-          $conex = mysqli_connect("localhost", "root", "1234")
-          or die("No se ha podido conectar...");
+        mysqli_select_db($conex, "dwes")
+                or die("No se ha podido seleccionar la base de datos");
+		//consulta
+        $consulta = mysqli_query($conex, "select * from usuarios");
+        $numFilas = mysqli_num_rows($consulta);
+        $fila = mysqli_fetch_array($consulta);
+        echo '<pre>';
+        print_r($fila);
+        echo '</pre>';
+        echo $numFilas;
 
-          mysqli_select_db($conex, "dwes")
-          or die("No se ha podido seleccionar la base de datos");
-          //consulta
-          $consulta = mysqli_query($conex, "select * from usuarios");
-          $numFilas = mysqli_num_rows($consulta);
-          $fila = mysqli_fetch_array($consulta);
-          echo '<pre>';
-          print_r($fila);
-          echo '</pre>';
-          echo $numFilas;
-
-          //cerrar conex
-          mysqli_close($conex);
-         */
+		//cerrar conex
+        mysqli_close($conex);
+		*/
     }
 }
 if ($sacarForm) {
@@ -72,10 +72,10 @@ if ($sacarForm) {
     <form method="post" enctype="multipart/form-data" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
         <h1>Nombre de usuario:</h1>
         <?php
-        if ($usuarioExiste) {
-            echo '<h1>El usuario introducido ya existe</h1>';
-        }
-        if ($errorNombre) {
+        if($usuarioExiste){
+			echo '<h3 style="color: red">El usuario introducido ya existe</h3>';
+		}
+		if ($errorNombre) {
             echo '<label>El nombre tiene que ser valido</label>';
         }
         ?>

@@ -32,13 +32,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		//consulta
 		$consulta = mysqli_query($conex, "SELECT * FROM usuarios WHERE login = '$nombre'");
 		$numFilas = mysqli_num_rows($consulta);
-		echo 'por aqui ha pasado bien';
 		if($numFilas >= 1){
 			$usuarioExiste = true;
 			$sacarForm = true;
 		}else{
-			$consulta = mysqli_query($conex, "INSERT INTO usuarios (login, clave) VALUES ('$nombre', '$contraseña');");
-			$numFilas = mysqli_num_rows($consulta);
+			mysqli_query($conex, "INSERT INTO usuarios (login, clave) VALUES ('$nombre', '$contraseña')");
+			$numFilas = mysqli_affected_rows($conex);
 			if($numFilas === 1){
 				echo '<h1>Todo OK :)</h1>';
 			}
@@ -47,24 +46,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		//cerrar conex
         mysqli_close($conex);
 		
-		/*//abrir conexion
-        $conex = mysqli_connect("localhost", "root", "1234")
-                or die("No se ha podido conectar...");
-
-        mysqli_select_db($conex, "dwes")
-                or die("No se ha podido seleccionar la base de datos");
-		//consulta
-        $consulta = mysqli_query($conex, "select * from usuarios");
-        $numFilas = mysqli_num_rows($consulta);
-        $fila = mysqli_fetch_array($consulta);
-        echo '<pre>';
-        print_r($fila);
-        echo '</pre>';
-        echo $numFilas;
-
-		//cerrar conex
-        mysqli_close($conex);
-		*/
     }
 }
 if ($sacarForm) {

@@ -9,8 +9,50 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="cookies.js" type="text/javascript"></script>
+        <script src="js.js" type="text/javascript"></script>
     </head>
-    <body>
-        <div>TODO write content</div>
+    <body onload="rellenarForm()"> 
+        <form name="miForm">
+            <input type="text" value="Introduzca nombre" name="cajaTexto" id="cajaTexto"/><br>
+
+            <input type="radio" name="radio1" value="false" id="radio1">
+            <label for="radio1">Radio1</label><br>
+
+            <input type="radio" name="radio2" value="false" id="radio2">
+            <label for="radio2">radio2</label><br>
+
+            <input type="radio" name="radio3" value="false" id="radio3">
+            <label for="radio3">radio3</label><br>
+
+            <input type="radio" name="radio4" value="false" id="radio4">
+            <label for="radio4">radio4</label><br>
+
+            <input type="radio" name="radio5" value="false" id="radio5">
+            <label for="radio5">radio5</label><br>
+
+
+            <input type="checkbox" name="check1" value="1" id="check1" >
+            <label for="check1">Check1</label><br>
+
+            <input type="checkbox" name="check2" value="1" id="check2" >
+            <label for="check2">Check1</label><br>
+
+            <input type="checkbox" name="check3" value="1" id="check3" >
+            <label for="check3">Check1</label><br>
+
+            <input type="checkbox" name="check4" value="1" id="check4" >
+            <label for="check4">Check1</label><br>
+
+            <select>
+                <option value="volvo">Volvo</option>
+                <option value="saab">Saab</option>
+                <option value="mercedes">Mercedes</option>
+                <option value="audi">Audi</option>
+            </select> 
+
+
+        </form>
+        <button onClick="validar()">VALIDAR</button>
     </body>
 </html>

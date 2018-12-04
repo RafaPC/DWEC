@@ -5,7 +5,7 @@ class Coche {
 	protected $color;
 	protected $tipo; //diesel o gasolina
 	protected $velocidad = 0;
-	public static $ventas =0;
+	public static $ventas = 0;
 	
 	const DIESEL = 1;
 	const GASOLINA= 2;

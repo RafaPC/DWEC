@@ -46,8 +46,7 @@ class Coche {
 	}
 	//método estático
 	public static  function totalVentas(){
-
-		return Coche::$ventas;
+            return Coche::$ventas;
 	}
 } //fin de la definición de la clase.
 
@@ -72,10 +71,11 @@ $miDeportivo = new Coche();
 $miDeportivo -> setColor("verde");
 $miDeportivo -> setTipo(Coche::GASOLINA);
 while($miDeportivo->getVelocidad() < Coche::VMAXIMA){
-	$miDeportivo->acelerar();
-	echo "Mi deportivo va a ". $miDeportivo->getVelocidad(). "km/h<br>";
+    $miDeportivo->acelerar();
+    echo "Mi deportivo va a ". $miDeportivo->getVelocidad(). "km/h<br>";
 }
-?><pre><?php
+?>
+<pre><?php
 print_r($miDeportivo);
 ?></pre><?php
 
@@ -83,7 +83,7 @@ print_r($miDeportivo);
 echo "<br>Se ha producido una venta<br>";
 Coche::$ventas++;
 echo "El total de ventas es: ". 
-		Coche::totalVentas() . '<br>';
+		Coche::totY alVentas() . '<br>';
 
 
 ?>

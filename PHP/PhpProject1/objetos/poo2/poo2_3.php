@@ -110,7 +110,8 @@ class Cuadrado extends Figura {
         echo 'Lado: ' . $this->lado . '\n';
     }
 
-    public function __construct($lado) {
+    public function __construct($nombre, $color, $esRellena, $lado) {
+        parent::__construct($nombre, $color, $esRellena);
         $this->lado = $lado;
     }
 

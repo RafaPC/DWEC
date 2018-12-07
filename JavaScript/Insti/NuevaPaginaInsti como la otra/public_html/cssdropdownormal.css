@@ -22,13 +22,14 @@ body{
     overflow: hidden;
     width: 100%;
     margin-top: 20px;
+    height: 60px;
 }
 
 /* Navbar links */
 .topnav a {
     color: white;
     text-align: center;
-    padding: 27px 16px;
+    padding: 20px 16px;
     text-decoration: none;
     font-size: 23px;
 }
@@ -147,11 +148,12 @@ body{
     font-size: 23px;    
     border: none;
     outline: none;
-    padding: 0px 16px;
+    padding-top: 20px;
+    padding-bottom: 14px;
     background-color: inherit;
     font-family: inherit;
     margin-top: 0px;
-    margin: 27px 16px;
+    margin: 0px 16px;
 }
 
 .dropdown-content {
@@ -376,10 +378,10 @@ body{
     #barraNav{
         display: block;
     }
-
-}
-
-@media only screen and (max-width: 833px){
+    
+    .topnav{
+        height:auto;
+    }
 
     #rowFooter div{
         font-size: 19px;

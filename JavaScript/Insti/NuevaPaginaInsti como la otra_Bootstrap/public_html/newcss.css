@@ -11,9 +11,6 @@ and open the template in the editor.
 
 body{
     margin: 0px;
-}
-
-#bgimagen {
     /* The image used */
     background-image: url("resources/portadacortada.jpg");
 
@@ -28,9 +25,10 @@ body{
     min-height: 970px;
 }
 
-#navbarColor{
-    color: white;
+.navbar{
+    font-size: 20px;
 }
+
 
 .negro{
     background-image: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.2));
@@ -41,4 +39,33 @@ body{
 }
 .footer{
     height: 100%;
+}
+
+.espacio{
+    display: inline-block;
+    height: 200px;
+}
+
+.card{
+    background-color: rgba(255,255,255,0.7);
+}
+
+
+
+.navbar li a:hover{
+    background-color: #ae1212;
+}
+
+.active{
+    background-color: #0095DB;
+}
+
+.dropdown-menu a:hover{
+    background-color: #137519;
+}
+
+footer{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }

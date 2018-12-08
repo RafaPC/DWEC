@@ -77,15 +77,6 @@ body{
     background-color: #ae1212;
 }
 
-
-.topnav dropdown dropdown-content a:hover{
-    background-color: green;
-}
-
-.topnav a dropbtn:hover{
-    background-color: #ddd;
-}
-
 /* Style the input container */
 .topnav .login-container {
     display: flex;
@@ -131,7 +122,6 @@ body{
 /* Pone el cursor como pointer al pasarlo por encima de un elemento que desplega un dropdown*/
 .topnav dropdown, dropbtn, button:hover{
     cursor: pointer;
-    background-color: #ae1212;
 }
 
 .dropdown {
@@ -182,7 +172,7 @@ body{
 }
 /*Pinta cada elemento del dropdown al pasar el cursor por encima*/
 .dropdown-content a:hover {
-    background-color: green;    
+    background-color: #137519;    
 }
 
 .dropdown:hover .dropdown-content {
@@ -231,15 +221,15 @@ body{
         padding:  0px 0px;
         margin: 0px;
     }
-    
+
     .dropdown .dropbtn{
         padding: 14px;
         margin: 0px 0px;
     }
-    
+
     .topnav .login-container button {
-    padding: 10px;
-}
+        padding: 10px;
+    }
 }
 
 
@@ -320,8 +310,10 @@ body{
 
 }
 
+
+
 .filaCuadros{
-    margin: 0 10% 0% 10%;
+    margin: 0% 10% 0% 10%;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -331,7 +323,7 @@ body{
     margin-top: 4%;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4), 0 6px 20px 0 rgba(0, 0, 0, 0.3), 4px 4px 8px 0px rgba(0,0,0,0.1);
     border: 1px solid rgba(0,0,0,0.6);
-    border-radius: 0px 0px 3px 3px;
+    border-radius: 10px 10px 8px 8px;
     height: 380px;
     float:left;
     width: 300px;
@@ -342,6 +334,7 @@ body{
     width: 100%;
     height: 55%;    
     border-bottom: 5px solid #00cccc;
+    border-radius: 5px 5px 3px 3px;
 }
 
 .titulo{
@@ -378,7 +371,7 @@ body{
     #barraNav{
         display: block;
     }
-    
+
     .topnav{
         height:auto;
     }
@@ -391,6 +384,70 @@ body{
         background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4),rgba(0,0,0,0.5));
     }
 
+}
+
+@media only screen and (max-width: 833px){
+
+    .cuadro{
+        height: 290px;
+        width: 230px;
+    }
+
+    .titulo{
+        font-size: 21px;
+    }
+
+    .texto{
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 591px){
+
+    .cuadro{
+        height: 260px;
+        width: 210px;
+    }
+
+    .titulo{
+        font-size: 21px;
+    }
+
+    .texto{
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 541px){
+
+    .cuadro{
+        height: 260px;
+        width: 210px;
+    }
+
+    .titulo{
+        font-size: 21px;
+    }
+
+    .texto{
+        font-size: 14px;
+    }
+}
+
+@media only screen and (max-width: 541px){
+
+    .cuadro{
+        height: 230px;
+        width: 170px;
+    }
+
+    .titulo{
+        font-size: 21px;
+    }
+
+    .texto{
+        font-size: 14px;
+    }
 }
 
 /*
@@ -406,7 +463,7 @@ FAVOR
 }
 
 .topnav .active{
-     background-color: #0095DB;
+    background-color: #0095DB;
     color: white;
     cursor: pointer;
 }

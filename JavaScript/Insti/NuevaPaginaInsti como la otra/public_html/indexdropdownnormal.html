@@ -6,26 +6,27 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>I.E.S. Enrique Tierno Galván</title>
         <meta charset="UTF-8">
         <link href="cssdropdownormal.css" rel="stylesheet" type="text/css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
     </head>
     <body>
-        <div class="bgimagen">
-            <div class="bgcolor">
+        <header>
+            <div id="bgcolor">
                 <div id="filaFotos">
-                    <div id="logotierno">
-                        <img src="resources/logofinal.png" alt="logo" height="140" width="167">
-                    </div>
-                    <a href="https://www.educa2.madrid.org/web/tiernogalvan">
-                        <img id="logoeducamadrid" src="resources/logo_educamadrid.png" alt="logo">
-                    </a>
-                    <div id="idiomas">
-                        <img class="bandera" src="resources/flag_es.png" alt="bandera de españa">
+                    <img id="logoTierno" src="resources/logofinal.png" alt="logo">
+                    <div id="logoeidiomas">
+                        <a href="https://www.educa2.madrid.org/web/tiernogalvan">
+                            <img id="logoeducamadrid" src="resources/logo_educamadrid.png" alt="logo">
+                        </a>
+                        <div id="idiomas">
+                            <img class="bandera" src="resources/flag_es.png" alt="bandera de españa">
 
-                        <img class="bandera" src="resources/flag_en.png" alt="bandera de gran bretaña">
+                            <img class="bandera" src="resources/flag_en.png" alt="bandera de gran bretaña">
+                        </div>
                     </div>
                 </div>
                 <div class="topnav">
@@ -33,58 +34,62 @@ and open the template in the editor.
                         <a class="active" href="#home">Home</a>
                         <a href="#about">About</a>
                         <div class="dropdown">
-                            <div class="dropbtn">Dropdown</div>
+                            <div class="dropbtn">Alumnos
+                            <i class="fas fa-sort-down" style="font-size:24px"></i>
+                            </div>
                             <div class="dropdown-content">
-                                <a href="#">Link 1</a>
-                                <a href="#">Link 2</a>
-                                <a class="lastContent" href="#">Link 3</a>  
+                                <a href="#">Faltas</a>
+                                <a href="#">Calificaciones</a>
+                                <a href="#">Trabajos enviados</a>  
                             </div>
                         </div>
                         <a href="#contact" class="dropbtn">Contact</a>
-                        
+
                     </div>
                     <div class="login-container">
                         <form action="/action_page.php">
-                            <input type="text" placeholder="Usuario" name="username">
+                            <input id="inputTexto" type="text" placeholder="Usuario" name="username">
                             <input type="password" placeholder="Contraseña" name="psw">
                             <button type="submit">Login</button>
                         </form>
                     </div>
                 </div> 
             </div>
+        </header>
+        <div id="cuadros">
             <div class="filaCuadros">
                 <div class="cuadro">
-                    <a href="#"><img class="imagenCuadro" src="resources/niños-estudiando.jpg" alt="algo"></a>
-                    <span class="titulo">Lorem ipsum dolor</span>
+                    <a href="#"><img class="imagenCuadro" src="resources/calendario2.jpg" alt="algo"></a>
+                    <span class="titulo">Calendario</span>
                     <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
                         Curabitur at est arcu. Phasellus euismod magna lacus.</p>
                 </div>
                 <div class="cuadro">
-                    <a href="#"><img class="imagenCuadro" src="resources/niños-estudiando.jpg" alt="algo"></a>
-                    <span class="titulo">Lorem ipsum dolor</span>
-                    <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
-                        Curabitur at est arcu. Phasellus euismod magna lacus.</p>
-                </div>
-                <div class="cuadro">
-                    <a href="#"><img class="imagenCuadro" src="resources/niños-estudiando.jpg" alt="algo"></a>
-                    <span class="titulo">Lorem ipsum dolor</span>
-                    <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
-                        Curabitur at est arcu. Phasellus euismod magna lacus.</p>
-                </div>
-                <div class="cuadro">
-                    <a href="#"><img class="imagenCuadro" src="resources/niños-estudiando.jpg" alt="algo"></a>
-                    <span class="titulo">Lorem ipsum dolor</span>
+                    <a href="#"><img class="imagenCuadro" src="resources/email2.jpg" alt="algo"></a>
+                    <span class="titulo">Email interno</span>
                     <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
                         Curabitur at est arcu. Phasellus euismod magna lacus.</p>
                 </div>
             </div>
-            <footer>
-                <div id="rowFooter">
-                    <div>Madrid, Comunidad de Madrid, Consejería de Educación.</div> 
-                    <div>2018 IES Enrique Tierno Galván</div>
+            <div class="filaCuadros">
+                <div class="cuadro">
+                    <a href="#"><img class="imagenCuadro" src="resources/fotocopias2.jpg" alt="algo"></a>
+                    <span class="titulo">Fotocopias</span>
+                    <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
+                        Curabitur at est arcu. Phasellus euismod magna lacus.</p>
                 </div>
-            </footer>
+                <div class="cuadro">
+                    <a href="#"><img class="imagenCuadro" src="resources/biblioteca2.jpg" alt="algo"></a>
+                    <span class="titulo">Biblioteca</span>
+                    <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
+                        Curabitur at est arcu. Phasellus euismod magna lacus.</p>
+                </div>
+            </div>
         </div>
+        <footer>
+                <div>Madrid, Comunidad de Madrid, Consejería de Educación.</div> 
+                <div>2018 IES Enrique Tierno Galván</div>
+        </footer>
 
 
 

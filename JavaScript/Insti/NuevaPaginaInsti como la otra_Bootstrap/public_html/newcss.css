@@ -7,51 +7,80 @@ and open the template in the editor.
     Created on : 08-nov-2018, 12:44:44
     Author     : Daw2
 */
+html{
+    font-size: 1.2rem;
+}
 
+.logo{
+    height: 140px;
+    width: 190px;
+}
 
+#logoeidiomas{
+    width: 300px;
+
+}
+.bandera{
+    width: 60px;
+    margin-top: 10px;
+}
 body{
+    margin: 0;
+    padding: 0;
+    background-image: url("resources/portadacortada.jpg");
+
+    /* Center and scale the image nicely */
+    background-position: top;
+    background-repeat: space;
+    background-size: cover;
+}
+
+#fotoFondo{
     margin: 0px;
+    width: 100%;
     /* The image used */
     background-image: url("resources/portadacortada.jpg");
 
-    /* Full height */
-    width: 100%;
-
     /* Center and scale the image nicely */
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-
-    min-height: 970px;
+    background-position: top;
+    background-repeat: space;
+    background-size: auto;
 }
-
-.navbar{
-    font-size: 20px;
-}
-
-
-.negro{
+header{
     background-image: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.2));
+    padding-bottom: 5px;
 }
 
 .noMargin{
     padding: 0;
 }
-.footer{
-    height: 100%;
-}
 
 .espacio{
     display: inline-block;
-    height: 200px;
+    height: 7vh;
 }
 
-.card{
-    background-color: rgba(255,255,255,0.7);
+.espacio2{
+    display: inline-block;
+    height: 118px;
+}
+/* Footer */
+footer{
+    background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.5));
+    bottom: 0;
+    width: 100%;
+}
+
+footer col-4{
+    text-align: right;
+}
+
+footer col-8{
+    text-align: left;
 }
 
 
-
+/* Estilos para los colores de la barra de navegación */
 .navbar li a:hover{
     background-color: #ae1212;
 }
@@ -61,11 +90,101 @@ body{
 }
 
 .dropdown-menu a:hover{
-    background-color: #137519;
+    background-color: #137519 !important;
 }
 
-footer{
-    position: absolute;
-    bottom: 0;
-    width: 100%;
+.navbar{
+    font-size: 20px;
+    padding: 0;
+    margin-top: 15px;
 }
+
+.nav-link{
+    color: white !important;
+}
+.navbar-collapse{
+    margin-right: 3%;
+}
+
+
+
+/* Color de fondo para las cartas */
+.card{
+    background-color: rgba(255,255,255,0.7);
+}
+
+@media only screen and (max-width: 992px){
+    html {
+        font-size: 1rem;
+    }
+    footer{
+        position: static;
+        margin-top: auto;
+    }
+    .espacio2{
+        height: 0px;
+    }
+
+    .espacio{
+        height: 40px;
+    }
+}
+
+@media only screen and (max-width: 768px){
+    html {
+        font-size: 0.9rem;
+    }
+    footer{
+        /*position: static;*/
+        padding-top: auto;
+        margin-top: auto;
+    }
+    .espacio2{
+        height: 100px;
+    }
+    form input{
+        width: 100px !important;
+    }
+    form-inline{
+        width: 150px !important;
+        min-width: 150px;
+        max-width: 150px;
+    }
+}
+
+@media only screen and (max-width: 576px){
+    html{
+        font-size: 0.70rem;
+    }
+
+    .logo{
+        height: 75px;
+        width: 107px;
+    }
+    #logoeidiomas{
+        width: 170px;
+    }
+    .bandera{
+        width: 40px;
+        height: 23px;
+    }
+    
+    .espacio{
+        height: 80px;
+    }
+    
+    .espacio2{
+        height: 113px;
+    }
+    
+    .navbar li a{
+        padding-left: 5px !important;
+    }
+}
+
+body *{
+    margin-right: 0 !important;
+}
+
+.navbar{}
+

@@ -11,6 +11,17 @@ html{
     font-size: 1.2rem;
 }
 
+body{
+    margin: 0;
+    padding: 0;
+    background-image: url("resources/portadacortada.jpg");
+
+    /* Center and scale the image nicely */
+    background-position: top;
+    background-repeat: space;
+    background-size: cover;
+}
+
 .logo{
     height: 140px;
     width: 190px;
@@ -24,35 +35,24 @@ html{
     width: 60px;
     margin-top: 10px;
 }
-body{
-    margin: 0;
-    padding: 0;
-    background-image: url("resources/portadacortada.jpg");
 
-    /* Center and scale the image nicely */
-    background-position: top;
-    background-repeat: space;
-    background-size: cover;
-}
-
-#fotoFondo{
-    margin: 0px;
-    width: 100%;
-    /* The image used */
-    background-image: url("resources/portadacortada.jpg");
-
-    /* Center and scale the image nicely */
-    background-position: top;
-    background-repeat: space;
-    background-size: auto;
-}
 header{
     background-image: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.2));
-    padding-bottom: 5px;
 }
 
+/* Quitarle el padding con el que viene automáticamente */
 .noMargin{
     padding: 0;
+}
+
+.fa-home{
+    display: inline !important;
+}
+
+.form-inline{
+    padding-bottom: 8px;
+    
+    
 }
 
 .espacio{
@@ -68,7 +68,8 @@ header{
 footer{
     background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.5));
     bottom: 0;
-    width: 100%;
+    color: white;
+    padding: 0 3%;
 }
 
 footer col-4{
@@ -81,16 +82,20 @@ footer col-8{
 
 
 /* Estilos para los colores de la barra de navegación */
-.navbar li a:hover{
+.navbar li:hover{
     background-color: #ae1212;
 }
 
 .active{
-    background-color: #0095DB;
+    background-color: #0095DB !important;
 }
 
 .dropdown-menu a:hover{
     background-color: #137519 !important;
+}
+.dropdown-menu a{
+    color: white !important;
+    font-size: 13px;
 }
 
 .navbar{
@@ -102,11 +107,6 @@ footer col-8{
 .nav-link{
     color: white !important;
 }
-.navbar-collapse{
-    margin-right: 3%;
-}
-
-
 
 /* Color de fondo para las cartas */
 .card{
@@ -117,10 +117,7 @@ footer col-8{
     html {
         font-size: 1rem;
     }
-    footer{
-        position: static;
-        margin-top: auto;
-    }
+    
     .espacio2{
         height: 0px;
     }
@@ -141,14 +138,6 @@ footer col-8{
     }
     .espacio2{
         height: 100px;
-    }
-    form input{
-        width: 100px !important;
-    }
-    form-inline{
-        width: 150px !important;
-        min-width: 150px;
-        max-width: 150px;
     }
 }
 
@@ -186,5 +175,12 @@ body *{
     margin-right: 0 !important;
 }
 
-.navbar{}
+/* Dar estilo a los inputs del formulario */
+.form-inline input[type=text]{
+        width: 220px !important;
+}
+
+.form-inline input[type=password]{
+        width: 170px !important;
+}
 

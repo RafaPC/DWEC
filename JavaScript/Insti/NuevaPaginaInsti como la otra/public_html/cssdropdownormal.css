@@ -108,7 +108,7 @@ body{
 
 
 /* BARRA DE NAVEGACIÓN + LOGIN*/
-.topnav {
+#topnav {
     display: flex;
     flex-direction: row;
     overflow: hidden;
@@ -127,12 +127,18 @@ body{
 }
 
 /* Cada link de la barra de navegación*/
-.topnav a {
+#topnav a {
     color: white;
     text-align: center;
     padding: 20px 16px;
     text-decoration: none;
     font-size: 23px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.dropbtn{
+        font-family: Arial, Helvetica, sans-serif;
+
 }
 
 /* Para que el icono siempre esté al lado del texto */
@@ -140,9 +146,13 @@ body{
     display: inline !important;
     cursor: pointer;
 }
+.fa-home{
+   display: inline !important;
+    cursor: pointer; 
+}
 
 /* Colorear los enlaces al pasar el ratón por encima*/
-.topnav a:hover {
+#topnav a:hover {
     background-color: #ae1212;
 }
 
@@ -168,16 +178,17 @@ body{
 }
 
 /* Aumenta el input de texto al hacer click en ellos */
-.topnav #inputTexto:focus{
+#topnav #inputTexto:focus{
     width: 180px;
 }
 
 /* Da estilo al input de contraseña */
-.topnav input[type=password]{
+#topnav input[type=password]{
     width: 100px;
 }
+
 /* Da estilo al boton del login */
-.topnav .login-container button {
+#topnav .login-container button {
     float: right;
     padding: 6px;
     margin-top: 8px;
@@ -191,13 +202,13 @@ body{
 }
 
 /* Colorea el boton de login al poner el cursor encima */
-.topnav .login-container button:hover {
+#topnav .login-container button:hover {
     background: #333333;
     color: white;
 }
 
 /* Pone el cursor como pointer al pasarlo por encima de un elemento que desplega un dropdown */
-.topnav dropdown, dropbtn:hover{
+#topnav dropdown, dropbtn:hover{
     cursor: pointer;
 }
 
@@ -232,14 +243,14 @@ body{
 .dropdown-content a {
     padding: 12px 16px;
     display: block;
-    text-align: left;
+    text-align: left !important;
     font-size: 21px;
     background-color: rgba(0,0,0,0.8);
 }
 
 /*Pinta cada elemento del dropdown al pasar el cursor por encima*/
 .dropdown-content a:hover {
-    background-color: #137519;    
+    background-color: #137519 !important;    
 }
 
 /* Cambia el display de none a block para mostrar el dropdown */
@@ -256,13 +267,13 @@ body{
 
 /* Add responsiveness - On small screens, display the navbar vertically instead of horizontally */
 /* Controla el formulario cuando la página está por debajo de 800 de ancho*/
-@media screen and (max-width: 850px) {
-    .topnav .login-container {
+@media screen and (max-width: 937px) {
+    #topnav .login-container {
         display: flex;
         float: none;
         flex-wrap: wrap;
     }
-    .topnav a, .topnav input, .topnav .login-container button {
+    #topnav a, #topnav input, #topnav .login-container button {
         /*-webkit-transition: width .0s ease-in-out;
         transition: width .0s ease-in-out;
         */
@@ -274,11 +285,11 @@ body{
     }
 
     /* Borde para separar los dos inputs */
-    .topnav input[type=text] {
+    #topnav input[type=text] {
         border: 1px solid #ccc; 
     }
 
-    .topnav .login-container button {
+    #topnav .login-container button {
         padding: 10px;
     }
 }
@@ -333,6 +344,7 @@ body{
 .texto{
     font-size: 1.2rem;
     margin-left: 6%;
+    margin-top: 3%;
 }
 
 footer{
@@ -355,19 +367,20 @@ footer div{
 
 
 /* Responsividad y esas cosas */
-@media only screen and (max-width: 850px){
-    .topnav a{
+/* Cuando baja el width de 850, cambiar el menu */
+@media only screen and (max-width: 937px){
+    #topnav a{
         display: block;
     }
     #barraNav{
         display: block;
     }
 
-    .topnav{
+    #topnav{
         height:auto;
     }
 
-    .topnav *{
+    #topnav *{
         width: 190px;
     }
 
@@ -438,12 +451,12 @@ POR
 FAVOR
 
  Active/current link */
-.topnav a.active{
+#topnav a.active{
     background-color: #0095DB;
     color: white;
 }
 
-.topnav .active{
+#topnav .active{
     background-color: #0095DB;
     color: white;
     cursor: pointer;

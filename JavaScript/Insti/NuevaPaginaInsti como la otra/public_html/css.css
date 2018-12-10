@@ -152,9 +152,15 @@ body{
 }
 
 /* Colorear los enlaces al pasar el ratón por encima*/
-#topnav a:hover {
-    background-color: #ae1212;
+#topnav a:hover, .dropdown:hover{
+    background-color: rgb(174,18,18);
 }
+
+#topnav a.active{
+    background-color: #0095DB;
+    color: white;
+}
+
 
 
 
@@ -250,8 +256,8 @@ body{
 }
 
 /*Pinta cada elemento del dropdown al pasar el cursor por encima*/
-.dropdown-content a:hover {
-    background-color: #137519 !important;    
+.dropdown-content a:hover { 
+    background-color: rgb(19,117,25) !important;
 }
 
 /* Cambia el display de none a block para mostrar el dropdown */
@@ -260,9 +266,6 @@ body{
 }
 
 /* Pinta el dropbtn mientras tengamos el raton encima de algun elemento del dropdown */
-.dropdown:hover{
-    background-color: #ae1212;
-}
 
 
 
@@ -442,9 +445,4 @@ footer div{
         height: 230px;
         width: 170px;
     }
-}
-
-#topnav a.active{
-    background-color: #0095DB;
-    color: white;
 }

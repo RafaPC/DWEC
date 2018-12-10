@@ -4,141 +4,91 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
-<html>
+<html lang="es">
     <head>
-        <title>TODO supply a title</title>
+        <title>I.E.S. Enrique Tierno Galván</title>
         <meta charset="UTF-8">
-        <link href="newcss.css" rel="stylesheet" type="text/css"/>
+        <link href="css.css" rel="stylesheet" type="text/css"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="shortcut icon" href="">
+        <link rel="shortcut icon" href="#">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" crossorigin="anonymous">
     </head>
     <body>
-        <div class="bgimagen">
-            <div class="bgcolor">
+        <header>
+            <div id="bgcolor">
                 <div id="filaFotos">
-                    <div id="logotierno">
-                        <img src="resources/logofinal.png" alt="logo" height="140" width="167">
+                    <img id="logoTierno" src="resources/logofinal.png" alt="logo">
+                    <div id="logoeidiomas">
+                        <a href="https://www.educa2.madrid.org/web/tiernogalvan">
+                            <img id="logoeducamadrid" src="resources/logo_educamadrid.png" alt="logo">
+                        </a>
+                        <div id="idiomas">
+                            <img class="bandera" src="resources/flag_es.png" alt="bandera de españa">
+                            <img class="bandera" src="resources/flag_en.png" alt="bandera de gran bretaña">
+                        </div>
                     </div>
-                    <a href="https://www.educa2.madrid.org/web/tiernogalvan">
-                        <img id="logoeducamadrid" src="resources/logo_educamadrid.png" alt="logo">
-                    </a>
-                    <p style="color:white; float:right">Idiomas</p>
                 </div>
-                <div class="topnav">
+                <div id="topnav">
                     <div id="barraNav">
-                        <ul>
-                            <li>
-                                <a class="active" href="#home">Home</a>
-                            </li>
-                            <li>
-                                <a href="#about">About</a>
-                            </li>
-                            <li>
-                                <a href="#contact" class="dropbtn">Contact</a>
-                            </li>
-                            <li>
-                                <div class="dropdown">
-                                    <button class="dropbtn">Dropdown<i></i></button>
-                                    <div class="dropdown-content">
-                                        <a href="#">Link 1</a>
-                                        <a href="#">Link 2</a>
-                                        <a class="lastContent" href="#">Link 3</a>  
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Dropdown
-                                </a>
-                                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </li>
-                        </ul>
+                        <a class="active" href="#home">
+                            <i class='fas fa-home' style='font-size:24px'></i>
+                        </a>
+                        <a href="#about">Alumnos</a>
+                        <div class="dropdown">
+                            <div class="dropbtn">Alumnos
+                                <i class="fas fa-sort-down" style="font-size:24px"></i>
+                            </div>
+                            <div class="dropdown-content">
+                                <a href="#">Faltas</a>
+                                <a href="#">Calificaciones</a>
+                                <a href="#">Trabajos enviados</a>  
+                            </div>
+                        </div>
+                        <a href="#contact" class="dropbtn">Contact</a>
                     </div>
                     <div class="login-container">
                         <form action="/action_page.php">
-                            <input type="text" placeholder="Usuario" name="username">
-                            <input type="text" placeholder="Contraseña" name="psw">
+                            <input id="inputTexto" type="text" placeholder="Usuario" name="username">
+                            <input type="password" placeholder="Contraseña" name="psw">
                             <button type="submit">Login</button>
                         </form>
                     </div>
                 </div> 
             </div>
+        </header>
+        <div id="cuadros">
             <div class="filaCuadros">
                 <div class="cuadro">
-                    <a href="#"><img class="imagenCuadro" src="resources/niños-estudiando.jpg" alt="algo"></a>
-                    <span class="titulo">Lorem ipsum dolor</span>
+                    <a href="#"><img class="imagenCuadro" src="resources/calendario2.jpg" alt="algo"></a>
+                    <span class="titulo">Calendario</span>
                     <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
                         Curabitur at est arcu. Phasellus euismod magna lacus.</p>
                 </div>
                 <div class="cuadro">
-                    <a href="#"><img class="imagenCuadro" src="resources/niños-estudiando.jpg" alt="algo"></a>
-                    <span class="titulo">Lorem ipsum dolor</span>
-                    <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
-                        Curabitur at est arcu. Phasellus euismod magna lacus.</p>
-                </div>
-                <div class="cuadro">
-                    <a href="#"><img class="imagenCuadro" src="resources/niños-estudiando.jpg" alt="algo"></a>
-                    <span class="titulo">Lorem ipsum dolor</span>
-                    <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
-                        Curabitur at est arcu. Phasellus euismod magna lacus.</p>
-                </div>
-                <div class="cuadro">
-                    <a href="#"><img class="imagenCuadro" src="resources/niños-estudiando.jpg" alt="algo"></a>
-                    <span class="titulo">Lorem ipsum dolor</span>
+                    <a href="#"><img class="imagenCuadro" src="resources/email2.jpg" alt="algo"></a>
+                    <span class="titulo">Email interno</span>
                     <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
                         Curabitur at est arcu. Phasellus euismod magna lacus.</p>
                 </div>
             </div>
-            <footer>
-                <div id="rowFooter">
-                    <div>Madrid, Comunidad de Madrid, Consejería de Educación.</div> 
-                    <div>2018 IES Enrique Tierno Galván</div>
+            <div class="filaCuadros">
+                <div class="cuadro">
+                    <a href="#"><img class="imagenCuadro" src="resources/fotocopias2.jpg" alt="algo"></a>
+                    <span class="titulo">Fotocopias</span>
+                    <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
+                        Curabitur at est arcu. Phasellus euismod magna lacus.</p>
                 </div>
-            </footer>
-        </div>
-
-
-
-        <!--div class="headerbg">
-            <img id="logotierno" src="resources/logofinal.png" height="150" width="150" alt="logo">
-            <a id="logoeducamadrid" href="https://www.educa2.madrid.org/web/tiernogalvan">
-                <img src="resources/logo_educamadrid.png" width="250" height="150">
-            </a>
-            <div class="caption">
-                <span class="border">IES TIERNO GALVAN Y ESO</span>
+                <div class="cuadro">
+                    <a href="#"><img class="imagenCuadro" src="resources/biblioteca2.jpg" alt="algo"></a>
+                    <span class="titulo">Biblioteca</span>
+                    <p class="texto">Lorem ipsum dolor sit amet, cotetur adipiscing elit. Morbi cursus metus lorem. 
+                        Curabitur at est arcu. Phasellus euismod magna lacus.</p>
+                </div>
             </div>
         </div>
-
-
-        <!nav>
-            <div style="clear:left" class="topnav">
-                <a class="active" href="#home">Home</a>
-                <a href="#about">About</a>
-                <a href="#contact" class="dropbtn">Contact</a>
-                <div class="dropdown">
-                    <button class="dropbtn">
-                        Dropdown
-                        <i></i>
-                    </button>
-                    <div class="dropdown-content">
-                        <a href="#">Link 1</a>
-                        <a href="#">Link 2</a>
-                        <a href="#">Link 3</a>  
-                    </div>
-                </div>
-                <div class="login-container">
-                    <form action="/action_page.php">
-                        <input type="text" placeholder="Usuario" name="username">
-                        <input type="text" placeholder="Nohay2sin3" name="psw">
-                        <button type="submit">Login</button>
-                    </form>
-                </div>
-            </div>
-        </nav--> 
+        <footer>
+            <div>Madrid, Comunidad de Madrid, Consejería de Educación.</div> 
+            <div>2018 IES Enrique Tierno Galván</div>
+        </footer>
     </body>
 </html>

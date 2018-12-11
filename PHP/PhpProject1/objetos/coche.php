@@ -83,7 +83,7 @@ print_r($miDeportivo);
 echo "<br>Se ha producido una venta<br>";
 Coche::$ventas++;
 echo "El total de ventas es: ". 
-		Coche::totY alVentas() . '<br>';
+Coche::totalVentas() . '<br>';
 
 
 ?>

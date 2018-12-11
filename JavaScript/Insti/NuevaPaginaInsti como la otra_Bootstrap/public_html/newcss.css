@@ -36,12 +36,8 @@ body{
     margin-top: 10px;
 }
 
-header{
+#myHeader{
     background-image: linear-gradient(rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.35),rgba(0,0,0,0.2));
-}
-
-/* Quitarle el padding con el que viene automáticamente */
-.noMargin{
     padding: 0;
 }
 
@@ -50,9 +46,7 @@ header{
 }
 
 .form-inline{
-    padding-bottom: 8px;
-    
-    
+    padding-bottom: 8px;  
 }
 
 .espacio{
@@ -65,18 +59,18 @@ header{
     height: 118px;
 }
 /* Footer */
-footer{
+#myFooter{
     background-image: linear-gradient(rgba(0,0,0,0.2),rgba(0,0,0,0.5));
     bottom: 0;
     color: white;
     padding: 0 3%;
 }
 
-footer col-4{
+#myFooter col-4{
     text-align: right;
 }
 
-footer col-8{
+#myFooter col-8{
     text-align: left;
 }
 
@@ -117,7 +111,7 @@ footer col-8{
     html {
         font-size: 1rem;
     }
-    
+
     .espacio2{
         height: 0px;
     }
@@ -131,7 +125,7 @@ footer col-8{
     html {
         font-size: 0.9rem;
     }
-    footer{
+    #myFooter{
         /*position: static;*/
         padding-top: auto;
         margin-top: auto;
@@ -157,15 +151,15 @@ footer col-8{
         width: 40px;
         height: 23px;
     }
-    
+
     .espacio{
         height: 80px;
     }
-    
+
     .espacio2{
         height: 113px;
     }
-    
+
     .navbar li a{
         padding-left: 5px !important;
     }
@@ -177,10 +171,10 @@ body *{
 
 /* Dar estilo a los inputs del formulario */
 .form-inline input[type=text]{
-        width: 220px !important;
+    width: 220px !important;
 }
 
 .form-inline input[type=password]{
-        width: 170px !important;
+    width: 170px !important;
 }
 

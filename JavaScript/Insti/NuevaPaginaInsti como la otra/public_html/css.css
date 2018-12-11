@@ -22,9 +22,7 @@ body{
     width: 100%;
 }
 
-
-/* HEADER */
-#bgcolor{
+header{
     display: flex;
     flex-direction: column;
     background-color: rgba(0,0,0,0.1);
@@ -266,9 +264,6 @@ body{
     display: block;
 }
 
-/* Pinta el dropbtn mientras tengamos el raton encima de algun elemento del dropdown */
-
-
 
 /* Add responsiveness - On small screens, display the navbar vertically instead of horizontally */
 /* Controla el formulario cuando la página está por debajo de 800 de ancho*/
@@ -351,7 +346,7 @@ body{
     margin-top: 3%;
 }
 
-footer{
+#rowFooter{
     height: 60px;
     width: 100%;
     background-image:linear-gradient(rgba(0,0,0,0.3),rgba(0,0,0,0.4),rgba(0,0,0,0.5));
@@ -363,7 +358,7 @@ footer{
     padding: 0 2%;
 }
 
-footer div{
+#rowFooter div{
     margin-top: 20px;
     display: inline-block;
     font-size: 22px;
@@ -388,11 +383,11 @@ footer div{
         width: 190px;
     }
 
-    footer div{
+    #rowFooter div{
         font-size: 19px;
     }
 
-    footer{
+    #rowFooter{
         background-image:linear-gradient(rgba(0,0,0,0.4),rgba(0,0,0,0.4),rgba(0,0,0,0.5));
     }
 
@@ -412,7 +407,7 @@ footer div{
 
 @media only screen and (max-width: 640px){
 
-    footer div{
+    #rowFooter div{
         font-size: 15px;
     }
 }

@@ -156,6 +156,7 @@ body{
     background-color: rgb(174,18,18);
 }
 
+/* Colorea los enlaces activos */
 #topnav a.active{
     background-color: #0095DB;
     color: white;

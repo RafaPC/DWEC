@@ -14,14 +14,14 @@ if($db->connect_error){
 }
 
 if($result = $db->query("SELECT * FROM programas ORDER BY codigo DESC")){
-$filaActual = 0;
-while($filaActual < $result->num_rows){
-	$fila = $result->fetch_assoc();
-	echo '<pre>';
-	print_r ($fila);
-	echo '</pre>';
-	$filaActual++;
-}
+    $filaActual = 0;
+        while($filaActual < $result->num_rows){
+            $fila = $result->fetch_assoc();
+            echo '<pre>';
+            print_r ($fila);
+            echo '</pre>';
+            $filaActual++;
+    }
 }
 
 //Cerramos conexiones

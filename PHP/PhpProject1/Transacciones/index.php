@@ -38,6 +38,7 @@ if ($db->query("INSERT INTO invitados (dni, nombre, apellidos, especialidad) VAL
 } else {
     echo 'Error: ' . $db->error;
 }
+$db->rollback();
 
 if ($result = $db->query("SELECT i.dni, i.nombre, i.apellidos, p.nombre FROM invitados i JOIN colaboran c ON (i.dni = c.dni_invitado) JOIN programas p ON(p.codigo = c.cod_programa);")) {
     $filaActual = 0;

@@ -43,10 +43,6 @@ if($db->connect_error){
 	echo '<h1>Se ha conectado a la base de datos</h1>';
 }
 
-$consulta = mysqli_real_query($db,"SELECT * FROM invitados");
-$resultado = mysqli_store_result($db);
-
-
 if($consulta = mysqli_real_query($db,"SELECT * FROM invitados")){
 $result = mysqli_store_result($db);
 

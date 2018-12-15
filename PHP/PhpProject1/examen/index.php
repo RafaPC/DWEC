@@ -8,7 +8,6 @@ if (isset($_POST['enviar'])) {
     $password = $_POST['password'];
 
     $numCodigo = validaUser($login, $password);
-    echo $numCodigo;
     switch ($numCodigo) {
 
         case constant('ERROR_NOREGISTRADO'):
@@ -30,23 +29,26 @@ if (isset($_POST['enviar'])) {
             break;
     }
 }
+include_once 'head.html';
 ?>
 
-<form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
-    <div>
-        <div>
-            <label>Login:</label>
-            <input type="text" name="login" value="">
-            <?php if ($errorLogin) echo '<label style="color:red">El login esta mal</label>'; ?>
-        </div>
-        <div>
-            <label>Password</label>
-            <input type="password" name="password" value="">
-            <?php if ($errorPassword) echo '<label style="color:red">La contraseña esta mal</label>'; ?>
-        </div>
-        <?php if ($errorExpiracion) echo '<label style="color:red">El usuario ya ha expirado</label>'; ?>
+<form id="formulario" method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]); ?>">
+            <div>
+                <div>
+                    <label for="login">Login:</label>
+                    <input type="text" name="login" id="login" value="">
+                    <?php if ($errorLogin) echo '<label style="color:red">El login esta mal</label>'; ?>
+                </div>
+                <div>
+                    <label for="password">Password</label>
+                    <input type="password" name="password" id="password" value="">
+                    <?php if ($errorPassword) echo '<label style="color:red">La contraseña esta mal</label>'; ?>
+                </div>
+                <?php if ($errorExpiracion) echo '<label style="color:red">El usuario ya ha expirado</label>'; ?>
 
-    </div>
+            </div>
 
-    <input type="submit" name="enviar" value="Continuar">
-</form>
+            <input type="submit" name="enviar" value="Continuar">
+        </form>
+    </body>
+</html>

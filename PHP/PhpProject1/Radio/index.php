@@ -13,14 +13,23 @@ if($db->connect_error){
 	echo '<h1>Se ha conectado a la base de datos</h1>';
 }
 
-if($result = $db->query("SELECT * FROM programas ORDER BY codigo DESC")){
-    $filaActual = 0;
-        while($filaActual < $result->num_rows){
-            $fila = $result->fetch_assoc();
+if($result = $db->query("SELECT * FROM programas")){
+    
+    //Empiezo por la última fila
+    $numFilas = $numFila = $result->num_rows;
+    
+//Hay x filas pero la última es x-1
+    $filaResta = 1;
+        while($numFila >= 0){
+            
+            $numFila = $numFilas - $filaResta;
+            $result->data_seek($numFila);
+            $fila = $result->fetch_row();
+            
             echo '<pre>';
             print_r ($fila);
             echo '</pre>';
-            $filaActual++;
+            $filaResta++;
     }
 }
 

@@ -29,11 +29,6 @@ function validaUser($login, $contrasena) {
         } else {
             return constant('ERROR_PASSWORD');
         }
-
-        //Otra forma
-        /*if (in_array($usuarios[$login], $contrasena)) {
-            
-        }*/
     } else {
         return constant('ERROR_NOREGISTRADO');
     }

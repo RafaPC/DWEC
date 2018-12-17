@@ -40,10 +40,10 @@ if ($db->query("INSERT INTO invitados (dni, nombre, apellidos, especialidad) VAL
 }
 $db->rollback();
 
-if ($result = $db->query("SELECT i.dni, i.nombre, i.apellidos, p.nombre FROM invitados i JOIN colaboran c ON (i.dni = c.dni_invitado) JOIN programas p ON(p.codigo = c.cod_programa);")) {
+if ($result = $db->query("SELECT i.nombre as invitado, p.nombre as programa FROM invitados i JOIN colaboran c ON (i.dni = c.dni_invitado) JOIN programas p ON(p.codigo = c.cod_programa);")) {
     $filaActual = 0;
     while ($filaActual < $result->num_rows) {
-        $fila = mysqli_fetch_array($result);
+        $fila = $result->fetch_array();
         echo '<pre>';
         print_r($fila);
         echo '</pre>';

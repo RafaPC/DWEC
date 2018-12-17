@@ -1,4 +1,5 @@
 <?php
+//RADIO
 include_once('head.html');
 $server = 'localhost';
 $user = 'root';
@@ -16,20 +17,19 @@ if($db->connect_error){
 if($result = $db->query("SELECT * FROM programas")){
     
     //Empiezo por la última fila
-    $numFilas = $numFila = $result->num_rows;
+    $numFila = $result->num_rows;
     
 //Hay x filas pero la última es x-1
     $filaResta = 1;
         while($numFila >= 0){
             
-            $numFila = $numFilas - $filaResta;
+            $numFila--;
             $result->data_seek($numFila);
             $fila = $result->fetch_row();
             
             echo '<pre>';
             print_r ($fila);
             echo '</pre>';
-            $filaResta++;
     }
 }
 
@@ -53,10 +53,10 @@ if($db->connect_error){
 }
 
 if($consulta = mysqli_real_query($db,"SELECT * FROM invitados")){
-$result = mysqli_store_result($db);
+$result = $db->store_result();
 
 $filaActual = 0;
-while($filaActual < mysqli_num_rows($result)){
+while($filaActual < $result->num_rows){
 	$fila = $result->fetch_assoc();
 	echo '<pre>';
 	print_r ($fila);
@@ -92,18 +92,18 @@ $insertColaboracion = "INSERT INTO colaboran (cod_programa, dni_invitado, fecha)
 if(mysqli_multi_query($db,$queryEspecialidades.$queryNombres.$queryEdificios.$insertInvitado.$insertColaboracion)){
     do {
         /* almacenar primer juego de resultados */
-        if ($result = mysqli_store_result($db)) {
-            while ($row = mysqli_fetch_row($result)) {
+        if ($result = $db->store_result()) {
+            while ($row = $result->fetch_row()) {
                 printf("%s\n", $row[0]);
             }
-            mysqli_free_result($result);
+            $result->free_result();
         }
         /* mostrar divisor */
-        if (mysqli_more_results($db)) {
+        if ($db->more_results()) {
             printf("-----------------\n<br>");
 			echo 'entra';        
 		}
-    } while (mysqli_next_result($db));
+    } while ($db->next_result());
 }
 //Cerramos conexiones
 $db->close();

@@ -6,7 +6,7 @@
 "use strict";
 
 class Arrives {
-    arrives;
+    arrives
 
     getArrives() {
         return arrives;

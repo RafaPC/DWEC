@@ -5,10 +5,10 @@
  */
 
 class Stop {
-    stopId;
-    name;
-    latitude;
-    longitude;
+    stopId
+    name
+    latitude
+    longitude
 
     getStopId() {
         return stopId;

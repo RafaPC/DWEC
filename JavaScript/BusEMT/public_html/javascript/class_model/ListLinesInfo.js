@@ -7,7 +7,7 @@
 
 class ListsLinesInfo {
 
-    resultValues;
+    resultValues
 
     getResultValues() {
         return resultValues;

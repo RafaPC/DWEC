@@ -5,14 +5,14 @@
  */
 "use strict";
 class Arrive {
-    stopId;
-    lineId;
-    destination;
-    latitude;
-    longitude;
-    busPositionType;
-    busTimeLeft;
-    busId;
+    stopId
+    lineId
+    destination
+    latitude
+    longitude
+    busPositionType
+    busTimeLeft
+    busId
 
     getStopId() {
         return stopId;

@@ -6,11 +6,11 @@
 
 
 class ListLineInfo {
-    groupNumber;
-    line;
-    label;
-    nameA;
-    nameB;
+    groupNumber
+    line
+    label
+    nameA
+    nameB
 
     getGroupNumber() {
         return groupNumber;

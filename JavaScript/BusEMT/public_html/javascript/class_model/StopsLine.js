@@ -6,7 +6,7 @@
 
 
 class StopsList {
-    stopsList;
+    stopsList
 
     getStopsList() {
         return stopsList;

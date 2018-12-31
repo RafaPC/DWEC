@@ -35,24 +35,64 @@
                 // New map
                 map = new google.maps.Map(document.getElementById('map'), options);
 
-                //Marcadores
+                // Listen for click on map
+                google.maps.event.addListener(map, 'click', function (event) {
+                    addMarker({coords: event.latLng});
+                });
+
+                //Marcador
                 var marker = new google.maps.Marker({
                     position: {lat: 40.41349419, lng: -3.68133283},
                     map: map
-                    //icon: "resources/front-bus.png"
+                            //icon: "resources/front-bus.png"
                 });
+
             }
 
             function loadStops(stopsLine) {
+                var polyCoords = [];
+                for (var i = 0; i < stopsLine.length; i++) {
 
-                for (stop in stopsLine) {
+                    var stop = stopsLine[i];
+
+                    // Meto las coordenadas en array          
+                    polyCoords.push({lat: stop.latitude, lng: stop.longitude});
+
                     var marker = new google.maps.Marker({
                         position: {lat: stop.latitude, lng: stop.longitude},
                         map: map
                     });
+
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: stop.name
+                    });
+
+                    marker.addListener('click', function () {
+                        infoWindow.open(map, marker);
+                    });
                 }
-                google.maps.event.trigger(map, 'resize');
+
+                // Opciones del polyline
+                var polyLine = new google.maps.Polyline({
+                    path: polyCoords,
+                    strokeColor: '#FF0000',
+                    strokeWieght: 5
+                });
+
+                polyLine.setMap(map);
             }
+
+            /*function addMarker(props) {
+             var marker = new google.maps.Marker({
+             position: props.coords,
+             map: map
+             });
+             
+             if (props.iconImage) {
+             marker.setIcon(props.iconImage);
+             }
+             }*/
+
         </script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCPSHcS_xzbFeu36FX9EOZ45cf9Y-oVfvM&callback=initMap"
         async defer></script>

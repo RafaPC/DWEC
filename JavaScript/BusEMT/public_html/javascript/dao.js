@@ -6,7 +6,6 @@
 window.onload = getListLines();
 
 function getListLines() {
-    alert("entra");
     var fecha = new Date();
     var fechaActual = fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
 
@@ -122,7 +121,7 @@ function getStopsLine(line) {
         // codigo a ejecutar si la peticion es satisfactoria;
         // la respuesta es pasada como argumento a la funcion
         success: function (resultado) {
-            stopsLine = resultado['stop'];
+            stopsLine = resultado.stop;
             loadStops(stopsLine);
         },
 

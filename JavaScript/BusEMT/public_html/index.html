@@ -75,7 +75,6 @@
             function loadStops(stopsLine) {
                 var polyCoords = [];
                 var markers = [];
-                var infoWindows = [];
                 for (var i = 0; i < stopsLine.length; i++) {
 
                     var stop = stopsLine[i];
@@ -87,7 +86,7 @@
                         position: {lat: stop.latitude, lng: stop.longitude},
                         map: map
                     });
-                    
+
                     var infoWindow = new google.maps.InfoWindow({
                         content: stop.name
                     });

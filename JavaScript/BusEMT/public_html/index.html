@@ -75,6 +75,8 @@
             function loadStops(stopsLine) {
                 var polyCoords = [];
                 var markers = [];
+                var infos = [];
+
                 for (var i = 0; i < stopsLine.length; i++) {
 
                     var stop = stopsLine[i];
@@ -84,31 +86,60 @@
 
                     var marker = new google.maps.Marker({
                         position: {lat: stop.latitude, lng: stop.longitude},
-                        map: map
+                        map: map,
+                        title: i
                     });
-
                     var infoWindow = new google.maps.InfoWindow({
                         content: stop.name
                     });
 
-                    marker.addListener('click', function () {
+                    markers[i] = marker;
+                    infos[i] = infoWindow;
+                    var pruebas = [];
+                    pruebas[0] = marker;
+
+                    marker.addListener('click', function (event) {
+                        //Se donde ha clickado y se donde está cada marker
+                        var i;
+                        for (i = 0, found = false; i < markers.length && found === false; i++) {
+                            if (event.latLng === markers[i].position) {
+                                found = true;
+                            }
+                        }
+                        i--;
+                        //El for suma una ultima vez i antes de salir porque no cumple el condicional                
+                        var marker = markers[i];
+                        var infoWindow = infos[i];
                         infoWindow.open(map, marker);
                     });
 
-                    if (i === 3) {
-                        stop = stopsLine[3];
-                        var marker3 = new google.maps.Marker({
-                            position: {lat: stop.latitude, lng: stop.longitude},
-                            map: map
-                        });
+                    /*marker.addListener('click', function () {
+                     //this                
+                     var marker = new google.maps.Marker({
+                     position: {lat: stop.latitude, lng: stop.longitude},
+                     map: map
+                     });
+                     
+                     var infoWindow = new google.maps.InfoWindow({
+                     content: stop.name
+                     });
+                     infoWindow.open(map, marker);
+                     });*/
 
-                        var infoWindow3 = new google.maps.InfoWindow({
-                            content: stop.name
-                        });
-                        marker3.addListener('click', function () {
-                            infoWindow3.open(map, marker3);
-                        });
-                    }
+                    /*if (i === 3) {
+                     stop = stopsLine[3];
+                     var marker3 = new google.maps.Marker({
+                     position: {lat: stop.latitude, lng: stop.longitude},
+                     map: map
+                     });
+                     
+                     var infoWindow3 = new google.maps.InfoWindow({
+                     content: stop.name
+                     });
+                     marker3.addListener('click', function () {
+                     infoWindow3.open(map, marker3);
+                     });
+                     }*/
                 }
 
 

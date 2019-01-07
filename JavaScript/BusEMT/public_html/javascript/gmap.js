@@ -91,6 +91,7 @@ function loadStops(stopsLine) {
             var marker = markers[i];
             var infoWindow = infos[i];
             infoWindow.open(map, marker);
+            getArrivesStop(stopsLine[i].stopId);
         });
     }
 
@@ -105,6 +106,23 @@ function loadStops(stopsLine) {
     polyLine.setMap(map);
 }
 
+
+function loadArrives(arrives){
+    var llegada;
+    $("#llegadas").html("");
+    for (i = 0; i < arrives.length; i++) {
+        var arrive = arrives[i];
+        if(arrive.busTimeLeft === 999999){
+            llegada = ' +20 minutos';
+        }else if(arrive.busTimeLeft === 0){
+            llegada = ' en parada';
+        }else{
+            var minutos = Math.round(arrive.busTimeLeft/60);
+            llegada = ' ' + minutos + ' min';
+        }
+        $("#llegadas").html($("#llegadas").html() + "<div id=\"" + arrive.busId + "\" class=\"llegada\">" + "Bus " + arrive.busId + " - Línea" + arrive.lineId + " Tiempo: " + llegada + "</div>");
+    }
+}
 /*function addMarker(props) {
  var marker = new google.maps.Marker({
  position: props.coords,

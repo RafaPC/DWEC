@@ -64,6 +64,6 @@ html, body {
   padding: 12px 16px;
 }
 
-#myDropdown div:hover {background-color: #ddd;}
+.dropdown-content div:hover {background-color: #ddd;}
 
 .show {display: block;}

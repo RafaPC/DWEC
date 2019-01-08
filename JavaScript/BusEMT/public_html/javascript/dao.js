@@ -137,7 +137,6 @@ function getStopsLine(line) {
 
         // codigo a ejecutar sin importar si la peticion falla o no
         complete: function (xhr, status) {
-            alert('Peticion realizada');
         }
     });
 
@@ -180,7 +179,6 @@ function getArrivesStop(idStop) {
 
         // codigo a ejecutar sin importar si la peticion falla o no
         complete: function (xhr, status) {
-            alert('Peticion realizada');
         }
     });
 
@@ -228,7 +226,6 @@ function getArriveStop(idStop, idBus) {
 
         // codigo a ejecutar sin importar si la peticion falla o no
         complete: function (xhr, status) {
-            alert('Peticion realizada');
         }
     });
 

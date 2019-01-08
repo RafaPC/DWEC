@@ -43,8 +43,3 @@ window.onclick = function (event) {
     }
 };
 
-$(document).on("click", ".linea", function () {
-    var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
-    getStopsLine(clickedBtnID);
-});
-

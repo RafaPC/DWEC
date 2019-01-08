@@ -12,6 +12,15 @@ var buses = [];
 var idStop;
 var idBus;
 var markerBus = null;
+var intervalBus;
+var selectedMarker = -1;
+var selectedLine;
+
+$(document).on("click", ".linea", function () {
+    var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
+    selectedLine = clickedBtnID;
+    getStopsLine(clickedBtnID);
+});
 
 function initMap() {
     // Map Options
@@ -27,23 +36,6 @@ function initMap() {
     google.maps.event.addListener(map, 'click', function (event) {
         addMarker({coords: event.latLng});
     });
-
-    //Marcador
-    var marker = new google.maps.Marker({
-        position: {lat: 40.41349419, lng: -3.68133283},
-        map: map
-                //icon: "resources/front-bus.png"
-    });
-
-    var infoWindow = new google.maps.InfoWindow({
-        content: "retiro"
-    });
-
-    marker.addListener('click', function () {
-        infoWindow.open(map, marker);
-    });
-
-
 }
 
 function loadStops(stopsLine) {
@@ -98,8 +90,10 @@ function loadStops(stopsLine) {
             //El for suma una ultima vez i antes de salir porque no cumple el condicional                
             var marker = markers[i];
             var infoWindow = infos[i];
-            //Pasa medio segundo
-            infoWindow.close(map, marker);
+            //Mantiene el infowindow si está seleccionado
+            if (marker.getIcon() !== "resources/blue-icon.png") {
+                infoWindow.close(map, marker);
+            }
         });
 
         marker.addListener('click', function (event) {
@@ -110,7 +104,15 @@ function loadStops(stopsLine) {
                     found = true;
                 }
             }
+            if (selectedMarker !== -1) {
+                markers[selectedMarker].setIcon("");
+                infos[selectedMarker].close();
+            }
+            document.getElementById("dropdown-llegadas").style.display = "inline-block";
+            document.getElementById("btn-llegadas").innerHTML = "Llegadas " + selectedLine;
             i--;
+            selectedMarker = i;
+            markers[i].setIcon("resources/blue-icon.png");
             idStop = stopsLine[i].stopId;
             getArrivesStop(stopsLine[i].stopId);
         });
@@ -150,20 +152,21 @@ function loadArrives(arrives) {
 $(document).on("click", ".llegada", function () {
     var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
     idBus = clickedBtnID;
-    setInterval(getArriveStop(idStop, idBus), 6000);
-    setInterval(function(){alert('va bene');}, 3000);
+    getArriveStop(idStop, idBus);
+    intervalBus = setInterval(function () {
+        getArriveStop(idStop, idBus);
+    }, 4000);
 });
 
 function ponerBus(arrive) {
     if (markerBus !== null) {
-        map.removeMarker = markerBus;
-    alert("se borra marker anterior");
+        markerBus.setMap(null);
     }
-    alert('se pone marker');
     markerBus = new google.maps.Marker({
         position: {lat: arrive.latitude, lng: arrive.longitude},
         map: map,
-        label: 'BUS'
+        label: 'BUS',
+        icon: 'resources/front-bus.png'
     });
 
 }

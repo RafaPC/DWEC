@@ -48,8 +48,3 @@ $(document).on("click", ".linea", function () {
     getStopsLine(clickedBtnID);
 });
 
-$(document).on("click", ".llegada", function () {
-    var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
-    getStopsLine(clickedBtnID);
-    alert(buses[clickedBtnID]);
-});

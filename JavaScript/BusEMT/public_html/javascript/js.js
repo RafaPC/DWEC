@@ -51,4 +51,5 @@ $(document).on("click", ".linea", function () {
 $(document).on("click", ".llegada", function () {
     var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
     getStopsLine(clickedBtnID);
+    alert(buses[clickedBtnID]);
 });

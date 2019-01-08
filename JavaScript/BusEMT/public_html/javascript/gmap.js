@@ -8,6 +8,7 @@
 var map;
 var markers = [];
 var infos = [];
+var buses = [];
 
 function initMap() {
     // Map Options
@@ -31,13 +32,6 @@ function initMap() {
                 //icon: "resources/front-bus.png"
     });
 
-    var marker1 = new google.maps.Marker({
-        position: {lat: 40.4040200, lng: -3.6882300},
-        map: map
-                //icon: "resources/front-bus.png"
-    });
-
-
     var infoWindow = new google.maps.InfoWindow({
         content: "retiro"
     });
@@ -46,19 +40,12 @@ function initMap() {
         infoWindow.open(map, marker);
     });
 
-    var infoWindow1 = new google.maps.InfoWindow({
-        content: "atocha"
-    });
-
-    marker1.addListener('click', function () {
-        infoWindow1.open(map, marker1);
-    });
 
 }
 
 function loadStops(stopsLine) {
     var polyCoords = [];
-
+    buses = stopsLine;
     for (var i = 0; i < stopsLine.length; i++) {
 
         var stop = stopsLine[i];

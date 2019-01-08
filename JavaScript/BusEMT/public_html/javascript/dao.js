@@ -3,6 +3,8 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+var lines = [];
+
 window.onload = getListLines();
 
 function getListLines() {
@@ -29,8 +31,8 @@ function getListLines() {
         // codigo a ejecutar si la peticion es satisfactoria;
         // la respuesta es pasada como argumento a la funcion
         success: function (resultado) {
-            listLines = resultado['resultValues'];
-            loadList(listLines);
+            lines = resultado['resultValues'];
+            loadList(lines);
         },
 
         // codigo a ejecutar si la peticion falla;

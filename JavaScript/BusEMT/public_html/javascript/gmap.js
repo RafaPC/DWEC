@@ -11,14 +11,16 @@ var infos = [];
 var buses = [];
 var idStop;
 var idBus;
+var polyLine = null;
 var markerBus = null;
-var intervalBus;
+var intervalBus = null;
 var selectedMarker = -1;
 var selectedLine;
 
 $(document).on("click", ".linea", function () {
     var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
     selectedLine = clickedBtnID;
+    clearMarkers();
     getStopsLine(clickedBtnID);
 });
 
@@ -120,7 +122,7 @@ function loadStops(stopsLine) {
 
 
     // Opciones del polyline
-    var polyLine = new google.maps.Polyline({
+    polyLine = new google.maps.Polyline({
         path: polyCoords,
         strokeColor: '#FF0000',
         strokeWieght: 5
@@ -165,12 +167,25 @@ function ponerBus(arrive) {
     markerBus = new google.maps.Marker({
         position: {lat: arrive.latitude, lng: arrive.longitude},
         map: map,
-        label: 'BUS',
         icon: 'resources/front-bus.png'
     });
-
 }
-;
+function clearMarkers() {
+    if (intervalBus !== null) {
+        clearInterval(intervalBus);
+    }
+    if (markerBus !== null) {
+        markerBus.setMap(null);
+    }
+    if (polyLine !== null) {
+        polyLine.setMap(null);
+    }
+    if (markers.length !== 0) {
+        for (var i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+    }
+}
 /*function addMarker(props) {
  var marker = new google.maps.Marker({
  position: props.coords,

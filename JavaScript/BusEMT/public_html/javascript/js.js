@@ -4,11 +4,7 @@
  * and open the template in the editor.
  */
 
-function loadList(listLines) {
-    for (i = 0; i < listLines.length; i++) {
-        $("#myDropdown").html($("#myDropdown").html() + "<div id=\"" + listLines[i].line + "\" class=\"linea\">" + "Línea " + listLines[i].label + " " + listLines[i].nameA + " - " + listLines[i].nameB + "</div>");
-    }
-}
+
 
 /* When the user clicks on the button, 
  toggle between hiding and showing the dropdown content */

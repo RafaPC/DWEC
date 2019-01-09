@@ -6,6 +6,8 @@
 
 
 var map;
+var lines = [];
+var stops = [];
 var markers = [];
 var infos = [];
 var buses = [];
@@ -16,6 +18,14 @@ var markerBus = null;
 var intervalBus = null;
 var selectedMarker = -1;
 var selectedLine;
+
+
+function loadList(listLines) {
+    lines = listLines;
+    for (i = 0; i < listLines.length; i++) {
+        $("#myDropdown").html($("#myDropdown").html() + "<div id=\"" + listLines[i].line + "\" class=\"linea\">" + "Línea " + listLines[i].label + " " + listLines[i].nameA + " - " + listLines[i].nameB + "</div>");
+    }
+}
 
 $(document).on("click", ".linea", function () {
     var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
@@ -41,6 +51,7 @@ function initMap() {
 }
 
 function loadStops(stopsLine) {
+    stops = stopsLine;
     var polyCoords = [];
     buses = stopsLine;
     for (var i = 0; i < stopsLine.length; i++) {
@@ -110,13 +121,14 @@ function loadStops(stopsLine) {
                 markers[selectedMarker].setIcon("");
                 infos[selectedMarker].close();
             }
-            document.getElementById("dropdown-llegadas").style.display = "inline-block";
-            document.getElementById("btn-llegadas").innerHTML = "Llegadas " + selectedLine;
             i--;
             selectedMarker = i;
-            markers[i].setIcon("resources/blue-icon.png");
-            idStop = stopsLine[i].stopId;
-            getArrivesStop(stopsLine[i].stopId);
+            document.getElementById("dropdown-llegadas").style.display = "inline-block";
+            document.getElementById("btn-llegadas").innerHTML = "Llegadas " + stopsLine[selectedMarker].name;
+
+            markers[selectedMarker].setIcon("resources/blue-icon.png");
+            idStop = stopsLine[selectedMarker].stopId;
+            getArrivesStop(stopsLine[selectedMarker].stopId);
         });
     }
 

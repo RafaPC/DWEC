@@ -145,7 +145,7 @@ function loadArrives(arrives) {
     var llegada;
     $("#llegadas").html("");
     for (i = 0; i < arrives.length; i++) {
-        buses[arrives[i].busId] = arrives[i];
+        //buses[arrives[i].busId] = arrives[i];
         var arrive = arrives[i];
         if (arrive.busTimeLeft === 999999) {
             llegada = ' +20 minutos';

@@ -1,12 +1,10 @@
-/* 
+ /* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-var lines = [];
-
 window.onload = getListLines();
-
+var lines = [];
 function getListLines() {
     var fecha = new Date();
     var fechaActual = fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
@@ -101,6 +99,13 @@ function getLineInfo(line) {
     return listLines;
 }
 
+//function getLineInfo(line){
+//    for(var i = 0; i < line.length; i++){
+//        if(){
+//            
+//        }
+//    }
+//}
 function getStopsLine(line) {
 
     $.ajax({

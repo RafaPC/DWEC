@@ -3,14 +3,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-
 var map;
 var lines = [];
 var stops = [];
 var markers = [];
 var infos = [];
-var buses = [];
 var idStop;
 var idBus;
 var polyLine = null;
@@ -51,9 +48,9 @@ function initMap() {
 }
 
 function loadStops(stopsLine) {
+    document.getElementById("dropdown-llegadas").style.display = "none";
     stops = stopsLine;
     var polyCoords = [];
-    buses = stopsLine;
     for (var i = 0; i < stopsLine.length; i++) {
 
         var stop = stopsLine[i];

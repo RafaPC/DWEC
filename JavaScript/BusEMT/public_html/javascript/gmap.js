@@ -60,7 +60,8 @@ function loadStops(stopsLine) {
 
         var marker = new google.maps.Marker({
             position: {lat: stop.latitude, lng: stop.longitude},
-            map: map
+            map: map,
+            title: stop.stopId
         });
         var infoWindow = new google.maps.InfoWindow({
             content: stop.name
@@ -108,7 +109,7 @@ function loadStops(stopsLine) {
 
         marker.addListener('click', function (event) {
             //Se donde ha clickado y se donde está cada marker
-            var i;
+            var i, found;
             for (i = 0, found = false; i < markers.length && found === false; i++) {
                 if (event.latLng === markers[i].position) {
                     found = true;
@@ -125,7 +126,7 @@ function loadStops(stopsLine) {
 
             markers[selectedMarker].setIcon("resources/blue-icon.png");
             idStop = stopsLine[selectedMarker].stopId;
-            getArrivesStop(stopsLine[selectedMarker].stopId);
+            //getArrivesStop(stopsLine[selectedMarker].stopId);
         });
     }
 
@@ -139,6 +140,11 @@ function loadStops(stopsLine) {
 
     polyLine.setMap(map);
 }
+
+$(document).on("click", "#btn-llegadas", function () {
+    //getArrivesStop(markers[selectedMarker].title);
+    getArrivesStop(idStop);
+});
 
 
 function loadArrives(arrives) {

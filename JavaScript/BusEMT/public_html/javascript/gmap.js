@@ -15,21 +15,7 @@ var markerBus = null;
 var intervalBus = null;
 var selectedMarker = -1;
 var selectedLine;
-
-
-function loadList(listLines) {
-    lines = listLines;
-    for (i = 0; i < listLines.length; i++) {
-        $("#myDropdown").html($("#myDropdown").html() + "<div id=\"" + listLines[i].line + "\" class=\"linea\">" + "Línea " + listLines[i].label + " " + listLines[i].nameA + " - " + listLines[i].nameB + "</div>");
-    }
-}
-
-$(document).on("click", ".linea", function () {
-    var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
-    selectedLine = clickedBtnID;
-    clearMarkers();
-    getStopsLine(clickedBtnID);
-});
+var loadInterval;
 
 function initMap() {
     // Map Options
@@ -45,6 +31,13 @@ function initMap() {
     google.maps.event.addListener(map, 'click', function (event) {
         addMarker({coords: event.latLng});
     });
+}
+
+function loadList(listLines) {
+    lines = listLines;
+    for (i = 0; i < listLines.length; i++) {
+        $("#myDropdown").html($("#myDropdown").html() + "<div id=\"" + lines[i].line + "\" class=\"linea\">" + "Línea " + lines[i].label + "<br>" + lines[i].nameA + " - " + lines[i].nameB + "</div>");
+    }
 }
 
 function loadStops(stopsLine) {
@@ -126,8 +119,9 @@ function loadStops(stopsLine) {
 
             markers[selectedMarker].setIcon("resources/blue-icon.png");
             idStop = stopsLine[selectedMarker].stopId;
-            //getArrivesStop(stopsLine[selectedMarker].stopId);
         });
+        $("#loading-msg").css('display', 'none');
+        clearInterval(loadInterval);
     }
 
 
@@ -140,12 +134,6 @@ function loadStops(stopsLine) {
 
     polyLine.setMap(map);
 }
-
-$(document).on("click", "#btn-llegadas", function () {
-    //getArrivesStop(markers[selectedMarker].title);
-    getArrivesStop(idStop);
-});
-
 
 function loadArrives(arrives) {
     var llegada;
@@ -161,10 +149,43 @@ function loadArrives(arrives) {
             var minutos = Math.round(arrive.busTimeLeft / 60);
             llegada = ' ' + minutos + ' min';
         }
-        $("#llegadas").html($("#llegadas").html() + "<div id=\"" + arrive.busId + "\" class=\"llegada\">" + "Bus " + arrive.busId + " - Línea" + arrive.lineId + " Tiempo: " + llegada + "</div>");
+        var nameA, nameB;
+        for (var i = 0; i < lines.length; i++) {
+            //lineId = String.format("%03d", parseInt(arrive.lineId));
+            var lineId = arrive.lineId;
+            var length = lineId.length;
+//            alert('numero: ' + lineId + ' - longitud:' + length);
+            var threeDigitNo = "";
+            if (length === 1)
+            {
+                threeDigitNo = 00 + lineId;
+            }
+            if (length === 2)
+            {
+                threeDigitNo = 0 + lineId;
+            }
+            if (lines[i].line === threeDigitNo) {
+                nameA = lines[i].nameA;
+                nameB = lines[i].nameB;
+            }
+        }
+        nameA = nameA[0] + nameA.substr(1).toLowerCase();
+        nameB = nameB[0] + nameB.substr(1).toLowerCase();
+        $("#llegadas").html($("#llegadas").html() + "<div id=\"" + arrive.busId + "\" class=\"llegada\">" + "Bus " + arrive.busId + "<br>Línea " + nameA + " - " + nameB + "<br>Tiempo: " + llegada + "</div>");
     }
 }
 
+$(document).on("click", "#btn-llegadas", function () {
+    getArrivesStop(idStop);
+});
+
+$(document).on("click", ".linea", function () {
+    setLoading();
+    var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
+    selectedLine = clickedBtnID;
+    clearMarkers();
+    getStopsLine(clickedBtnID);
+});
 
 $(document).on("click", ".llegada", function () {
     var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
@@ -185,6 +206,7 @@ function ponerBus(arrive) {
         icon: 'resources/front-bus.png'
     });
 }
+
 function clearMarkers() {
     if (intervalBus !== null) {
         clearInterval(intervalBus);
@@ -201,6 +223,20 @@ function clearMarkers() {
         }
     }
 }
+
+function setLoading() {
+    $("#loading-msg").css('display', 'block');
+    loadInterval = window.setInterval(function () {
+        $("#loading-msg").html('Loading.');
+        window.setTimeout(function(){$("#loading-msg").html('Loading..');}, 500);
+        window.setTimeout(function(){$("#loading-msg").html('Loading...');}, 800);
+    }, 1300);
+    $("#loading-msg").html('Loading.');
+    window.setTimeout(function(){$("#loading-msg").html('Loading..');}, 500);
+    window.setTimeout(function(){$("#loading-msg").html('Loading...');}, 800);
+    
+}
+
 /*function addMarker(props) {
  var marker = new google.maps.Marker({
  position: props.coords,

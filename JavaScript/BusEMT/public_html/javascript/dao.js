@@ -4,8 +4,8 @@
  * and open the template in the editor.
  */
 window.onload = getListLines();
-var lines = [];
-function getListLines() {
+
+ function getListLines() {
     var fecha = new Date();
     var fechaActual = fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
 
@@ -29,8 +29,7 @@ function getListLines() {
         // codigo a ejecutar si la peticion es satisfactoria;
         // la respuesta es pasada como argumento a la funcion
         success: function (resultado) {
-            lines = resultado['resultValues'];
-            loadList(lines);
+            loadList(resultado['resultValues']);
         },
 
         // codigo a ejecutar si la peticion falla;
@@ -51,7 +50,7 @@ function getLineInfo(line) {
     var fecha = new Date();
     var fechaActual = fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
     var listLines;
-
+    
     $.ajax({
         // la URL para la peticion
         url: 'https://openbus.emtmadrid.es:9443/emt-proxy-server/last/bus/GetListLines.php',
@@ -95,17 +94,8 @@ function getLineInfo(line) {
             alert('Peticion realizada');
         }
     });
-
-    return listLines;
 }
 
-//function getLineInfo(line){
-//    for(var i = 0; i < line.length; i++){
-//        if(){
-//            
-//        }
-//    }
-//}
 function getStopsLine(line) {
 
     $.ajax({
@@ -189,6 +179,7 @@ function getArrivesStop(idStop) {
 
     return arrives;
 }
+
 function getArriveStop(idStop, idBus) {
     $.ajax({
         // la URL para la peticion

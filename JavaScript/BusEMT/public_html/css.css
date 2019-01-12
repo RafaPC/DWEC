@@ -71,3 +71,11 @@ html, body {
 #dropdown-llegadas{
     display: none;
 }
+#loading-msg{
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: none;
+    background-color: white;
+    padding: 3px;
+}

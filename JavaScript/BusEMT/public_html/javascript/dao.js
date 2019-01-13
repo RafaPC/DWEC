@@ -1,11 +1,11 @@
- /* 
+/* 
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 window.onload = getListLines();
 
- function getListLines() {
+function getListLines() {
     var fecha = new Date();
     var fechaActual = fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
 
@@ -46,56 +46,6 @@ window.onload = getListLines();
     });
 }
 
-function getLineInfo(line) {
-    var fecha = new Date();
-    var fechaActual = fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
-    var listLines;
-    
-    $.ajax({
-        // la URL para la peticion
-        url: 'https://openbus.emtmadrid.es:9443/emt-proxy-server/last/bus/GetListLines.php',
-
-        // la informacion a enviar
-        // (tambien es posible utilizar una cadena de datos)
-        data: {idClient: 'WEB.SERV.rafitap.c@hotmail.com',
-            passKey: '84802663-D65C-4C6B-8372-0E8206AB6808',
-            SelectDate: fechaActual,
-            Lines: line
-        },
-
-        // especifica si sera una peticion POST o GET
-        type: 'POST',
-
-        // el tipo de informaciÃ³n que se espera de respuesta
-        dataType: 'json',
-
-        // codigo a ejecutar si la peticion es satisfactoria;
-        // la respuesta es pasada como argumento a la funcion
-        success: function (resultado) {
-            alert('Success');
-            listLines = resultado['resultValues'];
-
-            for (i = 0; i < listLines.length; i++) {
-                $("#selectLine").html($("#selectLine").html() + "<option value=\"" + listLines[i].label + "\">" + listLines[i].nameA + "</option>");
-            }
-
-        },
-
-        // codigo a ejecutar si la peticion falla;
-        // son pasados como argumentos a la funciÃ³n
-        // el objeto de la peticion en crudo y codigo de estatus de la peticion
-        error: function (xhr, status) {
-            alert('Disculpe, existia un problema');
-            listLines = null;
-        },
-
-        // codigo a ejecutar sin importar si la peticion falla o no
-        complete: function (xhr, status) {
-            alert('Peticion realizada');
-        }
-    });
-}
-
 function getStopsLine(line) {
 
     $.ajax({
@@ -127,19 +77,15 @@ function getStopsLine(line) {
         // el objeto de la peticion en crudo y codigo de estatus de la peticion
         error: function (xhr, status) {
             alert('Disculpe, existia un problema');
-            listLines = null;
         },
 
         // codigo a ejecutar sin importar si la peticion falla o no
         complete: function (xhr, status) {
         }
     });
-
-    return listLines;
 }
 
 function getArrivesStop(idStop) {
-
     $.ajax({
         // la URL para la peticion
         url: 'https://openbus.emtmadrid.es:9443/emt-proxy-server/last/geo/GetArriveStop.php',
@@ -204,12 +150,12 @@ function getArriveStop(idStop, idBus) {
             arrives = resultado.arrives;
             var encontrado = false;
             var i;
-            for (i = 0; i < arrives.length && encontrado === false; i++){
-                if(arrives[i].busId === idBus){
+            for (i = 0; i < arrives.length && encontrado === false; i++) {
+                if (arrives[i].busId === idBus) {
                     encontrado = true;
                 }
             }
-            ponerBus(arrives[i]);        
+            ponerBus(arrives[i]);
         },
 
         // codigo a ejecutar si la peticion falla;
@@ -217,14 +163,11 @@ function getArriveStop(idStop, idBus) {
         // el objeto de la peticion en crudo y codigo de estatus de la peticion
         error: function (xhr, status) {
             alert('Disculpe, existia un problema');
-            listLines = null;
         },
 
         // codigo a ejecutar sin importar si la peticion falla o no
         complete: function (xhr, status) {
         }
     });
-
-    return arrives;
 }
 

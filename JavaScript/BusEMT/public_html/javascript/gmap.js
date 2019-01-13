@@ -138,40 +138,56 @@ function loadStops(stopsLine) {
 function loadArrives(arrives) {
     var llegada;
     $("#llegadas").html("");
-    for (i = 0; i < arrives.length; i++) {
-        //buses[arrives[i].busId] = arrives[i];
-        var arrive = arrives[i];
-        if (arrive.busTimeLeft === 999999) {
-            llegada = ' +20 minutos';
-        } else if (arrive.busTimeLeft === 0) {
-            llegada = ' en parada';
-        } else {
-            var minutos = Math.round(arrive.busTimeLeft / 60);
-            llegada = ' ' + minutos + ' min';
+    if (arrives === undefined) {
+        $("#llegadas").html("<div>No hay ningún bus disponible</div>");
+    } else {
+        for (i = 0; i < arrives.length; i++) {
+            //buses[arrives[i].busId] = arrives[i];
+            var arrive = arrives[i];
+            if (arrive.busTimeLeft === 999999) {
+                llegada = ' +20 minutos';
+            } else if (arrive.busTimeLeft === 0) {
+                llegada = ' en parada';
+            } else {
+                var minutos = Math.round(arrive.busTimeLeft / 60);
+                llegada = ' ' + minutos + ' min';
+            }
+            var nameA, nameB;
+            
+            //AQUI HAY QUE CAMBIAR ALGO
+            for (var i = 0; i < lines.length; i++) {
+                var singleDigitId = arrive.lineId;
+                var arriveLineId = arrive.lineId;
+                if ($.isNumeric(singleDigitId)) {
+                    arriveLineId = "";
+                    var length = singleDigitId.length;
+
+                    if (length === 1)
+                    {
+                        arriveLineId = 00 + singleDigitId;
+                    }
+                    if (length === 2)
+                    {
+                        arriveLineId = 0 + singleDigitId;
+                    }
+                    if (lines[i].line === arriveLineId) {
+                        nameA = lines[i].nameA;
+                        nameB = lines[i].nameB;
+                    }
+
+                } else {
+                    if (lines[i].label === arriveLineId) {
+                        nameA = lines[i].nameA;
+                        nameB = lines[i].nameB;
+                    }
+                }
+
+
+            }
+            nameA = nameA[0] + nameA.substr(1).toLowerCase();
+            nameB = nameB[0] + nameB.substr(1).toLowerCase();
+            $("#llegadas").html($("#llegadas").html() + "<div id=\"" + arrive.busId + "\" class=\"llegada\">" + "Bus " + arrive.busId + "<br>Línea " + nameA + " - " + nameB + "<br>Tiempo: " + llegada + "</div>");
         }
-        var nameA, nameB;
-        for (var i = 0; i < lines.length; i++) {
-            //lineId = String.format("%03d", parseInt(arrive.lineId));
-            var lineId = arrive.lineId;
-            var length = lineId.length;
-//            alert('numero: ' + lineId + ' - longitud:' + length);
-            var threeDigitNo = "";
-            if (length === 1)
-            {
-                threeDigitNo = 00 + lineId;
-            }
-            if (length === 2)
-            {
-                threeDigitNo = 0 + lineId;
-            }
-            if (lines[i].line === threeDigitNo) {
-                nameA = lines[i].nameA;
-                nameB = lines[i].nameB;
-            }
-        }
-        nameA = nameA[0] + nameA.substr(1).toLowerCase();
-        nameB = nameB[0] + nameB.substr(1).toLowerCase();
-        $("#llegadas").html($("#llegadas").html() + "<div id=\"" + arrive.busId + "\" class=\"llegada\">" + "Bus " + arrive.busId + "<br>Línea " + nameA + " - " + nameB + "<br>Tiempo: " + llegada + "</div>");
     }
 }
 
@@ -228,13 +244,21 @@ function setLoading() {
     $("#loading-msg").css('display', 'block');
     loadInterval = window.setInterval(function () {
         $("#loading-msg").html('Loading.');
-        window.setTimeout(function(){$("#loading-msg").html('Loading..');}, 500);
-        window.setTimeout(function(){$("#loading-msg").html('Loading...');}, 800);
+        window.setTimeout(function () {
+            $("#loading-msg").html('Loading..');
+        }, 500);
+        window.setTimeout(function () {
+            $("#loading-msg").html('Loading...');
+        }, 800);
     }, 1300);
     $("#loading-msg").html('Loading.');
-    window.setTimeout(function(){$("#loading-msg").html('Loading..');}, 500);
-    window.setTimeout(function(){$("#loading-msg").html('Loading...');}, 800);
-    
+    window.setTimeout(function () {
+        $("#loading-msg").html('Loading..');
+    }, 500);
+    window.setTimeout(function () {
+        $("#loading-msg").html('Loading...');
+    }, 800);
+
 }
 
 /*function addMarker(props) {

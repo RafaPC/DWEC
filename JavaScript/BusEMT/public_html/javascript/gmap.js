@@ -31,6 +31,9 @@ function initMap() {
     google.maps.event.addListener(map, 'click', function (event) {
         addMarker({coords: event.latLng});
     });
+    if ($.isNumeric('N74')) {
+        alert('pues entra');
+    }
 }
 
 function loadList(listLines) {
@@ -120,8 +123,7 @@ function loadStops(stopsLine) {
             markers[selectedMarker].setIcon("resources/blue-icon.png");
             idStop = stopsLine[selectedMarker].stopId;
         });
-        $("#loading-msg").css('display', 'none');
-        clearInterval(loadInterval);
+        stopLoading();
     }
 
 
@@ -141,7 +143,7 @@ function loadArrives(arrives) {
     if (arrives === undefined) {
         $("#llegadas").html("<div>No hay ningún bus disponible</div>");
     } else {
-        for (i = 0; i < arrives.length; i++) {
+        for (var i = 0; i < arrives.length; i++) {
             //buses[arrives[i].busId] = arrives[i];
             var arrive = arrives[i];
             if (arrive.busTimeLeft === 999999) {
@@ -152,46 +154,71 @@ function loadArrives(arrives) {
                 var minutos = Math.round(arrive.busTimeLeft / 60);
                 llegada = ' ' + minutos + ' min';
             }
-            var nameA, nameB;
-            
-            //AQUI HAY QUE CAMBIAR ALGO
-            for (var i = 0; i < lines.length; i++) {
-                var singleDigitId = arrive.lineId;
-                var arriveLineId = arrive.lineId;
-                if ($.isNumeric(singleDigitId)) {
-                    arriveLineId = "";
-                    var length = singleDigitId.length;
+            var nameA, nameB, idArrive;
 
-                    if (length === 1)
-                    {
-                        arriveLineId = 00 + singleDigitId;
-                    }
-                    if (length === 2)
-                    {
-                        arriveLineId = 0 + singleDigitId;
-                    }
-                    if (lines[i].line === arriveLineId) {
-                        nameA = lines[i].nameA;
-                        nameB = lines[i].nameB;
-                    }
+            if ($.isNumeric(arrive.lineId)) {
+                idArrive = parseInt(arrive.lineId);
+            } else {
+                var length = arrive.lineId.length;
 
+                if (length === 1) {
+                    idArrive = "00" + arrive.lineId;
+                }
+                if (length === 2) {
+                    idArrive = "0" + arrive.lineId;
                 } else {
-                    if (lines[i].label === arriveLineId) {
-                        nameA = lines[i].nameA;
-                        nameB = lines[i].nameB;
-                    }
+                    idArrive = arrive.lineId;
+                }
+            }
+
+            var found = false;
+            for (var j = 0; j < lines.length && !found; j++) {
+//                var singleDigitId = arrive.lineId;
+//                var arriveLineId = arrive.lineId;
+//                if ($.isNumeric(singleDigitId)) {
+//                    arriveLineId = "";
+//                    var length = singleDigitId.length;
+//
+//                    if (length === 1)
+//                    {
+//                        arriveLineId = "00" + singleDigitId;
+//                    }
+//                    if (length === 2)
+//                    {
+//                        arriveLineId = "0" + singleDigitId;
+//                    }
+//                    if (lines[i].line == arriveLineId) {
+//                        nameA = lines[i].nameA;
+//                        nameB = lines[i].nameB;
+//                    }
+//
+//                } else {
+//                    if (lines[i].label === arriveLineId) {
+//                        nameA = lines[i].nameA;
+//                        nameB = lines[i].nameB;
+//                    }
+//                }
+                if (idArrive === parseInt(lines[j].line || lines[i].label === idArrive)) {
+                    nameA = lines[j].nameA;
+                    nameB = lines[j].nameB;
+                    found = true;
+                    nameA = nameA[0] + nameA.substr(1).toLowerCase();
+                    nameB = nameB[0] + nameB.substr(1).toLowerCase();
+                    $("#llegadas").html($("#llegadas").html() + "<div id=\"" + arrive.busId + "\" class=\"llegada\">" + "Bus " + arrive.busId + "<br>Línea " + nameA + " - " + nameB + "<br>Tiempo: " + llegada + "</div>");
                 }
 
-
+//                if (parseInt(lines[i].line) === idArrive || lines[i].label === idArrive){
+//                    nameA = lines[i].nameA;
+//                    nameB = lines[i].nameB;
+//                }
             }
-            nameA = nameA[0] + nameA.substr(1).toLowerCase();
-            nameB = nameB[0] + nameB.substr(1).toLowerCase();
-            $("#llegadas").html($("#llegadas").html() + "<div id=\"" + arrive.busId + "\" class=\"llegada\">" + "Bus " + arrive.busId + "<br>Línea " + nameA + " - " + nameB + "<br>Tiempo: " + llegada + "</div>");
         }
     }
+    stopLoading();
 }
 
 $(document).on("click", "#btn-llegadas", function () {
+    setLoading();
     getArrivesStop(idStop);
 });
 
@@ -213,6 +240,7 @@ $(document).on("click", ".llegada", function () {
 });
 
 function ponerBus(arrive) {
+    //If there is already a bus marker it's deleted by just setting it's map to null
     if (markerBus !== null) {
         markerBus.setMap(null);
     }
@@ -261,13 +289,18 @@ function setLoading() {
 
 }
 
-/*function addMarker(props) {
- var marker = new google.maps.Marker({
- position: props.coords,
- map: map
- });
- 
- if (props.iconImage) {
- marker.setIcon(props.iconImage);
- }
- }*/
+function stopLoading() {
+    clearInterval(loadInterval);
+    $("#loading-msg").css('display', 'none');
+}
+
+//function addMarker(props) {
+//    var marker = new google.maps.Marker({
+//        position: props.coords,
+//        map: map
+//    });
+//
+//    if (props.iconImage) {
+//        marker.setIcon(props.iconImage);
+//    }
+//}

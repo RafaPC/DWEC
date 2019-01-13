@@ -28,8 +28,21 @@ function dropdown2() {
     document.getElementById("llegadas").classList.toggle("show");
 }
 
+//window.onclick = function (event) {
+//    if (!event.target.matches('.dropbtn')) {
+//        var dropdowns = document.getElementsByClassName("dropdown-content");
+//        for (var i = 0; i < dropdowns.length; i++) {
+//            var openDropdown = dropdowns[i];
+//            if (openDropdown.classList.contains('show')) {
+//                openDropdown.classList.remove('show');
+//            }
+//        }
+//    }
+//};
+
 window.onclick = function (event) {
-    if (!event.target.matches('.dropbtn')) {
+    alert('entra');
+    if (event.target.matches('.dropbtn')) {
         var dropdowns = document.getElementsByClassName("dropdown-content");
         for (var i = 0; i < dropdowns.length; i++) {
             var openDropdown = dropdowns[i];
@@ -40,3 +53,8 @@ window.onclick = function (event) {
     }
 };
 
+//$(document).on("click", ".dropbtn", function () {
+//    if ($("#myDropdown").classList.contains('show')) {
+//        $("#myDropdown").classList.remove('show');
+//    }
+//});

@@ -5,6 +5,9 @@
  */
 window.onload = getListLines();
 
+var busLatitude = null;
+var busLongitude = null;
+
 function getListLines() {
     var fecha = new Date();
     var fechaActual = fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
@@ -85,7 +88,7 @@ function getStopsLine(line) {
     });
 }
 
-function getArrivesStop(idStop) {
+function getArrivesFromStop(idStop) {
     $.ajax({
         // la URL para la peticion
         url: 'https://openbus.emtmadrid.es:9443/emt-proxy-server/last/geo/GetArriveStop.php',
@@ -122,11 +125,9 @@ function getArrivesStop(idStop) {
         complete: function (xhr, status) {
         }
     });
-
-    return arrives;
 }
 
-function getArriveStop(idStop, idBus) {
+function getArriveFromStop(idStop, idBus) {
     $.ajax({
         // la URL para la peticion
         url: 'https://openbus.emtmadrid.es:9443/emt-proxy-server/last/geo/GetArriveStop.php',
@@ -148,14 +149,21 @@ function getArriveStop(idStop, idBus) {
         // la respuesta es pasada como argumento a la funcion
         success: function (resultado) {
             arrives = resultado.arrives;
-            var encontrado = false;
+            var found = false;
             var i;
-            for (i = 0; i < arrives.length && encontrado === false; i++) {
+            for (i = 0; i < arrives.length && !found; i++) {
                 if (arrives[i].busId === idBus) {
-                    encontrado = true;
+                    found = true;
                 }
             }
-            ponerBus(arrives[i]);
+            i--;
+
+            // Only calls 'putBusMarker' if the bus has changed the position from the last time it was called
+            if (!(busLatitude === arrives[i].latitude && busLongitude === arrives[i].longitude)) {
+                busLatitude = arrives[i].latitude;
+                busLongitude = arrives[i].longitude;
+                putBusMarker(arrives[i]);
+            }
         },
 
         // codigo a ejecutar si la peticion falla;

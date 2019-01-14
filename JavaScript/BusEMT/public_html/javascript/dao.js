@@ -9,41 +9,29 @@ var busLatitude = null;
 var busLongitude = null;
 
 function getListLines() {
-    var fecha = new Date();
-    var fechaActual = fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
+    var date = new Date();
+    var actualDate = date.getDate() + '/' + (date.getMonth() + 1) + '/' + date.getFullYear();
 
     $.ajax({
-        // la URL para la peticion
         url: 'https://openbus.emtmadrid.es:9443/emt-proxy-server/last/bus/GetListLines.php',
 
-        // la informacion a enviar
-        // (tambien es posible utilizar una cadena de datos)
         data: {idClient: 'WEB.SERV.rafitap.c@hotmail.com',
             passKey: '84802663-D65C-4C6B-8372-0E8206AB6808',
-            SelectDate: fechaActual
+            SelectDate: actualDate
         },
 
-        // especifica si sera una peticion POST o GET
         type: 'POST',
 
-        // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
 
-        // codigo a ejecutar si la peticion es satisfactoria;
-        // la respuesta es pasada como argumento a la funcion
-        success: function (resultado) {
-            loadList(resultado['resultValues']);
+        success: function (result) {
+            loadLines(result.resultValues);
         },
 
-        // codigo a ejecutar si la peticion falla;
-        // son pasados como argumentos a la funciÃ³n
-        // el objeto de la peticion en crudo y codigo de estatus de la peticion
         error: function (xhr, status) {
             alert('Disculpe, existia un problema');
-            return null;
         },
 
-        // codigo a ejecutar sin importar si la peticion falla o no
         complete: function (xhr, status) {
         }
     });
@@ -52,128 +40,94 @@ function getListLines() {
 function getStopsLine(line) {
 
     $.ajax({
-        // la URL para la peticion
         url: 'https://openbus.emtmadrid.es:9443/emt-proxy-server/last/geo/GetStopsLine.php',
 
-        // la informacion a enviar
-        // (tambien es posible utilizar una cadena de datos)
         data: {idClient: 'WEB.SERV.rafitap.c@hotmail.com',
             passKey: '84802663-D65C-4C6B-8372-0E8206AB6808',
             line: line
         },
 
-        // especifica si sera una peticion POST o GET
         type: 'POST',
 
-        // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
 
-        // codigo a ejecutar si la peticion es satisfactoria;
-        // la respuesta es pasada como argumento a la funcion
-        success: function (resultado) {
-            stopsLine = resultado.stop;
+        success: function (result) {
+            stopsLine = result.stop;
             loadStops(stopsLine);
         },
 
-        // codigo a ejecutar si la peticion falla;
-        // son pasados como argumentos a la funciÃ³n
-        // el objeto de la peticion en crudo y codigo de estatus de la peticion
         error: function (xhr, status) {
             alert('Disculpe, existia un problema');
         },
 
-        // codigo a ejecutar sin importar si la peticion falla o no
         complete: function (xhr, status) {
         }
     });
 }
 
-function getArrivesFromStop(idStop) {
+function getArrivalsFromStop(idStop) {
     $.ajax({
-        // la URL para la peticion
         url: 'https://openbus.emtmadrid.es:9443/emt-proxy-server/last/geo/GetArriveStop.php',
 
-        // la informacion a enviar
-        // (tambien es posible utilizar una cadena de datos)
         data: {idClient: 'WEB.SERV.rafitap.c@hotmail.com',
             passKey: '84802663-D65C-4C6B-8372-0E8206AB6808',
             idStop: idStop
         },
 
-        // especifica si sera una peticion POST o GET
         type: 'POST',
 
-        // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
 
-        // codigo a ejecutar si la peticion es satisfactoria;
-        // la respuesta es pasada como argumento a la funcion
-        success: function (resultado) {
-            arrives = resultado.arrives;
-            loadArrives(arrives);
+        success: function (result) {
+            arrivals = result.arrives;
+            loadArrivals(arrivals);
         },
 
-        // codigo a ejecutar si la peticion falla;
-        // son pasados como argumentos a la funciÃ³n
-        // el objeto de la peticion en crudo y codigo de estatus de la peticion
         error: function (xhr, status) {
             alert('Disculpe, existia un problema');
-            listLines = null;
         },
 
-        // codigo a ejecutar sin importar si la peticion falla o no
         complete: function (xhr, status) {
         }
     });
 }
 
-function getArriveFromStop(idStop, idBus) {
+function getArrivalFromStop(idStop, idBus) {
     $.ajax({
-        // la URL para la peticion
         url: 'https://openbus.emtmadrid.es:9443/emt-proxy-server/last/geo/GetArriveStop.php',
 
-        // la informacion a enviar
-        // (tambien es posible utilizar una cadena de datos)
         data: {idClient: 'WEB.SERV.rafitap.c@hotmail.com',
             passKey: '84802663-D65C-4C6B-8372-0E8206AB6808',
             idStop: idStop
         },
 
-        // especifica si sera una peticion POST o GET
         type: 'POST',
 
-        // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
 
-        // codigo a ejecutar si la peticion es satisfactoria;
-        // la respuesta es pasada como argumento a la funcion
-        success: function (resultado) {
-            arrives = resultado.arrives;
+        success: function (result) {
+            arrivals = result.arrives;
             var found = false;
             var i;
-            for (i = 0; i < arrives.length && !found; i++) {
-                if (arrives[i].busId === idBus) {
+            for (i = 0; i < arrivals.length && !found; i++) {
+                if (arrivals[i].busId === idBus) {
                     found = true;
                 }
             }
             i--;
 
             // Only calls 'putBusMarker' if the bus has changed the position from the last time it was called
-            if (!(busLatitude === arrives[i].latitude && busLongitude === arrives[i].longitude)) {
-                busLatitude = arrives[i].latitude;
-                busLongitude = arrives[i].longitude;
-                putBusMarker(arrives[i]);
+            if (!(busLatitude === arrivals[i].latitude && busLongitude === arrivals[i].longitude)) {
+                busLatitude = arrivals[i].latitude;
+                busLongitude = arrivals[i].longitude;
+                putBusMarker(arrivals[i]);
             }
         },
 
-        // codigo a ejecutar si la peticion falla;
-        // son pasados como argumentos a la funciÃ³n
-        // el objeto de la peticion en crudo y codigo de estatus de la peticion
         error: function (xhr, status) {
             alert('Disculpe, existia un problema');
         },
 
-        // codigo a ejecutar sin importar si la peticion falla o no
         complete: function (xhr, status) {
         }
     });

@@ -23,7 +23,7 @@ html, body {
     position: absolute;
     bottom: 0;
 }
-#prueba{
+#dropdowns{
     background-color: #ccccff;
 }
 
@@ -69,7 +69,7 @@ html, body {
 
 .show {display: block;}
 
-#dropdown-llegadas{
+#dropdown-arrivals{
     display: none;
 }
 #loading-msg{

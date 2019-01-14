@@ -38,7 +38,7 @@ function initMap() {
 function loadList(listLines) {
     lines = listLines;
     for (i = 0; i < listLines.length; i++) {
-        $("#myDropdown").html($("#myDropdown").html() + "<div id=\"" + lines[i].line + "\" class=\"linea\">" + "Línea " + lines[i].label + "<br>" + lines[i].nameA + " - " + lines[i].nameB + "</div>");
+        $("#myDropdown").html($("#myDropdown").html() + "<div id=\"" + lines[i].line + "\" class=\"linea\">" + "<strong>Línea " + lines[i].label + "</strong><br>" + lines[i].nameA + " - " + lines[i].nameB + "</div>");
     }
 }
 
@@ -174,7 +174,7 @@ function loadArrives(arrives) {
                     nameA = formatText(lines[j].nameA);
                     nameB = formatText(lines[j].nameB);
                     destination = formatText(arrive.destination);
-                    $("#llegadas").html($("#llegadas").html() + "<div id=\"" + arrive.busId + "\" class=\"llegada\">" + "Bus " + arrive.busId + "<br>Line: " + nameA + " - " + nameB + "<br>Towards: " + destination + "<br>Time: " + llegada + "</div>");
+                    $("#llegadas").html($("#llegadas").html() + "<div id=\"" + arrive.busId + "\" class=\"llegada\">" + "<strong>Bus " + arrive.busId + "</strong><br><strong>Line:</strong> " + nameA + " - " + nameB + "<br><strong>Towards:</strong> " + destination + "<br><strong>Time:</strong> " + llegada + "</div>");
                 }
             }
         }
@@ -204,6 +204,7 @@ $(document).on("click", ".llegada", function () {
     var clickedBtnID = $(this).attr('id'); // or var clickedBtnID = this.id
     idBus = clickedBtnID;
     getArriveFromStop(idStop, idBus);
+    map.setCenter(markerBus.getPosition());
     intervalBus = setInterval(function () {
         getArriveFromStop(idStop, idBus);
     }, 4000);
@@ -220,6 +221,7 @@ function putBusMarker(arrive) {
         map: map,
         icon: 'resources/front-bus.png'
     });
+    map.setCenter(markerBus.getPosition());
 }
 
 // Clears th polyLine, the bus marker bus and it's interval and the stops markers

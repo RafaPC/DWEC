@@ -11,7 +11,7 @@ class conectaBD {
     private $conn = null;
 
     public function __construct($database = 'test') {
-        $dsn = "mysql:host=localhost;dbname=$database";
+        $dsn = "mysql:host=localhost;dbname=$database;charset=UTF8";
         try {
             $this->conn = new PDO($dsn, 'root', '1234');
         } catch (PDOException $e) {
@@ -55,19 +55,18 @@ class conectaBD {
         if ($consulta) {
             echo '<table><tr>';
             $claves = array();
-            foreach ($consulta as $clave => $valor) {
-                echo "<th>$clave</th>";
+			foreach($consulta[0] as $clave => $valor){
                 array_push($claves, $clave);
+					echo "<td style=\"border: 1px solid black\">$clave</td>";
             }
             echo '</tr>';
             foreach ($consulta as $clave => $fila) {
                 echo '<tr>';
                 //echo "<tr><td>" . $fila['dni'] . "</td><td>" . $fila['nombre'] . "</td><td>" . $fila['apellidos'] . "</td><td>" . $fila['sueldo'] . "</td></tr>";
                 for ($i = 0; $i < count($claves); $i++) {
-                    
                     $x = $claves[$i];
-                    echo $claves[$i];
-                    echo "<td>$fila[$x]</td>";
+					//echo $claves[$i];
+                    echo "<td style=\"border: 1px solid black\">$fila[$x]</td>";
                 }
                 echo '</tr>';
             }
@@ -77,18 +76,17 @@ class conectaBD {
 
 }
 
-// ----------- Proceso principal
+include_once 'head.html';
+
 $obj = new conectaBD('radio'); // crea conexión para usar bd empresa
 $sql = 'SELECT * FROM presentadores';
 $resultado = $obj->consulta2($sql); // invoca método de objeto para ejecutar consulta
 $obj->muestra($resultado);
-//if ($resultado) {
-//    foreach ($resultado as $k => $fila) {
-//        if ($k == 0) {
-//            echo "<table><tr><th>Codigo</th><th>Apellido</th><th>Oficio</th></tr>";
-//        }
-//        echo "<tr><td>" . $fila['emp_no'] . "</td><td>" . $fila['apellido'] . "</td><td>" . $fila['oficio'] . "</td></tr>";
-//    }
-//    echo "</table>";
-//}
+
+$sql = 'SELECT * FROM programas';
+$resultado = $obj->consulta2($sql);
+$obj->muestra($resultado);
+
 ?>
+</body>
+</html>

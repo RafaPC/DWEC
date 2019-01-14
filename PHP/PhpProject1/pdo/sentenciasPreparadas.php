@@ -11,7 +11,7 @@ class conectaBD {
     private $conn = null;
 
     public function __construct($database = 'test') {
-        $dsn = "mysql:host=localhost;dbname=$database";
+        $dsn = "mysql:host=localhost;dbname=$database;charset=UTF8";
         try {
             $this->conn = new PDO($dsn, 'root', '1234');
         } catch (PDOException $e) {
@@ -27,7 +27,7 @@ class conectaBD {
         // Prepara y ejecuta consulta
         $datos = array(':par1' => $dni, ':par2' => $nombre, ':par3' => $apellidos, ':par4' => $sueldo);
         $sql = ' INSERT INTO presentadores (dni,nombre,apellidos,sueldo)
-VALUES ( :par1 , :par2 , :par3, :par4 , :par5) ';
+VALUES ( :par1 , :par2 , :par3, :par4) ';
         $q = $this->conn->prepare($sql);
         return $q->execute($datos);
     }
@@ -45,15 +45,57 @@ VALUES ( :par1 , :par2 , :par3, :par4 , :par5) ';
         $q = $this->conn->prepare($sql);
         return $q->execute($datos);
     }
+	
+	public function consulta2($orden) { // Ejecuta consulta y devuelve array de resultados o NULL sí falla ejecución
+        $filas = array();
+        $q = $this->conn->query($orden);
+        if ($q !== false) {
+            $q->setFetchMode(PDO::FETCH_ASSOC);
+
+            while ($r = $q->fetch()) {
+                $filas[] = $r;
+            }
+        }
+        return $filas;
+    }
+	
+	 public function muestra($consulta) {
+        if ($consulta) {
+            echo '<table><tr>';
+            $claves = array();
+			foreach($consulta[0] as $clave => $valor){
+                array_push($claves, $clave);
+					echo "<td style=\"border: 1px solid black\">$clave</td>";
+            }
+            echo '</tr>';
+            foreach ($consulta as $clave => $fila) {
+                echo '<tr>';
+                //echo "<tr><td>" . $fila['dni'] . "</td><td>" . $fila['nombre'] . "</td><td>" . $fila['apellidos'] . "</td><td>" . $fila['sueldo'] . "</td></tr>";
+                for ($i = 0; $i < count($claves); $i++) {
+                    $x = $claves[$i];
+					//echo $claves[$i];
+                    echo "<td style=\"border: 1px solid black\">$fila[$x]</td>";
+                }
+                echo '</tr>';
+            }
+            echo "</table>";
+        }
+    }
 
 }
 
-// ----------- Proceso principal
+include_once 'head.html';
+
 $obj = new conectaBD('radio'); // crea conexión para usar bd empresa
 if ($obj->insertaPresentador('43398576P', 'Luis', 'Dominguez', 2500) !== false) {
     echo 'se inserto con exito';
-    $obj->updatePresentador('43398576P','Luis','Dominguez',2500);
-} else {
+    $obj->updatePresentador('43398576P','Luis','NoDominguez',2500);
+	$obj->borraPresentador('11111111A');
+	$resultado = $obj->consulta2('SELECT * FROM presentadores');
+	$obj->muestra($resultado);
+	} else {
     echo 'fallo al insertar';
 }
 ?>
+</body>
+</html>

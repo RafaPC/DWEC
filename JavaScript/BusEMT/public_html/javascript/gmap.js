@@ -17,7 +17,7 @@ var selectedMarker = -1;
 var selectedLine;
 var loadInterval;
 
-// 
+// Sets the map options and creates the map
 function initMap() {
     // Map Options
     var options = {

@@ -8,34 +8,34 @@ and open the template in the editor.
 include_once('head.html');
 $crearTablaCliente = "CREATE TABLE clientes (
 	cl_dni varchar(9) NOT NULL,
-	cl_nom varchar(50) NOT NULL,
+	cl_nombre varchar(50) NOT NULL,
 	cl_dir varchar(60) NOT NULL,
 	cl_tel varchar(9) NOT NULL,
-	cl_ema varchar(65) NOT NULL,
-	cl_fna date DEFAULT NULL,
+	cl_email varchar(65) NOT NULL,
+	cl_fnac date DEFAULT NULL,
 	cl_fcl date NOT NULL,
-	cl_ncu tinyint(2) NOT NULL,
+	cl_ncuenta tinyint(2) NOT NULL,
 	cl_sal int(8) NOT NULL,
 	PRIMARY KEY (cl_dni)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 $crearTablaCuentas ="CREATE TABLE cuentas(
-	cu_ncu varchar(10) NOT NULL,
+	cu_ncuenta varchar(10) NOT NULL,
     cu_dn1 varchar(9) NOT NULL, 
     cu_dn2 varchar(9) DEFAULT NULL, 
     cu_sal int(8) NOT NULL,
-    PRIMARY KEY (cu_ncu),
+    PRIMARY KEY (cu_ncuenta),
 	FOREIGN KEY (cu_dn1) REFERENCES clientes(cl_dni),
 	FOREIGN KEY (cu_dn2) REFERENCES clientes (cl_dni)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 $crearTablaMovimientos = "CREATE TABLE movimientos (
-	mo_ncu varchar(10) NOT NULL, 
+	mo_ncuenta varchar(10) NOT NULL, 
 	mo_fec date NOT NULL, 
     mo_hor varchar(6) NOT NULL, 
-	mo_des varchar(80) NOT NULL,
-	mo_imp int(8) NOT NULL,
-	PRIMARY KEY (mo_ncu, mo_fec, mo_hor)
+	mo_descr varchar(80) NOT NULL,
+	mo_importe int(8) NOT NULL,
+	PRIMARY KEY (mo_ncuenta, mo_fec, mo_hor)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;"; 
 		
 // Conectar

@@ -8,4 +8,4 @@ window.onload = function(){
 //    alert(document.getElementById('prueba').appendChild);
 //    alert(document.body.appendChild());
     
-};
+}; 

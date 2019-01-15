@@ -10,7 +10,7 @@ function checkCuenta() {
         }
         if (acum % 9 === ultimoNumero) {
             alert(ncuenta);
-			var check = true;
+			var existe = false;
                 $.ajax({
                     // la URL para la peticion
                     url: 'comprobarNcuenta.php',
@@ -28,10 +28,11 @@ function checkCuenta() {
                     // codigo a ejecutar si la peticion es satisfactoria;
                     // la respuesta es pasada como argumento a la funcion
                     success: function (resultado) {
-                        alert('magia');
                         if(resultado.existe){
-                            alert('win');
-                        }
+                            existe = true;
+							return true;
+							}
+
                     },
 
                     // codigo a ejecutar si la peticion falla;
@@ -39,6 +40,7 @@ function checkCuenta() {
                     // el objeto de la peticion en crudo y codigo de estatus de la peticion
                     error: function (xhr, status) {
                         alert('Disculpe, existia un problema: ' + status);
+						return false;
                     },
 
                     // codigo a ejecutar sin importar si la peticion falla o no

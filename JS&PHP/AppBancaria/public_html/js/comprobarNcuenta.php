@@ -1,21 +1,24 @@
 <?php
+$myObj = new stdClass();
 $myObj->msg = 'eso no era';
-$numCuenta = $_POST['numCuenta'];
+
 if(isset($_POST['numCuenta'])){
+	$numCuenta = $_POST['numCuenta'];
+}else{
 	$myObj->msg = 'pues no se mete bien el post';
 }
-$selectCliente = "SELECT cl_ncuenta from clientes where cl_ncuenta = $ncuenta";
+$selectCuenta = "SELECT cu_ncuenta from cuentas where cu_ncuenta = '$numCuenta'";
 
 //abrir conexion
 $conex = new mysqli('localhost', 'root', '1234', 'banco');
 // Comprobar conexión
 if ($conex->connect_error) {
-    die('La conexión ha fallado, error número ' . $conex->connect_errno . ': ' . $conex->connect_error);
+    //die('La conexión ha fallado, error número ' . $conex->connect_errno . ': ' . $conex->connect_error);
 } else {
-    echo '<h1>Se ha conectado a la base de datos</h1>';
+    //echo '<h1>Se ha conectado a la base de datos</h1>';
 }
 //consulta
-$result = $conex->real_query($selectCliente);
+$result = $conex->real_query($selectCuenta);
 if($result){
 	$myObj->existe = true;	
 }else{

@@ -1,10 +1,13 @@
 <?php
+$myObj = new stdClass();
 $myObj->msg = 'eso no era';
-$numCuenta = $_POST['numCuenta'];
+
 if(isset($_POST['numCuenta'])){
+	$numCuenta = $_POST['numCuenta'];
+}else{
 	$myObj->msg = 'pues no se mete bien el post';
 }
-$selectCuenta = "SELECT cu_ncuenta from cuentas where cu_ncuenta = $ncuenta";
+$selectCuenta = "SELECT cu_ncuenta from cuentas where cu_ncuenta = '$numCuenta'";
 
 //abrir conexion
 $conex = new mysqli('localhost', 'root', '1234', 'banco');

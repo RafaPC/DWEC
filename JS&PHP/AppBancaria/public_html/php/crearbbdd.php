@@ -4,7 +4,6 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <?php
-
 include_once('head.html');
 $crearTablaCliente = "CREATE TABLE clientes (
 	cl_dni varchar(9) NOT NULL,

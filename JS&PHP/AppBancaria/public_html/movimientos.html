@@ -5,15 +5,22 @@
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
         <script src="js/js.js" type="text/javascript"></script>
+        <link href="css/movimientos.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
-        <form action="algo.php" onsubmit="checkCuenta()">
+        <form>
             <input type="text" name="ncuenta" value="0123456789" id="ncuenta">
-            <input type="date" name="fecha1" value="" id="fecha1">
-            <input type="date" name="fecha2" value="" id="fecha2">
-			<input type="submit">
+            <label id="ncuenta_err"></label>
+            <input type="date" name="fecha1" value="" id="fecha1" class="oculto">
+            <input type="date" name="fecha2" value="" id="fecha2" class="oculto">
         </form>
+        <button id="botonSiguiente">SIGUIENTE</button>
+        <script>
+            window.onload = function(){
+                $("#botonSiguiente").on("click",checkCuenta);
+            };
+        </script>
     </body>
 </html>

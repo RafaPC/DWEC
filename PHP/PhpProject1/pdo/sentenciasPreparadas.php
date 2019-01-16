@@ -34,16 +34,20 @@ VALUES ( :par1 , :par2 , :par3, :par4) ';
 
     public function updatePresentador($dni, $nombre, $apellidos, $sueldo) { // Prepara y ejecuta consulta
         $datos = array(':par1' => $dni, ':par2' => $nombre, ':par3' => $apellidos, ':par4' => $sueldo);
-        $sql = ' UPDATE empleados SET nombre= :par2, apellidos= :par3, sueldo= :par4 WHERE dni=:par1 ';
+        $sql = ' UPDATE presentadores SET nombre= :par2, apellidos= :par3, sueldo= :par4 WHERE dni=:par1 ';
         $q = $this->conn->prepare($sql);
         return $q->execute($datos);
     }
 
     public function borraPresentador($dni) { // Prepara y ejecuta consulta
         $datos = array(':par1' => $dni);
-        $sql = ' DELETE FROM presentadores WHERE dni=:par1 ';
-        $q = $this->conn->prepare($sql);
-        return $q->execute($datos);
+		//$sqlProg = ' DELETE FROM programas WHERE dni_presentador= :par1 ';
+		//$q = $this->conn->prepare($sqlProg);
+		//$q->execute($datos);
+        $sql = ' DELETE FROM presentadores WHERE dni= :par1 ';
+		$q = $this->conn->prepare($sql);
+		$q->execute($datos);
+		return $q->execute($datos);
     }
 	
 	public function consulta2($orden) { // Ejecuta consulta y devuelve array de resultados o NULL sí falla ejecución

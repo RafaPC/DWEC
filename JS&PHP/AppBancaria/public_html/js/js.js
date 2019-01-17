@@ -1,6 +1,4 @@
 'use strict';
-
-
 function checkCuenta() {
     var ncuenta = "" + document.getElementById('ncuenta').value;
     if (ncuenta.length !== 10) {
@@ -14,17 +12,13 @@ function checkCuenta() {
             $.ajax({
                 // la URL para la peticion
                 url: 'php/comprobarNcuenta.php',
-
                 // la informacion a enviar
                 // (tambien es posible utilizar una cadena de datos)
-                data: {numCuenta: ncuenta},
-
+                data: {numcuenta: ncuenta},
                 // especifica si sera una peticion POST o GET
                 type: 'POST',
-
                 // el tipo de informaciÃ³n que se espera de respuesta
                 dataType: 'json',
-
                 success: function (resultado) {
                     if (resultado.existe === true) {
                         $("#ncuenta").prop("disabled", true);
@@ -36,11 +30,9 @@ function checkCuenta() {
                         $("#ncuenta_err").html("No existe el n�mero de cuenta");
                     }
                 },
-
                 error: function (xhr, status) {
                     alert('Disculpe, existia un problema');
                 },
-
                 complete: function (xhr, status) {
                     alert('completada');
                 }
@@ -53,7 +45,7 @@ function checkFechas() {
     var ncuenta = $("#ncuenta").val();
     var fecha1 = $("#fecha1").val();
     var fecha2 = $("#fecha2").val();
-    if(fecha1 > fecha2){
+    if (new Date(fecha1).getTime() > new Date(fecha2).getTime()) {
         var x = fecha2;
         fecha2 = fecha1;
         fecha1 = x;
@@ -61,72 +53,57 @@ function checkFechas() {
     $.ajax({
         // la URL para la peticion
         url: 'php/getMovimientos.php',
-
         // la informacion a enviar
         // (tambien es posible utilizar una cadena de datos)
-        data: {numCuenta: ncuenta, fecha1: fecha1, fecha2: fecha2},
-
+        data: {numcuenta: ncuenta, fecha1: fecha1, fecha2: fecha2},
         // especifica si sera una peticion POST o GET
         type: 'POST',
-
         // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
-
         success: function (resultado) {
-            printMovimientos(resultado);
+            printMovimientos(resultado.resultado);
         },
-
         error: function (xhr, status) {
             alert('Disculpe, existia un problema');
         },
-
         complete: function (xhr, status) {
             alert('completada');
         }
     });
 }
 
-function printMovimientos($movimientos){
-    
-}
-
-function llamada() {
-    var ncuenta = "" + document.getElementById('ncuenta').value;
-    $.ajax({
-        // la URL para la peticion
-        url: 'php/comprobarNcuenta.php',
-
-        // la informacion a enviar
-        // (tambien es posible utilizar una cadena de datos)
-        data: {numCuenta: ncuenta},
-
-        // especifica si sera una peticion POST o GET
-        type: 'GET',
-
-        // el tipo de informaciÃ³n que se espera de respuesta
-        dataType: 'json',
-
-        // codigo a ejecutar si la peticion es satisfactoria;
-        // la respuesta es pasada como argumento a la funcion
-        success: function (resultado) {
-            checkCuenta2(resultado);
-            if (resultado.existe === true) {
-                alert("siguiente paso");
-            } else {
-                alert("repite");
+function printMovimientos(movimientos) {
+    var table = document.createElement("table");
+    document.body.appendChild(table);
+    var primeraVez = true;
+    for (var i = 0; i < movimientos.length; i++) {
+        var tr = document.createElement("tr");
+        if (primeraVez) {
+            var thead = table.appendChild(document.createElement("thead"));
+            table.appendChild(thead);
+            thead.appendChild(tr);
+        } else if (i === 1) {
+            var tbody = table.appendChild(document.createElement("tbody"));
+            table.appendChild(tbody);
+            tbody.appendChild(tr);
+        } else {
+            table.appendChild(tr);
+        }
+        for (var clave in movimientos[i]) {
+            var td = document.createElement("td");
+            var txt = document.createTextNode(movimientos[i][clave]);
+            if (primeraVez) {
+                td = document.createElement("th");
+                txt = document.createTextNode(clave);
             }
-        },
 
-        // codigo a ejecutar si la peticion falla;
-        // son pasados como argumentos a la funciÃ³n
-        // el objeto de la peticion en crudo y codigo de estatus de la peticion
-        error: function (xhr, status) {
-            alert('Disculpe, existia un problema: ' + status);
-        },
-
-        // codigo a ejecutar sin importar si la peticion falla o no
-        complete: function (xhr, status) {
-            alert('completada');
+            td.appendChild(txt);
+            tr.appendChild(td);
         }
-    });
+        if(primeraVez){
+            primeraVez = false;
+            i--;
+        }
+    }
 }
+

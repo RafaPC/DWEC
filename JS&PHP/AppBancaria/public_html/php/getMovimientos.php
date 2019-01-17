@@ -1,26 +1,30 @@
 <?php
-$ncuenta = $_POST['ncuenta'];
-$fecha1 = date("Y-m-d",strtotime($POST['fecha1']));
-$fecha2 = date("Y-m-d",strtotime($POST['fecha2']));
-$sql = "SELECT * FROM `movimientos` WHERE (mo_fec BETWEEN '$fecha1' AND '$fecha2')";
-//abrir conexion
-$conex = new mysqli('localhost', 'root', '1234', 'banco');
-// Comprobar conexión
-if ($conex->connect_error) {
-    die('La conexión ha fallado, error número ' . $conex->connect_errno . ': ' . $conex->connect_error);
-} else {
-    echo '<h1>Se ha conectado a la base de datos</h1>';
+	$myObj = new stdClass();
+	$myObj->resultado = null;
+	$ncuenta = $_POST['numcuenta'];
+    $prueba1 = strtotime(strtr($_POST['fecha1'],'/','-'));
+    $prueba2 = strtotime(strtr($_POST['fecha2'],'/','-'));
+    $fecha1 = date("Y-m-d",$prueba1);
+    $fecha2 = date("Y-m-d",$prueba2);  
+    $sql = "SELECT * FROM `movimientos` WHERE (mo_fec BETWEEN '$fecha1' AND '$fecha2') AND (mo_ncuenta = '$ncuenta')";
+    //abrir conexion
+$dsn = "mysql:host=localhost;dbname=banco;charset=UTF8";
+try{
+    $conex = new PDO($dsn,'root','1234');   
+}catch(PDOException $ex){
+    die("�Error!: " . $ex->getMessage()."<br>");
 }
-//consulta
-$result = $conex->query($sql);
+    //consulta
+    $result = $conex->query($sql);
+    $filas = array();
+            $result->setFetchMode(PDO::FETCH_ASSOC);
+            while ($r = $result->fetch()) {
+                $filas[] = $r;
+            }
+    $myObj->resultado = $filas;
+	$myJSON = json_encode($myObj);
+	echo $myJSON;
 
-
-//AQUI PONER QUE LO COJA COMO ASOCIATIVO Y ESO
-
-
-$myJSON = json_encode($result);
-echo $myJSON;
-
-//cerrar conex
-$conex->close();
+    //cerrar conex
+    $conex = null;
 ?>

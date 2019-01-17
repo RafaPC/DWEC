@@ -14,11 +14,3 @@ window.onload = function(){
     img.setAttributeNode(src);
     document.body.appendChild(img);
 };
-
-function crearParrafo(){
-    
-}
-
-function borrarParrafo(){
-    
-}

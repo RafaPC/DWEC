@@ -2,8 +2,8 @@
 
 $myObj = new stdClass();
 
-if (isset($_POST['numCuenta'])) {
-    $numCuenta = $_POST['numCuenta'];
+if (isset($_POST['numcuenta'])) {
+    $numCuenta = $_POST['numcuenta'];
 }
 $selectCuenta = "SELECT cu_ncuenta from cuentas where cu_ncuenta = '$numCuenta'";
 

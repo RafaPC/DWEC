@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
 <html>
     <head>
         <title>TODO supply a title</title>
@@ -6,8 +11,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="js/movimientos.js" type="text/javascript"></script>
-        <script src="js/comprobarCodigoCuenta.js" type="text/javascript"></script>
+        <script src="js/js.js" type="text/javascript"></script>
         <link href="css/movimientos.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="js/i18n-datepicker-es.js"></script>
@@ -31,17 +35,6 @@
                         <small id="ncuentaHelp" class="form-text text-muted">Cadena de 10 dígitos</small>
                     </div>
                 </div>
-                <div class="oculto" id="check">
-                    <div class="form-check form-check-inline" id="checkBox">
-                        <input class="form-check-input" type="checkbox" id="checkBoxImporte" value="">
-                        <label class="form-check-label" for="checkBoxImporte">Filtrar por rango de importe</label>
-                    </div>
-                </div>
-                <div class="oculto" id="sliderRangePrecio">
-                    <label for="amount">Rango de importe:</label>
-                    <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
-                    <div id="slider-range"></div>
-                </div>
                 <div class="form-group oculto" id="fechas">
                     <label for="fecha1">Fecha inicio</label>
                     <input type="text" value="" id="fecha1" class="form-control">
@@ -49,20 +42,6 @@
                     <input type="text" value="" id="fecha2" class="form-control">
                 </div>
             </form>
-            <button class="btn waves-effect waves-light" name="action" id="botonSiguiente">Siguiente
-                <i class="material-icons right">send</i>
-            </button>
-            <table class="table table-bordered table-hover oculto ">
-                <caption></caption>
-                <thead class="thead-dark">
-                <th>Codigo</th>
-                <th>Fecha de operación</th>
-                <th>Hora</th>
-                <th>Concepto</th>
-                <th>Importe</th>
-                </thead>
-                <tbody id="movimientos"></tbody>
-            </table>
         </div>
     </body>
 </html>

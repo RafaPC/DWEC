@@ -1,9 +1,13 @@
 'use strict';
-var filtrarPorImporte = false;
+var clienteAcheckear = 1;
 window.onload = function () {
     $("#botonSiguiente").on("click", function () {
         var codCuenta = "" + document.getElementById('ncuenta').value;
-        comprobarCodigoCuenta(codCuenta);
+        var cod_err = comprobarFormato(codCuenta);
+        if (cod_err) {
+
+        }
+        handleCodCuenta(cod_err);
     });
 
     $(function () {
@@ -38,26 +42,6 @@ window.onload = function () {
             return date;
         }
     });
-
-    $("#checkBoxImporte").on("change", function () {
-        filtrarPorImporte = $("#checkBoxImporte").checked;
-        $("#sliderRangePrecio").toggleClass("oculto");
-    });
-
-    //Para inicializar el slider
-    $(function () {
-        $("#slider-range").slider({
-            range: true,
-            min: -2000,
-            max: 2000,
-            values: [75, 300],
-            slide: function (event, ui) {
-                $("#amount").val(ui.values[ 0 ] + "€ - " + ui.values[ 1 ] + "€");
-            }
-        });
-        $("#amount").val($("#slider-range").slider("values", 0) +
-                "€ - " + $("#slider-range").slider("values", 1) + "€");
-    });
 };
 
 function checkCuenta() {
@@ -86,7 +70,6 @@ function checkCuenta() {
                     if (resultado.existe === true) {
                         $("#ncuenta").prop("disabled", true);
                         $("#fechas").removeClass("oculto");
-                        $("#cosa").removeClass("oculto");
                         $("#botonSiguiente").off("click");
                         $("#botonSiguiente").on("click", checkFechas);
                         $(".invalid-feedback").css("display", "none");
@@ -117,7 +100,6 @@ function handleCodCuenta(codigoErr) {
         $("#ncuenta").addClass("is-valid");
         $("#ncuenta").prop("disabled", true);
         $("#fechas").removeClass("oculto");
-        $("#check").removeClass("oculto");
         $("#botonSiguiente").off("click");
         $("#botonSiguiente").on("click", checkFechas);
     } else if (codigoErr === -1) {
@@ -142,24 +124,18 @@ function checkFechas() {
     document.getElementsByTagName("caption")[0].innerHTML = "Lista de movimientos de " + fecha1.getDate() + "/" + (fecha1.getMonth() + 1) + "/" + fecha1.getFullYear() + " a " + fecha2.getDate() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getFullYear();
     fecha1 = fecha1.getFullYear() + "/" + (fecha1.getMonth() + 1) + "/" + fecha1.getDate();
     fecha2 = fecha2.getFullYear() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getDate();
-    var llamada = {numcuenta: ncuenta, fecha1: fecha1, fecha2: fecha2};
-    if($("#checkBoxImporte").prop('checked')){
-        llamada.importeMinimo = $("#slider-range").slider("values", 0);
-        llamada.importeMaximo = $("#slider-range").slider("values", 1);
-    }
-        
     $.ajax({
         // la URL para la peticion
         url: 'php/getMovimientos.php',
         // la informacion a enviar
         // (tambien es posible utilizar una cadena de datos)
-        data: llamada,
+        data: {numcuenta: ncuenta, fecha1: fecha1, fecha2: fecha2},
         // especifica si sera una peticion POST o GET
         type: 'POST',
         // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
         success: function (resultado) {
-            printMovimientos(resultado.movimientos);
+            printMovimientos(resultado.resultado);
         },
         error: function (xhr, status) {
             alert('Disculpe, existia un problema');
@@ -199,3 +175,45 @@ function printMovimientos(movimientos) {
     }
 }
 
+function comprobarCliente() {
+    var dni = $("#dni").val();
+    $.ajax({
+        // la URL para la peticion
+        url: 'php/comprobarCliente.php',
+        // la informacion a enviar
+        // (tambien es posible utilizar una cadena de datos)
+        data: {dni: dni},
+        // especifica si sera una peticion POST o GET
+        type: 'POST',
+        // el tipo de informaciÃ³n que se espera de respuesta
+        dataType: 'json',
+        success: function (resultado) {
+            $(".datosCliente").removeClass("oculto");
+            if (resultado.existe) {
+                $(".datosCliente").prop("disabled",true);
+                $(".datosCliente").addClass("is-valid");
+                var cliente = resultado.cliente;
+                for(var i = 0; i < cliente.length; i++){
+                   document.getElementsByClassName("datosCliente")[i].innerHTML = cliente[i];
+                }
+                $("#botonSiguiente").off("click");
+                $("#botonSiguiente").on("click", checkCliente);
+                $(".invalid-feedback").css("display", "none");
+                $("#ncuenta").removeClass("is-invalid");
+                
+            } else {
+                //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
+            }
+        },
+        error: function (xhr, status) {
+            alert('Disculpe, existia un problema' + status);
+        },
+        complete: function (xhr, status) {
+        }
+    });
+}
+
+//Checkea los datos de un cliente
+function checkCliente(){
+    
+}

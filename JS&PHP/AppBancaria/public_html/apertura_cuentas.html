@@ -11,7 +11,7 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="js/js.js" type="text/javascript"></script>
+        <script src="js/apertura.js" type="text/javascript"></script>
         <link href="css/movimientos.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="js/i18n-datepicker-es.js"></script>
@@ -35,6 +35,40 @@ and open the template in the editor.
                         <small id="ncuentaHelp" class="form-text text-muted">Cadena de 10 dígitos</small>
                     </div>
                 </div>
+                <div class="form-group">
+                    <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
+                        <label for="dni">Número de cuenta</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control datosCliente" id="dni" placeholder="1234567890"> 
+                            <div class="invalid-feedback">
+                                Formato de DNI incorrecto
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="oculto" id="inputsCliente1">
+                    <label for="nombre">Número de cuenta</label>
+                    <input type="text" class="form-control datosCliente" id="nombre"> 
+                    <label for="direccion">Dirección</label>
+                    <input type="text" class="form-control datosCliente" id="direccion"> 
+                    <label for="telefono">Teléfono</label>
+                    <input type="text" class="form-control datosCliente" id="telefono"> 
+                    <label for="email">Email</label>
+                    <input type="text" class="form-control datosCliente" id="email"> 
+                    <label for="fecha-nacimiento">Fecha de nacimiento</label>
+                    <input type="text" class="form-control datosCliente" id="fecha-nacimiento"> 
+                    <label for="fecha-registro">Fecha de registro</label>
+                    <input type="text" class="form-control datosCliente" id="fecha-registro"> 
+                    <label for="num-cuentas">Número de cuentas</label>
+                    <input type="text" class="form-control datosCliente" id="num-cuentas"> 
+                    <label for="saldo">Saldo</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control datosCliente" id="saldo">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">€</span>
+                        </div>
+                    </div>
+                </div>
                 <div class="form-group oculto" id="fechas">
                     <label for="fecha1">Fecha inicio</label>
                     <input type="text" value="" id="fecha1" class="form-control">
@@ -42,6 +76,9 @@ and open the template in the editor.
                     <input type="text" value="" id="fecha2" class="form-control">
                 </div>
             </form>
+            <button class="btn waves-effect waves-light" name="action" id="botonSiguiente">Siguiente
+                <i class="material-icons right">send</i>
+            </button>
         </div>
     </body>
 </html>

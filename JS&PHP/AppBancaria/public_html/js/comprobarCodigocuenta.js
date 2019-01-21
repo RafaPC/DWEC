@@ -41,15 +41,15 @@ function comprobarCodigoCuenta(codCuenta) {
             success: function (respuesta) {
                 if (respuesta.existe === true) {
                     //El codigo existe
-                    handleCodCuenta(1);
+                    handleCodCuenta(respuesta);
                 } else {
                     //No se encuentra ese codigo en la base de datos
-                    handleCodCuenta(-3);
+                    handleCodCuenta(respuesta);
                 }
             },
             error: function (xhr, status) {
                 //Error en el servidor
-                handleCodCuenta(-4);
+                handleCodCuenta(respuesta);
             },
             complete: function (xhr, status) {
             }

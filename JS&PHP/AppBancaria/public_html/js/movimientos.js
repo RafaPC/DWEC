@@ -2,7 +2,7 @@
 var filtrarPorImporte = false;
 window.onload = function () {
     $("#botonSiguiente").on("click", function () {
-        var codCuenta = "" + document.getElementById('ncuenta').value;
+        var codCuenta = "" + $("#ncuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
 
@@ -46,6 +46,7 @@ window.onload = function () {
 
     //Para inicializar el slider
     $(function () {
+        $("#checkBoxImporte").checked = false;
         $("#slider-range").slider({
             range: true,
             min: -2000,
@@ -143,11 +144,11 @@ function checkFechas() {
     fecha1 = fecha1.getFullYear() + "/" + (fecha1.getMonth() + 1) + "/" + fecha1.getDate();
     fecha2 = fecha2.getFullYear() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getDate();
     var llamada = {numcuenta: ncuenta, fecha1: fecha1, fecha2: fecha2};
-    if($("#checkBoxImporte").prop('checked')){
+    if ($("#checkBoxImporte").prop('checked')) {
         llamada.importeMinimo = $("#slider-range").slider("values", 0);
         llamada.importeMaximo = $("#slider-range").slider("values", 1);
     }
-        
+
     $.ajax({
         // la URL para la peticion
         url: 'php/getMovimientos.php',
@@ -170,11 +171,21 @@ function checkFechas() {
 }
 
 function printMovimientos(movimientos) {
+    //Si no se ha devuelto ningún movimiento
     if (movimientos.length === 0) {
         alert("No hay ningÃºn movimiento entre esas dos fechas");
     } else {
         $(".table").removeClass("oculto");
         var tbody = document.getElementById("movimientos");
+
+        //Si el tbody ya tiene elementos dentro los borra todos antes de escribir más
+        if (tbody.childElementCount > 0) {
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+        }
+
+
         for (var i = 0; i < movimientos.length; i++) {
             var tr = document.createElement("tr");
             tbody.appendChild(tr);

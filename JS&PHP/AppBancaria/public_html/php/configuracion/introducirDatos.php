@@ -15,6 +15,10 @@ try {
 $conex->query($insertCliente);
 $conex->query($insertCuenta);
 $conex->query($insertMovimiento);
+$insertMovimiento = "INSERT INTO `movimientos`(`cod_cuenta`, `fecha`, `hora`, `descripcion`, `importe`) VALUES ('0000000000','2017/01/01','1200','Comunidad',-100)";
+$conex->query($insertMovimiento);
+$insertMovimiento = "INSERT INTO `movimientos`(`cod_cuenta`, `fecha`, `hora`, `descripcion`, `importe`) VALUES ('0000000000','2017/12/23','1200','Paga extra navidad',1200)";
+$conex->query($insertMovimiento);
 
 //cerrar conex
 $conex = null;

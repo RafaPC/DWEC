@@ -2,13 +2,17 @@
 var clienteAcheckear = 1;
 window.onload = function () {
     $("#botonSiguiente").on("click", function () {
-        var codCuenta = "" + document.getElementById('ncuenta').value;
-        var cod_err = comprobarFormato(codCuenta);
-        if (cod_err) {
-
-        }
-        handleCodCuenta(cod_err);
+        comprobarCliente();
     });
+
+//    $("#botonSiguiente").on("click", function () {
+//        var codCuenta = "" + document.getElementById('ncuenta').value;
+//        var cod_err = comprobarFormato(codCuenta);
+//        if (cod_err) {
+//
+//        }
+//        handleCodCuenta(cod_err);
+//    });
 
     $(function () {
 //        $("#fecha1").datepicker($.datepicker.regional["es"]);
@@ -188,19 +192,19 @@ function comprobarCliente() {
         // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
         success: function (resultado) {
-            $(".datosCliente").removeClass("oculto");
-            if (resultado.existe) {
-                $(".datosCliente").prop("disabled",true);
+            $("#inputsCliente1").removeClass("oculto");
+            if (resultado.cliente[0] !== undefined) {
+                $(".datosCliente").prop("disabled", true);
                 $(".datosCliente").addClass("is-valid");
                 var cliente = resultado.cliente;
-                for(var i = 0; i < cliente.length; i++){
-                   document.getElementsByClassName("datosCliente")[i].innerHTML = cliente[i];
+                for (var i = 0; i < 9; i++) {
+                    document.getElementsByClassName("datosCliente")[i].value = cliente[i];
                 }
                 $("#botonSiguiente").off("click");
                 $("#botonSiguiente").on("click", checkCliente);
                 $(".invalid-feedback").css("display", "none");
                 $("#ncuenta").removeClass("is-invalid");
-                
+
             } else {
                 //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
             }
@@ -214,6 +218,6 @@ function comprobarCliente() {
 }
 
 //Checkea los datos de un cliente
-function checkCliente(){
-    
+function checkCliente() {
+
 }

@@ -14,7 +14,7 @@ if (isset($_POST['importeMinimo'])) {
 } else {
     $sql = "SELECT * FROM `movimientos` WHERE (fecha BETWEEN '$fecha1' AND '$fecha2') AND (cod_cuenta = '$ncuenta') order by fecha";
 }
-require_once 'constantes_bbdd.php';
+require_once 'configuracion/constantes_bbdd.php';
 
 try {
     $conex = new PDO(DSN, USER, PASSWORD);

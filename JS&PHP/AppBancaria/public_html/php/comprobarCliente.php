@@ -2,12 +2,12 @@
 
 $objetoRespuesta = new stdClass();
 
-if (isset($_GET['dni'])) {
-    $dni = $_GET['dni'];
+if (isset($_POST['dni'])) {
+    $dni = $_POST['dni'];
 }
 $selectCliente = "SELECT * FROM `clientes` WHERE dni = '$dni'";
 
-require_once 'constantes_bbdd.php';
+require_once 'configuracion/constantes_bbdd.php';
 
 try {
     $conex = new PDO(DSN, USER, PASSWORD);
@@ -17,7 +17,6 @@ try {
 //consulta
 $result = $conex->query($selectCliente);
 
-if ($result) {
     $objetoRespuesta->existe = true;
     $cliente = new stdClass();
     foreach ($result as $row) {
@@ -26,9 +25,7 @@ if ($result) {
         }
     }
     $objetoRespuesta->cliente = $cliente;
-} else {
-    $objetoRespuesta->existe = false;
-}
+
 
 
 $objetoJSON = json_encode($objetoRespuesta);

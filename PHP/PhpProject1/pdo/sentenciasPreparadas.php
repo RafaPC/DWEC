@@ -71,7 +71,6 @@ VALUES ( :par1 , :par2 , :par3, :par4) ';
             echo '</tr></thead>';
             foreach ($consulta as $indice => $fila) {
                 echo '<tbody><tr>';
-                //echo "<tr><td>" . $fila['dni'] . "</td><td>" . $fila['nombre'] . "</td><td>" . $fila['apellidos'] . "</td><td>" . $fila['sueldo'] . "</td></tr>";
                 foreach ($fila as $clave => $valor) {
                     echo "<td style=\"border: 1px solid black\">$valor</td>";
                 }

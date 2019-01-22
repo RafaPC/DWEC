@@ -7,7 +7,7 @@ class patronSingleton {
     private static $instancia; // contenedor de la instancia
 
     private function __construct() { //método singleton que crea instancia sí no está creada
-        $this->Idb = new PDO('mysql:host=localhost; dbname=radio', 'root', '1234');
+        $this->Idb = new PDO('mysql:host=localhost;dbname=radio;charset=UTF8', 'root', '1234');
     }
 
     public static function singleton() { //método singleton que crea instancia sí no está creada
@@ -46,15 +46,29 @@ class patronSingleton {
         }
     }
     
-    public function mostrar(){
-        
+    public function muestra($consulta) {
+        if ($consulta) {
+            ?><table><thead><tr><?php
+            foreach ($consulta[0] as $clave => $valor) {
+                echo "<th style=\"border: 1px solid black\">" . $clave . "</th>";
+            }
+            ?></tr></thead><?php
+            foreach ($consulta as $indice => $fila) {
+                ?><tbody><tr><?php
+                foreach ($fila as $clave => $valor) {
+                    echo "<td style=\"border: 1px solid black\">$valor</td>";
+                }
+                ?></tr><?php
+            }
+            ?></tbody></table><?php
+        }
     }
 
 }
 
 $conDB = patronSingleton::singleton();
 $presentadores = $conDB->getPresentadores();
-$conDB->mostrar($presentadores);
+$conDB::muestra($presentadores);
 $invitados = $conDB->getInvitados();
-$conDB->mostrar($invitados);
+$conDB::muestra($invitados);
 ?>

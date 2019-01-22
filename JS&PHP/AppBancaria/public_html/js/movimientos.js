@@ -1,69 +1,73 @@
 'use strict';
 var filtrarPorImporte = false;
-window.onload = function () {
-    
+
+//Configuro los datepickers
+$(function () {
+//        $("#fecha1").datepicker($.datepicker.regional["es"]);
+//        $("#fecha2").datepicker($.datepicker.regional["es"]);
+    var dateFormat = "dd/mm/yy";
+    var from = $("#fecha1").datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        changeYear: true,
+        firstDay: 1
+    })
+            .on("change", function () {
+                to.datepicker("option", "minDate", getDate(this));
+            });
+    var to = $("#fecha2").datepicker({
+        defaultDate: "+1w",
+        changeMonth: true,
+        changeYear: true,
+        firstDay: 1
+    })
+            .on("change", function () {
+                from.datepicker("option", "maxDate", getDate(this));
+            });
+
+    function getDate(element) {
+        var date;
+        try {
+            date = $.datepicker.parseDate(dateFormat, element.value);
+        } catch (error) {
+            date = null;
+        }
+
+        return date;
+    }
+});
+
+$(function () {
+//A�ado listener al checkbox, al cambiar mostrar� el rango de dinero
+    $("#checkBox-importe").on("change", function () {
+        filtrarPorImporte = $("#checkBox-importe").checked;
+        $("#sliderRangePrecio").toggleClass("oculto");
+    });
+
+//Pongo evento al bot�n de Siguiente
     $("#botonSiguiente").on("click", function () {
         var codCuenta = "" + $("#ncuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
+});
 
-    $(function () {
-//        $("#fecha1").datepicker($.datepicker.regional["es"]);
-//        $("#fecha2").datepicker($.datepicker.regional["es"]);
-        var dateFormat = "dd/mm/yy";
-        var from = $("#fecha1").datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            changeYear: true,
-            firstDay: 1
-        })
-                .on("change", function () {
-                    to.datepicker("option", "minDate", getDate(this));
-                });
-        var to = $("#fecha2").datepicker({
-            defaultDate: "+1w",
-            changeMonth: true,
-            changeYear: true,
-            firstDay: 1
-        })
-                .on("change", function () {
-                    from.datepicker("option", "maxDate", getDate(this));
-                });
 
-        function getDate(element) {
-            var date;
-            try {
-                date = $.datepicker.parseDate(dateFormat, element.value);
-            } catch (error) {
-                date = null;
-            }
-
-            return date;
+//Para inicializar el slider
+$(function () {
+    //ESTO NO FUNCIONA
+    $("#checkBox-importe").prop("checked", false);
+    $("#slider-range").slider({
+        range: true,
+        min: -2000,
+        max: 2000,
+        values: [0, 100],
+        slide: function (event, ui) {
+            $("#amount").val("Entre " + ui.values[ 0 ] + "€ y " + ui.values[ 1 ] + "€");
         }
     });
-
-    $("#checkBoxImporte").on("change", function () {
-        filtrarPorImporte = $("#checkBoxImporte").checked;
-        $("#sliderRangePrecio").toggleClass("oculto");
-    });
-
-    //Para inicializar el slider
-    $(function () {
-        //ESTO NO FUNCIONA
-        $("#checkBoxImporte").checked = false;
-        $("#slider-range").slider({
-            range: true,
-            min: -2000,
-            max: 2000,
-            values: [75, 300],
-            slide: function (event, ui) {
-                $("#amount").val(ui.values[ 0 ] + "€ - " + ui.values[ 1 ] + "€");
-            }
-        });
-        $("#amount").val($("#slider-range").slider("values", 0) +
-                "€ - " + $("#slider-range").slider("values", 1) + "€");
-    });
-};
+    $("#amount").val("Entre " + $("#slider-range").slider("values", 0) +
+            "€ y " + $("#slider-range").slider("values", 1) + "€");
+});
 
 function checkCuenta() {
     var ncuenta = "" + document.getElementById('ncuenta').value;
@@ -123,7 +127,7 @@ function checkFechas() {
     fecha1 = fecha1.getFullYear() + "/" + (fecha1.getMonth() + 1) + "/" + fecha1.getDate();
     fecha2 = fecha2.getFullYear() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getDate();
     var llamada = {numcuenta: ncuenta, fecha1: fecha1, fecha2: fecha2};
-    if ($("#checkBoxImporte").prop('checked')) {
+    if ($("#checkBox-importe").prop("checked")) {
         llamada.importeMinimo = $("#slider-range").slider("values", 0);
         llamada.importeMaximo = $("#slider-range").slider("values", 1);
     }

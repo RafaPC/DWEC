@@ -36,38 +36,87 @@ and open the template in the editor.
                         <small id="ncuentaHelp" class="form-text text-muted">Cadena de 10 dígitos</small>
                     </div>
                 </div>
-                <div class="form-group oculto" id="form-dni">
+                <div class="form-group oculto" id="form-dni-1">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
-                        <label for="dni">Primer titular</label>
+                        <label for="dni-1">Primer titular</label>
                         <div class="input-group">
-                            <input type="text" class="form-control datosCliente" id="dni" aria-describedby="dniHelp" placeholder="49099576G"> 
+                            <input type="text" class="form-control datos-cliente-1" id="dni-1" aria-describedby="dni1-Help" placeholder="49099576G"> 
                             <div class="invalid-feedback">
                                 Formato de DNI incorrecto
                             </div>
                         </div>
-                        <small id="dniHelp" class="form-text text-muted">DNI</small>
+                        <small id="dni1-Help" class="form-text text-muted">DNI</small>
                     </div>
                 </div>
-                <div class="oculto" id="inputsCliente1">
-                    <label for="nombre">Número de cuenta</label>
-                    <input type="text" class="form-control datosCliente" id="nombre"> 
-                    <label for="direccion">Dirección</label>
-                    <input type="text" class="form-control datosCliente" id="direccion"> 
-                    <label for="telefono">Teléfono</label>
-                    <input type="text" class="form-control datosCliente" id="telefono"> 
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control datosCliente" id="email"> 
-                    <label for="fecha-nacimiento">Fecha de nacimiento</label>
-                    <input type="text" class="form-control datosCliente" id="fecha-nacimiento"> 
-                    <label for="fecha-registro">Fecha de registro</label>
-                    <input type="text" class="form-control datosCliente" id="fecha-registro"> 
-                    <label for="num-cuentas">Número de cuentas</label>
-                    <input type="text" class="form-control datosCliente" id="num-cuentas"> 
-                    <label for="saldo">Saldo</label>
+                <div class="oculto" id="inputs-cliente-1">
+                    <label for="nombre-1">Número de cuenta</label>
+                    <input type="text" class="form-control datos-cliente-1" id="nombre-1"> 
+                    <label for="direccion-1">Dirección</label>
+                    <input type="text" class="form-control datos-cliente-1" id="direccion-1"> 
+                    <label for="telefono-1">Teléfono</label>
+                    <input type="text" class="form-control datos-cliente-1" id="telefono-1"> 
+                    <label for="email-1">Email</label>
+                    <input type="text" class="form-control datos-cliente-1" id="email-1"> 
+                    <label for="fecha-nacimiento-1">Fecha de nacimiento</label>
+                    <input type="text" class="form-control datos-cliente-1" id="fecha-nacimiento-1"> 
+                    <label for="fecha-registro-1">Fecha de registro</label>
+                    <input type="text" class="form-control datos-cliente-1" id="fecha-registro-1"> 
+                    <label for="num-cuentas-1">Número de cuentas</label>
+                    <input type="text" class="form-control datos-cliente-1" id="num-cuentas-1"> 
+                    <label for="saldo-1">Saldo</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control datosCliente" id="saldo">
+                        <input type="text" class="form-control datos-cliente-1" id="saldo-1">
                         <div class="input-group-prepend">
-                            <span class="input-group-text" id="basic-addon1">€</span>
+                            <span class="input-group-text">€</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="oculto" id="radios">
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="segundo-titular-radios" id="segundo-titular-si" value="si">
+                        <label class="form-check-label" for="segundo-titular-si">
+                            Sí
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" name="segundo-titular-radios" id="segundo-titular-no" value="no" checked>
+                        <label class="form-check-label" for="segundo-titular-no">
+                            No
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group oculto" id="form-dni-2">
+                    <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
+                        <label for="dni-2">Primer titular</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control datos-cliente-2" id="dni-2" aria-describedby="dni2-Help" placeholder="49099576G"> 
+                            <div class="invalid-feedback">
+                                Formato de DNI incorrecto
+                            </div>
+                        </div>
+                        <small id="dni2-Help" class="form-text text-muted">DNI</small>
+                    </div>
+                </div>
+                <div class="oculto" id="inputs-cliente-2">
+                    <label for="nombre-2">Número de cuenta</label>
+                    <input type="text" class="form-control datos-cliente-2" id="nombre-2"> 
+                    <label for="direccion-2">Dirección</label>
+                    <input type="text" class="form-control datos-cliente-2" id="direccion-2"> 
+                    <label for="telefono-2">Teléfono</label>
+                    <input type="text" class="form-control datos-cliente-2" id="telefono-2"> 
+                    <label for="email-2">Email</label>
+                    <input type="text" class="form-control datos-cliente-2" id="email-2"> 
+                    <label for="fecha-nacimiento-2">Fecha de nacimiento</label>
+                    <input type="text" class="form-control datos-cliente-2" id="fecha-nacimiento-2"> 
+                    <label for="fecha-registro-2">Fecha de registro</label>
+                    <input type="text" class="form-control datos-cliente-2" id="fecha-registro-2"> 
+                    <label for="num-cuentas-2">Número de cuentas</label>
+                    <input type="text" class="form-control datos-cliente-2" id="num-cuentas-2"> 
+                    <label for="saldo-2">Saldo</label>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control datos-cliente-2" id="saldo-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">€</span>
                         </div>
                     </div>
                 </div>

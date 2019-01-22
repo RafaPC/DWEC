@@ -1,42 +1,58 @@
 'use strict';
-var clienteAcheckear = 1;
-window.onload = function () {
+var dni;
+var datosCliente;
+var inputsCliente;
+var segundoTitular;
+
+dni = $("#dni-1");
+datosCliente = "datos-cliente-1";
+inputsCliente = $("#inputs-cliente-1");
+segundoTitular = false;
+
+$("#botonSiguiente").on("click", function () {
+    var codCuenta = "" + $("#ncuenta").val();
+    comprobarCodigoCuenta(codCuenta);
+});
+
+$(function () {
+    dni = $("#dni-1");
+    datosCliente = "datos-cliente-1";
+    inputsCliente = $("#inputs-cliente-1");
+    segundoTitular = false;
 
     $("#botonSiguiente").on("click", function () {
         var codCuenta = "" + $("#ncuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
 
-    $(function () {
 //        $("#fecha1").datepicker($.datepicker.regional["es"]);
 //        $("#fecha2").datepicker($.datepicker.regional["es"]);
-        var dateFormat = "dd/mm/yy";
-        var nacimiento = $("#fecha-nacimiento").datepicker({
-            defaultDate: "+1m +7d",
-            changeMonth: true,
-            changeYear: true,
-            firstDay: 1,
-            maxDate: "-18y"
-        });
-        var registro = $("#fecha-registro").datepicker({
-            defaultDate: null,
-            changeMonth: true,
-            changeYear: true,
-            firstDay: 1
-        });
-
-        function getDate(element) {
-            var date;
-            try {
-                date = $.datepicker.parseDate(dateFormat, element.value);
-            } catch (error) {
-                date = null;
-            }
-
-            return date;
-        }
+    var dateFormat = "dd/mm/yy";
+    var nacimiento = $("#fecha-nacimiento").datepicker({
+        defaultDate: "+1m +7d",
+        changeMonth: true,
+        changeYear: true,
+        firstDay: 1,
+        maxDate: "-18y"
     });
-};
+    var registro = $("#fecha-registro").datepicker({
+        defaultDate: null,
+        changeMonth: true,
+        changeYear: true,
+        firstDay: 1
+    });
+
+    function getDate(element) {
+        var date;
+        try {
+            date = $.datepicker.parseDate(dateFormat, element.value);
+        } catch (error) {
+            date = null;
+        }
+
+        return date;
+    }
+});
 
 function handleCodCuenta(codigoErr) {
     $(".invalid-feedback").css("display", "block");
@@ -60,7 +76,7 @@ function handleCodCuenta(codigoErr) {
             //Añado propiedad de "discapacitado" para que no se pueda cambiar
             $("#ncuenta").prop("disabled", true);
             //Quito la clase oculto al siguiente input para mostrarlo
-            $("#form-dni").removeClass("oculto");
+            $("#form-dni-1").removeClass("oculto");
             //Quito el listener que tenía el botón de Siguiente
             $("#botonSiguiente").off("click");
             //Pongo nuevo listener al botón de siguiente
@@ -130,35 +146,48 @@ function printMovimientos(movimientos) {
 }
 
 function checkCliente() {
-    var dni = $("#dni").val();
+    var valorDNI = dni.val();
     $.ajax({
         // la URL para la peticion
         url: 'php/comprobarCliente.php',
         // la informacion a enviar
         // (tambien es posible utilizar una cadena de datos)
-        data: {dni: dni},
+        data: {dni: valorDNI},
         // especifica si sera una peticion POST o GET
         type: 'POST',
         // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
         success: function (resultado) {
-            $("#inputsCliente1").removeClass("oculto");
+            inputsCliente.removeClass("oculto");
             //Si me ha devuelto un cliente
+            $("#botonSiguiente").off("click");
             if (resultado.cliente[0] !== undefined) {
-                $(".datosCliente").prop("disabled", true);
-                $(".datosCliente").addClass("is-valid");
+                inputsCliente.prop("disabled", true);
+                $("." + datosCliente).addClass("is-valid");
                 var cliente = resultado.cliente;
                 for (var i = 0; i < 9; i++) {
-                    document.getElementsByClassName("datosCliente")[i].value = cliente[i];
-                    document.getElementsByClassName("datosCliente")[i].disabled = true;
+                    document.getElementsByClassName(datosCliente)[i].value = cliente[i];
+                    document.getElementsByClassName(datosCliente)[i].disabled = true;
                 }
-                $("#botonSiguiente").off("click");
-                $("#botonSiguiente").on("click", checkCliente2);
-                $("#dni").prop("disabled", true);
+                $("#dni-1").prop("disabled", true);
+                $("#radios").removeClass("oculto");
+                $("#botonSiguiente").on("click", function () {
+                    if ($("#segundo-titular-1").prop("checked")) {
+                        segundoTitular = true;
+                        $("#form-dni-2").removeClass("oculto");
+                        $("#botonSiguiente").on("click", checkCliente);
+                        dni = $("#dni-2");
+                        datosCliente = "datos-cliente-2";
+                        inputsCliente = $("#inputs-cliente-2");
+                    } else {
+                        //Mostrar input para meter el importe o algo as�, es el siguiente paso
+                    }
+                });
                 alert("Titular ya registrado, no se necesita completar su información");
             } else {
                 //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
-                $(".datosCliente").val("");
+                $("#botonSiguiente").on("click", "checkDatosCliente");
+                $("." + datosCliente).val("");
                 alert("Titular no registrado, se necesita rellenar los campos.");
             }
         },
@@ -170,6 +199,11 @@ function checkCliente() {
     });
 }
 
+function checkDatosCliente() {
+
+}
+
 function checkCliente2() {
-    checkCliente("dni2");
+    //Comprobar primero que el dni no es el de antes
+    checkCliente();
 }

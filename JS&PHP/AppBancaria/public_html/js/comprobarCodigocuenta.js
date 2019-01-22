@@ -39,20 +39,14 @@ function comprobarCodigoCuenta(codCuenta) {
             // el tipo de informaciÃ³n que se espera de respuesta
             dataType: 'json',
             success: function (respuesta) {
-                if (respuesta.existe === true) {
-                    //El codigo existe
-                    handleCodCuenta(respuesta);
-                } else {
-                    //No se encuentra ese codigo en la base de datos
-                    handleCodCuenta(respuesta);
-                }
+                handleCodCuenta(respuesta.cod_err);
             },
             error: function (xhr, status) {
                 //Error en el servidor
-                handleCodCuenta(respuesta);
+                handleCodCuenta(-4);
             },
             complete: function (xhr, status) {
             }
         });
     }
-} 
+}

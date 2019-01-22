@@ -1,6 +1,7 @@
 'use strict';
 var filtrarPorImporte = false;
 window.onload = function () {
+    
     $("#botonSiguiente").on("click", function () {
         var codCuenta = "" + $("#ncuenta").val();
         comprobarCodigoCuenta(codCuenta);
@@ -13,7 +14,8 @@ window.onload = function () {
         var from = $("#fecha1").datepicker({
             defaultDate: "+1w",
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
+            firstDay: 1
         })
                 .on("change", function () {
                     to.datepicker("option", "minDate", getDate(this));
@@ -21,7 +23,8 @@ window.onload = function () {
         var to = $("#fecha2").datepicker({
             defaultDate: "+1w",
             changeMonth: true,
-            changeYear: true
+            changeYear: true,
+            firstDay: 1
         })
                 .on("change", function () {
                     from.datepicker("option", "maxDate", getDate(this));
@@ -46,6 +49,7 @@ window.onload = function () {
 
     //Para inicializar el slider
     $(function () {
+        //ESTO NO FUNCIONA
         $("#checkBoxImporte").checked = false;
         $("#slider-range").slider({
             range: true,
@@ -111,31 +115,6 @@ function checkCuenta() {
     }
 }
 
-function handleCodCuenta(codigoErr) {
-    if (codigoErr === 1) {
-        $(".invalid-feedback").css("display", "none");
-        $("#ncuenta").removeClass("is-invalid");
-        $("#ncuenta").addClass("is-valid");
-        $("#ncuenta").prop("disabled", true);
-        $("#fechas").removeClass("oculto");
-        $("#check").removeClass("oculto");
-        $("#botonSiguiente").off("click");
-        $("#botonSiguiente").on("click", checkFechas);
-    } else if (codigoErr === -1) {
-        $(".invalid-feedback").html("El codigo tiene que tener al menos 10 números");
-        $(".invalid-feedback").css("display", "block");
-        $("#ncuenta").addClass("is-invalid");
-    } else if (codigoErr === -2 || codigoErr === -3) {
-        $(".invalid-feedback").html("El código no existe");
-        $(".invalid-feedback").css("display", "block");
-        $("#ncuenta").addClass("is-invalid");
-    } else if (codigoErr === -4) {
-        $(".invalid-feedback").html("Error del servidor");
-        $(".invalid-feedback").css("display", "block");
-        $("#ncuenta").addClass("is-invalid");
-    }
-}
-
 function checkFechas() {
     var ncuenta = $("#ncuenta").val();
     var fecha1 = $("#fecha1").datepicker("getDate");
@@ -170,15 +149,40 @@ function checkFechas() {
     });
 }
 
+function handleCodCuenta(codigoErr) {
+    if (codigoErr === 1) {
+        $(".invalid-feedback").css("display", "none");
+        $("#ncuenta").removeClass("is-invalid");
+        $("#ncuenta").addClass("is-valid");
+        $("#ncuenta").prop("disabled", true);
+        $("#fechas").removeClass("oculto");
+        $("#check").removeClass("oculto");
+        $("#botonSiguiente").off("click");
+        $("#botonSiguiente").on("click", checkFechas);
+    } else {
+        $(".invalid-feedback").css("display", "block");
+        $("#ncuenta").addClass("is-invalid");
+        if (codigoErr === -1) {
+            $(".invalid-feedback").html("El codigo tiene que tener al menos 10 números");
+        } else if (codigoErr === -2) {
+            $(".invalid-feedback").html("El código no cumple el formato");
+        } else if (codigoErr === -3) {
+            $(".invalid-feedback").html("El código no está registrado");
+        } else if (codigoErr === -4) {
+            $(".invalid-feedback").html("Error del servidor");
+        }
+    }
+}
+
 function printMovimientos(movimientos) {
-    //Si no se ha devuelto ning�n movimiento
+    //Si no se ha devuelto ning�n movimiento
     if (movimientos.length === 0) {
         alert("No hay ningún movimiento entre esas dos fechas");
     } else {
         $(".table").removeClass("oculto");
         var tbody = document.getElementById("movimientos");
 
-        //Si el tbody ya tiene elementos dentro los borra todos antes de escribir m�s
+        //Si el tbody ya tiene elementos dentro los borra todos antes de escribir m�s
         if (tbody.childElementCount > 0) {
             while (tbody.firstChild) {
                 tbody.removeChild(tbody.firstChild);

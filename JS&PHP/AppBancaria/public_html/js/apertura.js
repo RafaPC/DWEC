@@ -1,39 +1,29 @@
 'use strict';
 var clienteAcheckear = 1;
 window.onload = function () {
-    $("#botonSiguiente").on("click", function () {
-        comprobarCliente();
-    });
 
-//    $("#botonSiguiente").on("click", function () {
-//        var codCuenta = "" + document.getElementById('ncuenta').value;
-//        var cod_err = comprobarFormato(codCuenta);
-//        if (cod_err) {
-//
-//        }
-//        handleCodCuenta(cod_err);
-//    });
+    $("#botonSiguiente").on("click", function () {
+        var codCuenta = "" + $("#ncuenta").val();
+        comprobarCodigoCuenta(codCuenta);
+    });
 
     $(function () {
 //        $("#fecha1").datepicker($.datepicker.regional["es"]);
 //        $("#fecha2").datepicker($.datepicker.regional["es"]);
         var dateFormat = "dd/mm/yy";
-        var from = $("#fecha1").datepicker({
-            defaultDate: "+1w",
+        var nacimiento = $("#fecha-nacimiento").datepicker({
+            defaultDate: "+1m +7d",
             changeMonth: true,
-            changeYear: true
-        })
-                .on("change", function () {
-                    to.datepicker("option", "minDate", getDate(this));
-                });
-        var to = $("#fecha2").datepicker({
-            defaultDate: "+1w",
+            changeYear: true,
+            firstDay: 1,
+            maxDate: "-18y"
+        });
+        var registro = $("#fecha-registro").datepicker({
+            defaultDate: null,
             changeMonth: true,
-            changeYear: true
-        })
-                .on("change", function () {
-                    from.datepicker("option", "maxDate", getDate(this));
-                });
+            changeYear: true,
+            firstDay: 1
+        });
 
         function getDate(element) {
             var date;
@@ -48,76 +38,36 @@ window.onload = function () {
     });
 };
 
-function checkCuenta() {
-    var ncuenta = "" + document.getElementById('ncuenta').value;
-    if (ncuenta.length !== 10) {
-        $(".invalid-feedback").html("Por favor introduce in código de cuenta válido");
-        $(".invalid-feedback").css("display", "block");
-        $("#ncuenta").addClass("is-invalid");
-    } else {
-        var ultimoNumero = parseInt(ncuenta.substr(9, 1));
-        for (var i = 0, acum = 0; i < ncuenta.length - 1; i++) {
-            acum += parseInt(ncuenta[i]);
-        }
-        if (acum % 9 === ultimoNumero) {
-            $.ajax({
-                // la URL para la peticion
-                url: 'php/comprobarCodigoCuenta.php',
-                // la informacion a enviar
-                // (tambien es posible utilizar una cadena de datos)
-                data: {cod_cuenta: ncuenta},
-                // especifica si sera una peticion POST o GET
-                type: 'POST',
-                // el tipo de informaciÃ³n que se espera de respuesta
-                dataType: 'json',
-                success: function (resultado) {
-                    if (resultado.existe === true) {
-                        $("#ncuenta").prop("disabled", true);
-                        $("#fechas").removeClass("oculto");
-                        $("#botonSiguiente").off("click");
-                        $("#botonSiguiente").on("click", checkFechas);
-                        $(".invalid-feedback").css("display", "none");
-                        $("#ncuenta").removeClass("is-invalid");
-                        $("#ncuenta").addClass("is-valid");
-                    } else {
-                        $(".invalid-feedback").html("No existe ese código de cuenta.");
-                        $(".invalid-feedback").css("display", "block");
-                        $("#ncuenta").addClass("is-invalid");
-                    }
-                },
-                error: function (xhr, status) {
-                    alert('Disculpe, existia un problema' + status);
-                },
-                complete: function (xhr, status) {
-                }
-            });
-        } else {
-            $("#ncuenta_err").html("Ese codigo no vale");
-        }
-    }
-}
-
 function handleCodCuenta(codigoErr) {
+    $(".invalid-feedback").css("display", "block");
+    $("#ncuenta").addClass("is-invalid");
     if (codigoErr === 1) {
-        $(".invalid-feedback").css("display", "none");
-        $("#ncuenta").removeClass("is-invalid");
-        $("#ncuenta").addClass("is-valid");
-        $("#ncuenta").prop("disabled", true);
-        $("#fechas").removeClass("oculto");
-        $("#botonSiguiente").off("click");
-        $("#botonSiguiente").on("click", checkFechas);
-    } else if (codigoErr === -1) {
-        $(".invalid-feedback").html("El codigo tiene que tener al menos 10 números");
         $(".invalid-feedback").css("display", "block");
         $("#ncuenta").addClass("is-invalid");
-    } else if (codigoErr === -2 || codigoErr === -3) {
-        $(".invalid-feedback").html("El código no existe");
-        $(".invalid-feedback").css("display", "block");
-        $("#ncuenta").addClass("is-invalid");
-    } else if (codigoErr === -4) {
-        $(".invalid-feedback").html("Error del servidor");
-        $(".invalid-feedback").css("display", "block");
-        $("#ncuenta").addClass("is-invalid");
+        $(".invalid-feedback").html("El código de cuenta ya está registrado");
+    } else {
+        if (codigoErr === -1) {
+            $(".invalid-feedback").html("El codigo tiene que tener al menos 10 números");
+        } else if (codigoErr === -2) {
+            $(".invalid-feedback").html("El código no cumple el formato");
+        } else if (codigoErr === -3) {
+            //Quito mensaje de error (por si se habia fallado antes)
+            $(".invalid-feedback").css("display", "none");
+            //Quito la clase de error al input(por si se habia fallado antes)
+            $("#ncuenta").removeClass("is-invalid");
+            //Añado la clase de éxito
+            $("#ncuenta").addClass("is-valid");
+            //Añado propiedad de "discapacitado" para que no se pueda cambiar
+            $("#ncuenta").prop("disabled", true);
+            //Quito la clase oculto al siguiente input para mostrarlo
+            $("#form-dni").removeClass("oculto");
+            //Quito el listener que tenía el botón de Siguiente
+            $("#botonSiguiente").off("click");
+            //Pongo nuevo listener al botón de siguiente
+            $("#botonSiguiente").on("click", checkCliente);
+        } else if (codigoErr === -4) {
+            $(".invalid-feedback").html("Error del servidor");
+        }
     }
 }
 
@@ -179,7 +129,7 @@ function printMovimientos(movimientos) {
     }
 }
 
-function comprobarCliente() {
+function checkCliente() {
     var dni = $("#dni").val();
     $.ajax({
         // la URL para la peticion
@@ -193,20 +143,23 @@ function comprobarCliente() {
         dataType: 'json',
         success: function (resultado) {
             $("#inputsCliente1").removeClass("oculto");
+            //Si me ha devuelto un cliente
             if (resultado.cliente[0] !== undefined) {
                 $(".datosCliente").prop("disabled", true);
                 $(".datosCliente").addClass("is-valid");
                 var cliente = resultado.cliente;
                 for (var i = 0; i < 9; i++) {
                     document.getElementsByClassName("datosCliente")[i].value = cliente[i];
+                    document.getElementsByClassName("datosCliente")[i].disabled = true;
                 }
                 $("#botonSiguiente").off("click");
-                $("#botonSiguiente").on("click", checkCliente);
-                $(".invalid-feedback").css("display", "none");
-                $("#ncuenta").removeClass("is-invalid");
-
+                $("#botonSiguiente").on("click", checkCliente2);
+                $("#dni").prop("disabled", true);
+                alert("Titular ya registrado, no se necesita completar su información");
             } else {
                 //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
+                $(".datosCliente").val("");
+                alert("Titular no registrado, se necesita rellenar los campos.");
             }
         },
         error: function (xhr, status) {
@@ -217,7 +170,6 @@ function comprobarCliente() {
     });
 }
 
-//Checkea los datos de un cliente
-function checkCliente() {
-
+function checkCliente2() {
+    checkCliente("dni2");
 }

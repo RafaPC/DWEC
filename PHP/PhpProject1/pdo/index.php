@@ -1,5 +1,4 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -53,24 +52,20 @@ class conectaBD {
 
     public function muestra($consulta) {
         if ($consulta) {
-            echo '<table><tr>';
-            $claves = array();
-			foreach($consulta[0] as $clave => $valor){
-                array_push($claves, $clave);
-					echo "<td style=\"border: 1px solid black\">$clave</td>";
+            echo '<table><thead><tr>';
+            foreach ($consulta[0] as $clave => $valor) {
+                echo "<th style=\"border: 1px solid black\">" . $clave . "</th>";
             }
-            echo '</tr>';
-            foreach ($consulta as $clave => $fila) {
-                echo '<tr>';
+            echo '</tr></thead>';
+            foreach ($consulta as $indice => $fila) {
+                echo '<tbody><tr>';
                 //echo "<tr><td>" . $fila['dni'] . "</td><td>" . $fila['nombre'] . "</td><td>" . $fila['apellidos'] . "</td><td>" . $fila['sueldo'] . "</td></tr>";
-                for ($i = 0; $i < count($claves); $i++) {
-                    $x = $claves[$i];
-					//echo $claves[$i];
-                    echo "<td style=\"border: 1px solid black\">$fila[$x]</td>";
+                foreach ($fila as $clave => $valor) {
+                    echo "<td style=\"border: 1px solid black\">$valor</td>";
                 }
                 echo '</tr>';
             }
-            echo "</table>";
+            echo "</tbody></table>";
         }
     }
 
@@ -86,7 +81,6 @@ $obj->muestra($resultado);
 $sql = 'SELECT * FROM programas';
 $resultado = $obj->consulta2($sql);
 $obj->muestra($resultado);
-
 ?>
 </body>
 </html>

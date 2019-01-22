@@ -1,5 +1,4 @@
 <?php
-
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -41,16 +40,16 @@ VALUES ( :par1 , :par2 , :par3, :par4) ';
 
     public function borraPresentador($dni) { // Prepara y ejecuta consulta
         $datos = array(':par1' => $dni);
-		//$sqlProg = ' DELETE FROM programas WHERE dni_presentador= :par1 ';
-		//$q = $this->conn->prepare($sqlProg);
-		//$q->execute($datos);
+        //$sqlProg = ' DELETE FROM programas WHERE dni_presentador= :par1 ';
+        //$q = $this->conn->prepare($sqlProg);
+        //$q->execute($datos);
         $sql = ' DELETE FROM presentadores WHERE dni= :par1 ';
-		$q = $this->conn->prepare($sql);
-		$q->execute($datos);
-		return $q->execute($datos);
+        $q = $this->conn->prepare($sql);
+        $q->execute($datos);
+        return $q->execute($datos);
     }
-	
-	public function consulta2($orden) { // Ejecuta consulta y devuelve array de resultados o NULL sí falla ejecución
+
+    public function consulta2($orden) { // Ejecuta consulta y devuelve array de resultados o NULL sí falla ejecución
         $filas = array();
         $q = $this->conn->query($orden);
         if ($q !== false) {
@@ -62,27 +61,23 @@ VALUES ( :par1 , :par2 , :par3, :par4) ';
         }
         return $filas;
     }
-	
-	 public function muestra($consulta) {
+
+    public function muestra($consulta) {
         if ($consulta) {
-            echo '<table><tr>';
-            $claves = array();
-			foreach($consulta[0] as $clave => $valor){
-                array_push($claves, $clave);
-					echo "<td style=\"border: 1px solid black\">$clave</td>";
+            echo '<table><thead><tr>';
+            foreach ($consulta[0] as $clave => $valor) {
+                echo "<th style=\"border: 1px solid black\">" . $clave . "</th>";
             }
-            echo '</tr>';
-            foreach ($consulta as $clave => $fila) {
-                echo '<tr>';
+            echo '</tr></thead>';
+            foreach ($consulta as $indice => $fila) {
+                echo '<tbody><tr>';
                 //echo "<tr><td>" . $fila['dni'] . "</td><td>" . $fila['nombre'] . "</td><td>" . $fila['apellidos'] . "</td><td>" . $fila['sueldo'] . "</td></tr>";
-                for ($i = 0; $i < count($claves); $i++) {
-                    $x = $claves[$i];
-					//echo $claves[$i];
-                    echo "<td style=\"border: 1px solid black\">$fila[$x]</td>";
+                foreach ($fila as $clave => $valor) {
+                    echo "<td style=\"border: 1px solid black\">$valor</td>";
                 }
                 echo '</tr>';
             }
-            echo "</table>";
+            echo "</tbody></table>";
         }
     }
 
@@ -93,11 +88,11 @@ include_once 'head.html';
 $obj = new conectaBD('radio'); // crea conexión para usar bd empresa
 if ($obj->insertaPresentador('43398576P', 'Luis', 'Dominguez', 2500) !== false) {
     echo 'se inserto con exito';
-    $obj->updatePresentador('43398576P','Luis','NoDominguez',2500);
-	$obj->borraPresentador('11111111A');
-	$resultado = $obj->consulta2('SELECT * FROM presentadores');
-	$obj->muestra($resultado);
-	} else {
+    $obj->updatePresentador('43398576P', 'Luis', 'NoDominguez', 2500);
+    $obj->borraPresentador('11111111A');
+    $resultado = $obj->consulta2('SELECT * FROM presentadores');
+    $obj->muestra($resultado);
+} else {
     echo 'fallo al insertar';
 }
 ?>

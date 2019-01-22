@@ -3,6 +3,7 @@ var dni;
 var datosCliente;
 var inputsCliente;
 var segundoTitular;
+var dniPrimerTitular = null;
 
 dni = $("#dni-1");
 datosCliente = "datos-cliente-1";
@@ -115,88 +116,67 @@ function checkFechas() {
     });
 }
 
-function printMovimientos(movimientos) {
-    if (movimientos.length === 0) {
-        alert("No hay ningún movimiento entre esas dos fechas");
-    } else {
-        $(".table").removeClass("oculto");
-        var tbody = document.getElementById("movimientos");
-        for (var i = 0; i < movimientos.length; i++) {
-            var tr = document.createElement("tr");
-            tbody.appendChild(tr);
-            var ultimo_tr = tbody.lastChild;
-            if (movimientos[i]['importe'] > 0) {
-                ultimo_tr.classList = "table-success";
-            } else {
-                ultimo_tr.classList = "table-danger";
-            }
-
-            for (var clave in movimientos[i]) {
-                var td = document.createElement("td");
-                var txt = movimientos[i][clave];
-                if (clave === "importe") {
-                    txt += "€";
-                }
-                var txtNode = document.createTextNode(txt);
-                td.appendChild(txtNode);
-                tr.appendChild(td);
-            }
-        }
-    }
-}
-
 function checkCliente() {
     var valorDNI = dni.val();
-    $.ajax({
-        // la URL para la peticion
-        url: 'php/comprobarCliente.php',
-        // la informacion a enviar
-        // (tambien es posible utilizar una cadena de datos)
-        data: {dni: valorDNI},
-        // especifica si sera una peticion POST o GET
-        type: 'POST',
-        // el tipo de informaciÃ³n que se espera de respuesta
-        dataType: 'json',
-        success: function (resultado) {
-            inputsCliente.removeClass("oculto");
-            //Si me ha devuelto un cliente
-            $("#botonSiguiente").off("click");
-            if (resultado.cliente[0] !== undefined) {
-                inputsCliente.prop("disabled", true);
-                $("." + datosCliente).addClass("is-valid");
-                var cliente = resultado.cliente;
-                for (var i = 0; i < 9; i++) {
-                    document.getElementsByClassName(datosCliente)[i].value = cliente[i];
-                    document.getElementsByClassName(datosCliente)[i].disabled = true;
-                }
-                $("#dni-1").prop("disabled", true);
-                $("#radios").removeClass("oculto");
-                $("#botonSiguiente").on("click", function () {
-                    if ($("#segundo-titular-1").prop("checked")) {
-                        segundoTitular = true;
-                        $("#form-dni-2").removeClass("oculto");
-                        $("#botonSiguiente").on("click", checkCliente);
-                        dni = $("#dni-2");
-                        datosCliente = "datos-cliente-2";
-                        inputsCliente = $("#inputs-cliente-2");
-                    } else {
-                        //Mostrar input para meter el importe o algo as�, es el siguiente paso
+    if (dniPrimerTitular === valorDNI) {
+        document.getElementById("form-dni-2").getElementsByClassName("invalid-feedback")[0].style.display = "block";
+        document.getElementById("form-dni-2").getElementsByClassName("invalid-feedback")[0].innerHTML = "Ese DNI pertenece al primer titular";
+        $("#dni-2").addClass("is-invalid");
+    } else {
+        $.ajax({
+            // la URL para la peticion
+            url: 'php/comprobarCliente.php',
+            // la informacion a enviar
+            // (tambien es posible utilizar una cadena de datos)
+            data: {dni: valorDNI},
+            // especifica si sera una peticion POST o GET
+            type: 'POST',
+            // el tipo de informaciÃ³n que se espera de respuesta
+            dataType: 'json',
+            success: function (resultado) {
+                inputsCliente.removeClass("oculto");
+                //Si me ha devuelto un cliente
+                $("#botonSiguiente").off("click");
+                if (resultado.cliente[0] !== undefined) {
+                    dniPrimerTitular = valorDNI;
+                    inputsCliente.prop("disabled", true);
+                    $("." + datosCliente).addClass("is-valid");
+                    var cliente = resultado.cliente;
+                    for (var i = 0; i < 9; i++) {
+                        document.getElementsByClassName(datosCliente)[i].value = cliente[i];
+                        document.getElementsByClassName(datosCliente)[i].disabled = true;
                     }
-                });
-                alert("Titular ya registrado, no se necesita completar su información");
-            } else {
-                //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
-                $("#botonSiguiente").on("click", "checkDatosCliente");
-                $("." + datosCliente).val("");
-                alert("Titular no registrado, se necesita rellenar los campos.");
+                    $("#dni-1").prop("disabled", true);
+                    $("#radios").removeClass("oculto");
+                    $("#botonSiguiente").on("click", function () {
+                        if ($("#segundo-titular-si").prop("checked")) {
+                            segundoTitular = true;
+                            $("#form-dni-2").removeClass("oculto");
+                            $("#botonSiguiente").off("click");
+                            $("#botonSiguiente").on("click", checkCliente);
+                            dni = $("#dni-2");
+                            datosCliente = "datos-cliente-2";
+                            inputsCliente = $("#inputs-cliente-2");
+                        } else {
+                            //Mostrar input para meter el importe o algo asi, es el siguiente paso
+                            alert("Ahora iria el siguiente paso de mostrar un input de importe o algo asi");
+                        }
+                    });
+                    alert("Titular ya registrado, no se necesita completar su información");
+                } else {
+                    //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
+                    $("#botonSiguiente").on("click", "checkDatosCliente");
+                    $("." + datosCliente).val("");
+                    alert("Titular no registrado, se necesita rellenar los campos.");
+                }
+            },
+            error: function (xhr, status) {
+                alert('Disculpe, existia un problema' + status);
+            },
+            complete: function (xhr, status) {
             }
-        },
-        error: function (xhr, status) {
-            alert('Disculpe, existia un problema' + status);
-        },
-        complete: function (xhr, status) {
-        }
-    });
+        });
+    }
 }
 
 function checkDatosCliente() {

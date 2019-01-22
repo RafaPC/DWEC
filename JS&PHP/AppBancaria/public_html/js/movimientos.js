@@ -38,19 +38,18 @@ $(function () {
 });
 
 $(function () {
-//Añado listener al checkbox, al cambiar mostrará el rango de dinero
+//Aï¿½ado listener al checkbox, al cambiar mostrarï¿½ el rango de dinero
     $("#checkBox-importe").on("change", function () {
         filtrarPorImporte = $("#checkBox-importe").checked;
         $("#sliderRangePrecio").toggleClass("oculto");
     });
 
-//Pongo evento al botón de Siguiente
+//Pongo evento al botï¿½n de Siguiente
     $("#botonSiguiente").on("click", function () {
         var codCuenta = "" + $("#ncuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
 });
-
 
 //Para inicializar el slider
 $(function () {

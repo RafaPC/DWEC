@@ -1,0 +1,42 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 28-ene-2019, 0:13:46
+    Author     : Los Prieto
+*/
+
+body{
+    margin: 0;
+    width: 100%;
+}
+
+.tubarro{
+    display: inline-block;
+    width: 100px;
+    height: 100px;
+    position: absolute;
+    background-color: green;
+}
+
+#flappy{
+    display: inline-block;
+    width: 70px;
+    height: 70px;
+    position: absolute;
+}
+
+#puntuacion{
+    display: inline-block;
+    width: 50px;
+    height: 40px;
+    background-color: black;
+    color: white;
+    font-size: 35px;
+    border: 1px solid black;
+    position: absolute;
+    top: 0;
+    left: 0;
+}

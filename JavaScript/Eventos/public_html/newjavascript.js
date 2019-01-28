@@ -103,7 +103,10 @@ window.onload = function () {
 
         var movimientoY = aceleracionY * 1;
         var movimientoX = aceleracionX * 1;
+        
+        //Para escribir el valor de la aceleracion
         document.getElementById("padre").innerHTML = movimientoY;
+        
         valorTop += movimientoY;
         valorLeft += movimientoX;
         document.getElementById("moñeco").style.left = valorLeft + "px";

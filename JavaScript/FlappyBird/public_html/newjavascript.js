@@ -36,6 +36,7 @@ window.onload = function () {
             if (tuboX > 1900) {
                 tuboArriba.outerHTML = "";
                 tuboAbajo.outerHTML = "";
+                window.clearInterval(intervalMoverTubos);
             } else {
                 tuboX += 5;
                 tuboArriba.style.right = tuboX + "px";
@@ -44,26 +45,27 @@ window.onload = function () {
         }, "10");
 
         var intervalComprobarColision = window.setInterval(function () {
-            
+
             var topeArriba = parseInt((tuboArriba.style.height).replace("px", ""));
             var topeAbajo = 1000 - parseInt((tuboArriba.style.height).replace("px", ""));
 
             tuboX = parseInt((tuboArriba.style.right).replace("px", ""));
-            
+
             //Los tubos estan en la misma posicion horizontal que el flappy
-            if (tuboX > 1390 && tuboX < 1410) {
+            if (tuboX > 1397 && tuboX < 1403) {
                 var flappy = document.getElementById("flappy");
                 flappyY = parseInt((flappy.style.top).replace("px", ""));
                 //Flappy se encuentra entre los dos tubos
-                if (flappyY > topeArriba && flappyY < topeAbajo) {
+                if (flappyY + 50 > topeArriba && flappyY - 50 < topeAbajo) {
                     var puntuacion = parseInt(document.getElementById("puntuacion").innerHTML);
                     puntuacion++;
                     document.getElementById("puntuacion").innerHTML = puntuacion;
-                }else{
+                    window.clearInterval(intervalComprobarColision);
+                } else {
                     document.getElementById("puntuacion").innerHTML = 0;
                 }
             }
-        }, "30");
+        }, "5");
 
         //Cada vez el hueco entre cada par de tubos es mas pequeño
         apertura -= 1;
@@ -77,6 +79,11 @@ window.onload = function () {
         var valorTop = parseInt(top.replace("px", ""));
         if (valorTop > 850) {
             window.clearInterval(intervalGravedad);
+            window.clearInterval(intervalCrearTubos);
+//            var interval_id = window.setInterval("", 9999); // Get a reference to the last
+//            // interval +1
+//            for (var i = 1; i < interval_id; i++)
+//                window.clearInterval(i);
         }
         var caida = gravedad * 1;
         gravedad += 2;
@@ -91,9 +98,6 @@ window.onload = function () {
             gravedad = -20;
         }
     });
-
-
-    window.setInterval(detectarColision, "50");
 };
 
 function random(min, max) {

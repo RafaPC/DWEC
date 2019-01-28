@@ -74,13 +74,13 @@ and open the template in the editor.
                 <div class="oculto" id="radios">
                     <label for="segundo-titular-si">Añadir segundo titular</label>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="segundo-titular-radios" id="segundo-titular-si" value="si">
+                        <input class="form-check-input radio-titular" type="radio" name="segundo-titular-radios" id="segundo-titular-si" value="si">
                         <label class="form-check-label" for="segundo-titular-si">
                             Sí
                         </label>
                     </div>
                     <div class="form-check">
-                        <input class="form-check-input" type="radio" name="segundo-titular-radios" id="segundo-titular-no" value="no" checked>
+                        <input class="form-check-input radio-titular" type="radio" name="segundo-titular-radios" id="segundo-titular-no" value="no" checked>
                         <label class="form-check-label" for="segundo-titular-no">
                             No
                         </label>
@@ -121,10 +121,13 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
-                <div class="oculto" id="input-importe">
-                    <label for="saldo-2">Importe de la operacion</label>
+                <div class="oculto" id="importe">
+                    <label for="input-importe">Importe de la operacion</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control datos-cliente-2" id="importe">
+                        <input type="text" class="form-control" id="input-importe">
+                        <div class="invalid-feedback">
+                            El importe tiene que ser mayor de 0
+                        </div>
                         <div class="input-group-prepend">
                             <span class="input-group-text">€</span>
                         </div>

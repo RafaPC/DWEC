@@ -1,5 +1,6 @@
 'use strict';
 var cliente = 1;
+var botonSiguiente;
 var dni;
 var datosCliente;
 var formularioDNI;
@@ -7,21 +8,16 @@ var inputsCliente;
 var segundoTitular;
 var dniPrimerTitular = null;
 var letrasDNI = ["T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"];
-dni = $("#dni-1");
-datosCliente = "datos-cliente-1";
-formularioDNI = "form-dni-1";
-inputsCliente = $("#inputs-cliente-1");
 segundoTitular = false;
-$("#botonSiguiente").on("click", function () {
-    var codCuenta = "" + $("#ncuenta").val();
-    comprobarCodigoCuenta(codCuenta);
-});
+
 $(function () {
+    botonSiguiente = $("#botonSiguiente");
     dni = $("#dni-1");
-    datosCliente = "datos-cliente-1";
+    datosCliente = $(".datos-cliente-1");
+    formularioDNI = $("#form-dni-1");
     inputsCliente = $("#inputs-cliente-1");
-    segundoTitular = false;
-    $("#botonSiguiente").on("click", function () {
+
+    botonSiguiente.on("click", function () {
         var codCuenta = "" + $("#ncuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
@@ -77,49 +73,23 @@ function handleCodCuenta(codigoErr) {
             //Quito la clase oculto al siguiente input para mostrarlo
             $("#form-dni-1").removeClass("oculto");
             //Quito el listener que tenía el botón de Siguiente
-            $("#botonSiguiente").off("click");
+            botonSiguiente.off("click");
             //Pongo nuevo listener al botón de siguiente
-            $("#botonSiguiente").on("click", checkCliente);
+            botonSiguiente.on("click", checkCliente);
         } else if (codigoErr === -4) {
             $(".invalid-feedback").html("Error del servidor");
         }
     }
 }
 
-function checkFechas() {
-    var ncuenta = $("#ncuenta").val();
-    var fecha1 = $("#fecha1").datepicker("getDate");
-    var fecha2 = $("#fecha2").datepicker("getDate");
-    document.getElementsByTagName("caption")[0].innerHTML = "Lista de movimientos de " + fecha1.getDate() + "/" + (fecha1.getMonth() + 1) + "/" + fecha1.getFullYear() + " a " + fecha2.getDate() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getFullYear();
-    fecha1 = fecha1.getFullYear() + "/" + (fecha1.getMonth() + 1) + "/" + fecha1.getDate();
-    fecha2 = fecha2.getFullYear() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getDate();
-    $.ajax({
-        // la URL para la peticion
-        url: 'php/getMovimientos.php',
-        // la informacion a enviar
-        // (tambien es posible utilizar una cadena de datos)
-        data: {numcuenta: ncuenta, fecha1: fecha1, fecha2: fecha2},
-        // especifica si sera una peticion POST o GET
-        type: 'POST',
-        // el tipo de informaciÃ³n que se espera de respuesta
-        dataType: 'json',
-        success: function (resultado) {
-            printMovimientos(resultado.resultado);
-        },
-        error: function (xhr, status) {
-            alert('Disculpe, existia un problema');
-        },
-        complete: function (xhr, status) {
-        }
-    });
-}
-
 function checkCliente() {
     var valorDNI = dni.val();
     if (checkDNI()) {
         if (dniPrimerTitular === valorDNI) {
-            document.getElementById("form-dni-2").getElementsByClassName("invalid-feedback")[0].style.display = "block";
-            document.getElementById("form-dni-2").getElementsByClassName("invalid-feedback")[0].innerHTML = "Ese DNI pertenece al primer titular";
+            $("#form-dni-2 .invalid-feedback").css("display", "block");
+            $("#form-dni-2 .invalid-feedback").html("Ese DNI pertenece al primer titular");
+            //document.getElementById("form-dni-2").getElementsByClassName("invalid-feedback")[0].style.display = "block";
+            //document.getElementById("form-dni-2").getElementsByClassName("invalid-feedback")[0].innerHTML = "Ese DNI pertenece al primer titular";
             $("#dni-2").addClass("is-invalid");
         } else {
             $.ajax({
@@ -135,39 +105,33 @@ function checkCliente() {
                 success: function (resultado) {
                     inputsCliente.removeClass("oculto");
                     //Si me ha devuelto un cliente
-                    $("#botonSiguiente").off("click");
+                    botonSiguiente.off("click");
                     if (resultado.cliente[0] !== undefined) {
                         dniPrimerTitular = valorDNI;
-                        inputsCliente.prop("disabled", true);
-                        $("." + datosCliente).addClass("is-valid");
+                        //inputsCliente.prop("disabled", true);
+                        datosCliente.addClass("is-valid");
+                        datosCliente.prop("disabled", true);
+
                         var cliente = resultado.cliente;
+
                         for (var i = 0; i < 9; i++) {
-                            document.getElementsByClassName(datosCliente)[i].value = cliente[i];
-                            document.getElementsByClassName(datosCliente)[i].disabled = true;
+                            datosCliente[i].value = cliente[i];
                         }
+
                         $("#dni-1").prop("disabled", true);
                         $("#radios").removeClass("oculto");
-                        $("#botonSiguiente").on("click", function () {
-                            if ($("#segundo-titular-si").prop("checked")) {
-                                segundoTitular = true;
-                                $("#form-dni-2").removeClass("oculto");
-                                $("#botonSiguiente").off("click");
-                                $("#botonSiguiente").on("click", checkCliente);
-                                dni = $("#dni-2");
-                                datosCliente = "datos-cliente-2";
-                                inputsCliente = $("#inputs-cliente-2");
-                            } else {
-                                //Mostrar input para meter el importe o algo asi, es el siguiente paso
-                                alert("Ahora iria el siguiente paso de mostrar un input de importe o algo asi");
-                            }
-                            $("input[name=segundo-titular-radios]").prop("disabled", true);
-                        });
                         alert("Titular ya registrado, no se necesita completar su información");
+
+                        botonSiguiente.on("click", checkSegundoTitular);
+                        if (segundoTitular) {
+                            $("#importe").removeClass("oculto");
+                            botonSiguiente.off("click");
+                            botonSiguiente.on("click", checkImporte);
+                        }
                     } else {
                         //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
-                        $("#botonSiguiente").off("click");
-                        $("#botonSiguiente").on("click", "checkDatosCliente");
-                        $("." + datosCliente).val("");
+                        botonSiguiente.off("click");
+                        botonSiguiente.on("click", checkDatosCliente);
                         alert("Titular no registrado, se necesita rellenar los campos.");
                     }
                 },
@@ -185,25 +149,28 @@ function checkDatosCliente() {
 
 }
 
-function segundoTitular() {
-    $("#botonSiguiente").off("click");
-    $("#botonSiguiente").on("click", checkCliente);
+function checkSegundoTitular() {
+    botonSiguiente.off("click");
+    botonSiguiente.on("click", checkCliente);
 
     if ($("#segundo-titular-si").prop("checked")) {
-        formularioDNI = "form-dni-2";
+        formularioDNI = $("#form-dni-2");
         segundoTitular = true;
-        $("#form-dni-2").removeClass("oculto");
-        $("#botonSiguiente").off("click");
-        $("#botonSiguiente").on("click", checkDatosCliente);
+        formularioDNI.removeClass("oculto");
+        botonSiguiente.off("click");
+        botonSiguiente.on("click", checkCliente);
         dni = $("#dni-2");
-        datosCliente = "datos-cliente-2";
+        datosCliente = $(".datos-cliente-2");
         inputsCliente = $("#inputs-cliente-2");
     } else {
-        //Mostrar input para meter el importe o algo asi, es el siguiente paso
-        alert("Ahora iria el siguiente paso de mostrar un input de importe o algo asi");
+        $("#importe").removeClass("oculto");
+        botonSiguiente.off("click");
+        botonSiguiente.on("click", checkImporte);
     }
+    $(".radio-titular").prop("disabled", true);
 }
 
+//Que directamente se llame a dni cuando toque, sin pasar por checkCliente
 function checkDNI() {
     var valorDNI = "" + dni.val();
     var dniValido = false;
@@ -214,10 +181,32 @@ function checkDNI() {
         dniValido = true;
         dni.removeClass("is-invalid");
         dni.addClass("is-valid");
-        document.getElementById(formularioDNI).getElementsByClassName("invalid-feedback")[0].style.display = "none";
+        //document.getElementById(formularioDNI).getElementsByClassName("invalid-feedback")[0].style.display = "none";
+        formularioDNI.find(".invalid-feedback").css("display", "none");
     } else {
-        document.getElementById(formularioDNI).getElementsByClassName("invalid-feedback")[0].style.display = "block";
+        //document.getElementById(formularioDNI).getElementsByClassName("invalid-feedback")[0].style.display = "block";
+        formularioDNI.find(".invalid-feedback").css("display", "block");
         dni.addClass("is-invalid");
     }
     return dniValido;
 }
+
+function checkImporte() {
+    var importe = parseInt($("#input-importe").val());
+    if (importe > 0) {
+        $("#input-importe").removeClass("is-invalid");
+        $("#input-importe").addClass("is-valid");
+        $("#importe .invalid-feedback").css("display", "none");
+        mandarDatos();
+    } else {
+        $("#input-importe").addClass("is-invalid");
+        $("#importe .invalid-feedback").css("display", "block");
+    }
+}
+
+function mandarDatos() {
+
+}
+
+
+//No poner id a los inputs como tal, solo al div que los rodee y coger ese div por id y luego el input que haya dentro

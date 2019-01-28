@@ -9,6 +9,7 @@ var segundoTitular;
 var dniPrimerTitular = null;
 var letrasDNI = ["T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"];
 segundoTitular = false;
+var cliente1, cliente2;
 
 $(function () {
     botonSiguiente = $("#botonSiguiente");
@@ -85,11 +86,9 @@ function handleCodCuenta(codigoErr) {
 function checkCliente() {
     var valorDNI = dni.val();
     if (checkDNI()) {
-        if (dniPrimerTitular === valorDNI) {
+        if (segundoTitular && dniPrimerTitular === valorDNI) {
             $("#form-dni-2 .invalid-feedback").css("display", "block");
             $("#form-dni-2 .invalid-feedback").html("Ese DNI pertenece al primer titular");
-            //document.getElementById("form-dni-2").getElementsByClassName("invalid-feedback")[0].style.display = "block";
-            //document.getElementById("form-dni-2").getElementsByClassName("invalid-feedback")[0].innerHTML = "Ese DNI pertenece al primer titular";
             $("#dni-2").addClass("is-invalid");
         } else {
             $.ajax({
@@ -118,15 +117,17 @@ function checkCliente() {
                             datosCliente[i].value = cliente[i];
                         }
 
-                        $("#dni-1").prop("disabled", true);
-                        $("#radios").removeClass("oculto");
+                        dni.prop("disabled", true);
+
                         alert("Titular ya registrado, no se necesita completar su información");
 
-                        botonSiguiente.on("click", checkSegundoTitular);
                         if (segundoTitular) {
                             $("#importe").removeClass("oculto");
                             botonSiguiente.off("click");
                             botonSiguiente.on("click", checkImporte);
+                        } else {
+                            botonSiguiente.on("click", checkSegundoTitular);
+                            $("#radios").removeClass("oculto");
                         }
                     } else {
                         //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
@@ -146,7 +147,32 @@ function checkCliente() {
 }
 
 function checkDatosCliente() {
-
+    datosCliente.removeClass("is-invalid");
+    var error = false;
+    for (var i = 0; i < datosCliente.length; i++) {
+        if ((datosCliente[i].value).length === 0) {
+            datosCliente[i].classList.add("is-invalid");
+            error = true;
+        }
+    }
+    if (!error) {
+        inputsCliente.find(".invalid-feedback").css("display", "none");
+        datosCliente.addClass("is-valid");
+        botonSiguiente.off("click");
+        datosCliente.prop("disabled", true);
+        dni.prop("disabled", true);
+        //Ha chequeado los datos del segundo titular
+        if (segundoTitular) {
+            botonSiguiente.on("click", checkImporte);
+            $("#importe").removeClass("oculto");
+        } else {
+            //Ha chequeado los datos del primer titular
+            botonSiguiente.on("click", checkSegundoTitular);
+            $("#radios").removeClass("oculto");
+        }
+    } else {
+        inputsCliente.find(".invalid-feedback").css("display", "block");
+    }
 }
 
 function checkSegundoTitular() {
@@ -172,22 +198,30 @@ function checkSegundoTitular() {
 
 //Que directamente se llame a dni cuando toque, sin pasar por checkCliente
 function checkDNI() {
+    var dniValido;
+
+    var expregDni = new RegExp(/^\d{8}[A-Z]$/i);
     var valorDNI = "" + dni.val();
-    var dniValido = false;
-    var numeros = parseInt(valorDNI.substr(0, 8));
-    var resto = numeros % 23;
-    var letra = dni.val().substr(8, 1);
-    if (letrasDNI[resto] === letra) {
-        dniValido = true;
-        dni.removeClass("is-invalid");
-        dni.addClass("is-valid");
-        //document.getElementById(formularioDNI).getElementsByClassName("invalid-feedback")[0].style.display = "none";
-        formularioDNI.find(".invalid-feedback").css("display", "none");
+
+    if (expregDni.exec(valorDNI)) {
+        var numeros = parseInt(valorDNI.substr(0, 8));
+        var resto = numeros % 23;
+        var letra = dni.val().substr(8, 1);
+        if (letrasDNI[resto] === letra) {
+            dniValido = true;
+            dni.removeClass("is-invalid");
+            dni.addClass("is-valid");
+            //document.getElementById(formularioDNI).getElementsByClassName("invalid-feedback")[0].style.display = "none";
+            formularioDNI.find(".invalid-feedback").css("display", "none");
+        } else {
+            //document.getElementById(formularioDNI).getElementsByClassName("invalid-feedback")[0].style.display = "block";
+            formularioDNI.find(".invalid-feedback").css("display", "block");
+            dni.addClass("is-invalid");
+        }
     } else {
-        //document.getElementById(formularioDNI).getElementsByClassName("invalid-feedback")[0].style.display = "block";
-        formularioDNI.find(".invalid-feedback").css("display", "block");
-        dni.addClass("is-invalid");
+        dniValido = false;
     }
+
     return dniValido;
 }
 
@@ -205,7 +239,26 @@ function checkImporte() {
 }
 
 function mandarDatos() {
-
+    var llamada = {};
+    
+    $.ajax({
+        // la URL para la peticion
+        url: 'php/comprobarCliente.php',
+        // la informacion a enviar
+        // (tambien es posible utilizar una cadena de datos)
+        data: {dni: valorDNI},
+        // especifica si sera una peticion POST o GET
+        type: 'POST',
+        // el tipo de informaciÃ³n que se espera de respuesta
+        dataType: 'json',
+        success: function (resultado) {
+        },
+        error: function (xhr, status) {
+            alert('Disculpe, existia un problema' + status);
+        },
+        complete: function (xhr, status) {
+        }
+    });
 }
 
 

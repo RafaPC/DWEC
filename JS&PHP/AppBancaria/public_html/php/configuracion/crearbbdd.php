@@ -20,12 +20,12 @@ $crearTablaCliente = "CREATE TABLE clientes (
 
 $crearTablaCuentas = "CREATE TABLE cuentas(
 	cod_cuenta varchar(10) NOT NULL,
-        dn1 varchar(9) NOT NULL, 
-        dn2 varchar(9) DEFAULT NULL, 
+        dni1 varchar(9) NOT NULL, 
+        dni2 varchar(9) DEFAULT NULL, 
         saldo int(8) NOT NULL,
         PRIMARY KEY (cod_cuenta),
-	FOREIGN KEY (dn1) REFERENCES clientes(dni),
-	FOREIGN KEY (dn2) REFERENCES clientes (dni)
+	FOREIGN KEY (dni1) REFERENCES clientes(dni),
+	FOREIGN KEY (dni2) REFERENCES clientes (dni)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
 $crearTablaMovimientos = "CREATE TABLE movimientos (

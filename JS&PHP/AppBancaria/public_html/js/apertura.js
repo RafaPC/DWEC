@@ -16,21 +16,40 @@ $(function () {
     formularioDNI = $("#form-dni-1");
     inputsCliente = $("#inputs-cliente-1");
 
+    $("#num-cuentas-1").val("0");
+    $("#num-cuentas-2").val("0");
     botonSiguiente.on("click", function () {
         var codCuenta = "" + $("#ncuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
 //        $("#fecha1").datepicker($.datepicker.regional["es"]);
 //        $("#fecha2").datepicker($.datepicker.regional["es"]);
+    var fecha = new Date();
+    fecha = fecha.getFullYear() + "/" + fecha.getMonth() + "/" + fecha.getDate();
+    $("#fecha-registro-1").val(fecha);
+    $("#fecha-registro-2").val(fecha);
     var dateFormat = "dd/mm/yy";
-    var nacimiento = $("#fecha-nacimiento").datepicker({
+    var nacimiento1 = $("#fecha-nacimiento-1").datepicker({
         defaultDate: "+1m +7d",
         changeMonth: true,
         changeYear: true,
         firstDay: 1,
         maxDate: "-18y"
     });
-    var registro = $("#fecha-registro").datepicker({
+    var nacimiento2 = $("#fecha-nacimiento-2").datepicker({
+        defaultDate: "+1m +7d",
+        changeMonth: true,
+        changeYear: true,
+        firstDay: 1,
+        maxDate: "-18y"
+    });
+    var registro1 = $("#fecha-registro-1").datepicker({
+        defaultDate: null,
+        changeMonth: true,
+        changeYear: true,
+        firstDay: 1
+    });
+    var registro2 = $("#fecha-registro-2").datepicker({
         defaultDate: null,
         changeMonth: true,
         changeYear: true,
@@ -262,16 +281,17 @@ function mandarDatos() {
     console.log(llamada);
     $.ajax({
         // la URL para la peticion
-        url: 'php/insertarCliente.php',
+        url: 'php/aperturaCuenta.php',
         // la informacion a enviar
         // (tambien es posible utilizar una cadena de datos)
         data: llamada,
         // especifica si sera una peticion POST o GET
-        type: 'GET',
+        type: 'POST',
         // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
         success: function (resultado) {
-        alert(resultado.mensaje);
+            alert(resultado.mensaje);
+            console.log(resultado);
         },
         error: function (xhr, status) {
             alert('Disculpe, existia un problema' + status);

@@ -5,11 +5,9 @@ var dni;
 var datosCliente;
 var formularioDNI;
 var inputsCliente;
-var segundoTitular;
+var segundoTitular = false;
 var dniPrimerTitular = null;
-var letrasDNI = ["T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"];
-segundoTitular = false;
-var cliente1, cliente2;
+var existeCliente1 = false, existeCliente2 = false;
 
 $(function () {
     botonSiguiente = $("#botonSiguiente");
@@ -122,10 +120,12 @@ function checkCliente() {
                         alert("Titular ya registrado, no se necesita completar su información");
 
                         if (segundoTitular) {
+                            existeCliente2 = true;
                             $("#importe").removeClass("oculto");
                             botonSiguiente.off("click");
                             botonSiguiente.on("click", checkImporte);
                         } else {
+                            existeCliente1 = true;
                             botonSiguiente.on("click", checkSegundoTitular);
                             $("#radios").removeClass("oculto");
                         }
@@ -198,6 +198,8 @@ function checkSegundoTitular() {
 
 //Que directamente se llame a dni cuando toque, sin pasar por checkCliente
 function checkDNI() {
+    var letrasDNI = ["T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"];
+
     var dniValido;
 
     var expregDni = new RegExp(/^\d{8}[A-Z]$/i);
@@ -239,19 +241,37 @@ function checkImporte() {
 }
 
 function mandarDatos() {
-    var llamada = {};
-    
+    var llamada = new Object();
+    var cliente1 = [];
+    var cliente2 = [];
+    llamada.numCuenta = $("#ncuenta").val();
+    llamada.existeCliente1 = existeCliente1;
+    llamada.existeCliente2 = existeCliente2;
+
+    for (var i = 0; i < $(".datos-cliente-1").length; i++) {
+        cliente1.push($(".datos-cliente-1")[i].value);
+    }
+    llamada.cliente1 = cliente1;
+    if (segundoTitular) {
+        for (var i = 0; i < $(".datos-cliente-2").length; i++) {
+            cliente2.push($(".datos-cliente-2")[i].value);
+        }
+        llamada.cliente2 = cliente2;
+    }
+    llamada.saldo = $("#input-importe").val();
+    console.log(llamada);
     $.ajax({
         // la URL para la peticion
-        url: 'php/comprobarCliente.php',
+        url: 'php/insertarCliente.php',
         // la informacion a enviar
         // (tambien es posible utilizar una cadena de datos)
-        data: {dni: valorDNI},
+        data: llamada,
         // especifica si sera una peticion POST o GET
-        type: 'POST',
+        type: 'GET',
         // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
         success: function (resultado) {
+        alert(resultado.mensaje);
         },
         error: function (xhr, status) {
             alert('Disculpe, existia un problema' + status);

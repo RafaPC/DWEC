@@ -17,7 +17,6 @@ try {
 //consulta
 $result = $conex->query($selectCliente);
 
-    $objetoRespuesta->existe = true;
     $cliente = new stdClass();
     foreach ($result as $row) {
         foreach ($row as $clave => $valor) {

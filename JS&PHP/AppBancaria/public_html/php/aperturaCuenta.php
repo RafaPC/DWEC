@@ -25,9 +25,9 @@ $numCuenta = $_POST['numCuenta'];
 
 if (isset($_POST['cliente2'])) {
     $dni2 = $_POST['cliente2'][0];
-    $insertCuenta = "INSERT INTO `cuentas` (`cod_cuenta`, `dn1`, `dn2`, `saldo`) VALUES ('$numCuenta', '$dni1', '$dni2', '$saldo')";
+    $insertCuenta = "INSERT INTO `cuentas` (`cod_cuenta`, `dni1`, `dni2`, `saldo`) VALUES ('$numCuenta', '$dni1', '$dni2', '$saldo')";
 } else {
-    $insertCuenta = "INSERT INTO `cuentas` (`cod_cuenta`, `dn1`, `dn2`, `saldo`) VALUES ('$numCuenta', '$dni1', NULL, '$saldo')";
+    $insertCuenta = "INSERT INTO `cuentas` (`cod_cuenta`, `dni1`, `dni2`, `saldo`) VALUES ('$numCuenta', '$dni1', NULL, '$saldo')";
 }
 
 
@@ -41,7 +41,6 @@ $conex->query($insertMovimiento);
 
 //consulta
 $objetoRespuesta->mensaje = 'todo ok';
-
 
 
 $objetoJSON = json_encode($objetoRespuesta);

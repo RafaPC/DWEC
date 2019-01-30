@@ -8,6 +8,9 @@ $triggerAumentarNCuentas = "CREATE OR REPLACE TRIGGER increase_ncuentas_clientes
 FOR EACH ROW
 UPDATE clientes SET numero_cuentas = numero_cuentas + 1 WHERE dni = NEW.dni1 OR dni = NEW.dni2";
 
+$triggerAumentarSaldo = "CREATE OR REPLACE TRIGGER increase_saldo_cuentas_after_insert_movimiento AFTER INSERT ON movimientos
+FOR EACH ROW
+UPDATE cuentas SET saldo = saldo + NEW.importe WHERE cod_cuenta = NEW.cod_cuenta";
 
 require_once 'constantes_bbdd.php';
 
@@ -20,6 +23,7 @@ try {
 //consulta
 $conex->query($triggerAumentarNCuentas);
 $conex->query($triggerReducirNCuentas);
+$conex->query($triggerAumentarSaldo);
 
 //cerrar conex
 $conex = null;

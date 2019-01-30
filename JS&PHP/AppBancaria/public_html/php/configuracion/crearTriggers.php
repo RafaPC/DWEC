@@ -8,9 +8,22 @@ $triggerAumentarNCuentas = "CREATE OR REPLACE TRIGGER increase_ncuentas_clientes
 FOR EACH ROW
 UPDATE clientes SET numero_cuentas = numero_cuentas + 1 WHERE dni = NEW.dni1 OR dni = NEW.dni2";
 
-$triggerAumentarSaldo = "CREATE OR REPLACE TRIGGER increase_saldo_cuentas_after_insert_movimiento AFTER INSERT ON movimientos
+$triggerAumentarSaldoCuenta = "CREATE OR REPLACE TRIGGER update_saldo_cuentas_after_insert_movimiento AFTER INSERT ON movimientos
 FOR EACH ROW
 UPDATE cuentas SET saldo = saldo + NEW.importe WHERE cod_cuenta = NEW.cod_cuenta";
+
+$triggerAumentarSaldoCliente = "CREATE OR REPLACE TRIGGER update_saldo_clientes_after_update_cuenta AFTER UPDATE ON cuentas
+FOR EACH ROW
+UPDATE clientes SET saldo = saldo + (NEW.saldo - OLD.saldo) WHERE dni = NEW.dni1 or dni = NEW.dni2";
+
+$triggerDeleteMovimientos = "CREATE OR REPLACE TRIGGER delete_movimientos_before_delete_cuentas BEFORE DELETE ON cuentas
+FOR EACH ROW
+DELETE FROM movimientos WHERE cod_cuenta = OLD.cod_cuenta";
+
+//#1235 - Esta versión de MariaDB no soporta todavia 'multiple triggers with the same action time and event for one table'
+$triggerReducirSaldoCuenta = "CREATE OR REPLACE TRIGGER update_saldo_clientes_after_delete_cuenta AFTER DELETE ON cuentas
+FOR EACH ROW
+UPDATE clientes SET saldo = saldo - OLD.saldo WHERE dni = OLD.dni1 or dni = OLD.dni2";
 
 require_once 'constantes_bbdd.php';
 
@@ -23,7 +36,9 @@ try {
 //consulta
 $conex->query($triggerAumentarNCuentas);
 $conex->query($triggerReducirNCuentas);
-$conex->query($triggerAumentarSaldo);
+$conex->query($triggerAumentarSaldoCuenta);
+$conex->query($triggerAumentarSaldoCliente);
+$conex->query($triggerDeleteMovimientos);
 
 //cerrar conex
 $conex = null;

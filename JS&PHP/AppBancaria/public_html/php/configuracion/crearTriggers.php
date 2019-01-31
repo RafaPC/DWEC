@@ -20,6 +20,10 @@ $triggerDeleteMovimientos = "CREATE OR REPLACE TRIGGER delete_movimientos_before
 FOR EACH ROW
 DELETE FROM movimientos WHERE cod_cuenta = OLD.cod_cuenta";
 
+
+$triggerDeleteClientes = "CREATE OR REPLACE TRIGGER delete_clientes_after_update AFTER UPDATE ON clientes
+FOR EACH ROW
+DELETE FROM clientes WHERE numero_cuentas = 0";
 //#1235 - Esta versión de MariaDB no soporta todavia 'multiple triggers with the same action time and event for one table'
 $triggerReducirSaldoCuenta = "CREATE OR REPLACE TRIGGER update_saldo_clientes_after_delete_cuenta AFTER DELETE ON cuentas
 FOR EACH ROW
@@ -39,7 +43,7 @@ $conex->query($triggerReducirNCuentas);
 $conex->query($triggerAumentarSaldoCuenta);
 $conex->query($triggerAumentarSaldoCliente);
 $conex->query($triggerDeleteMovimientos);
-
+//$conex->query($triggerDeleteClientes);
 //cerrar conex
 $conex = null;
 ?>

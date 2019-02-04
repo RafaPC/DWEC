@@ -4,7 +4,7 @@ $triggerReducirNCuentas = "CREATE OR REPLACE TRIGGER decrease_ncuentas_clientes_
 FOR EACH ROW
 UPDATE clientes SET numero_cuentas = numero_cuentas - 1 WHERE dni = OLD.dni1 OR dni = OLD.dni2";
 
-$triggerAumentarNCuentas = "CREATE OR REPLACE TRIGGER increase_ncuentas_clientes_after_delete_cuentas AFTER INSERT ON cuentas
+$triggerAumentarNCuentas = "CREATE OR REPLACE TRIGGER increase_ncuentas_clientes_after_insert_cuentas AFTER INSERT ON cuentas
 FOR EACH ROW
 UPDATE clientes SET numero_cuentas = numero_cuentas + 1 WHERE dni = NEW.dni1 OR dni = NEW.dni2";
 

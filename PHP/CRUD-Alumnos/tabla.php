@@ -17,7 +17,7 @@
             echo "<tr class=\"$clase\">";
             foreach ($fila as $clave => $valor) {
                 $id = $fila['ID'];
-                $urlBuena = $url . "?id=$id";
+                $urlBuena = $url . "?ID=$id";
                 echo "<td><a href=\"$urlBuena\">$valor</a></td>";
             }
             ?></tr><?php

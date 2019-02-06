@@ -49,17 +49,35 @@ class Singleton {
         }
     }
 
-    public function crearAlumno($nombre, $fechaNac, $mayor) {
+    public function crearAlumno($nombre, $fechaNac) {
+        $mayorEdad = $this->checkNac($fechaNac);
+        $this->Idb->query("INSERT INTO alumnos (ID, NOMBRE, FECHA_NACIMIENTO, MAYOR_EDAD) VALUES (NULL,'$nombre', '$fechaNac', '$mayorEdad')");
+    }
+
+    public function updateAlumno($id, $nombre, $fechaNac, $mayor) {
         if ($mayor) {
             $mayorEdad = 1;
         } else {
             $mayorEdad = 0;
         }
-        $this->Idb->query("INSERT INTO alumnos (NOMBRE, FECHA_NACIMIENTO, MAYOR_EDAD) VALUES ('$nombre', '$fechaNac', '$mayorEdad')");
+        $this->Idb->query("UPDATE alumnos SET NOMBRE='$nombre', FECHA_NACIMIENTO='$fechaNac', MAYOR_EDAD='$mayorEdad' WHERE ID='$id'");
     }
 
     public function borrarAlumno($id) {
-        
+        $this->Idb->query("DELETE FROM notas WHERE ID_ALUMNO = '$id'");
+        $this->Idb->query("DELETE FROM alumnos WHERE ID='$id'");
+    }
+
+    private function checkNac($fecha) {
+        $date = strtotime($fecha);
+        //The age to be over, over +18
+        $min = strtotime('+18 years', $date);
+        echo $min;
+        if (time() < $min) {
+            return 0;
+        }else{
+            return 1;
+        }
     }
 
 }

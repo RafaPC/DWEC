@@ -53,10 +53,10 @@ tr:hover a{
     justify-content: center;
     text-align: center;
 }
-#filaBotones a{
+#filaBotones input{
     font-size: 24px;
     font-weight: bold;
 }
-#filaBotones a:hover{
+#filaBotones input:hover{
     background-color: #33d5a8;
 }

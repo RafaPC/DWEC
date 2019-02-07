@@ -1,25 +1,29 @@
 'use strict';
-window.onload = function(){
-  
-    navigator.geolocation.getCurrentPosition(guay,noguay);
+window.onload = function () {
+    var opcionesGeo = {
+        timeout: 3000
+    };
+    navigator.geolocation.getCurrentPosition(loadMap, noguay, opcionesGeo);
 };
 
-function guay(position){
-    for(var x in position.coords){
-        alert(x + " - " + position.coords[x]);
-    }
-}
-function noguay(location){
-    
+function noguay(location) {
+    alert('algo salió mal');
 }
 
-function loadMap() {
-  var mapOptions = {
-    center: new google.maps.LatLng(22.719840899999998, 75.8824308),
-    zoom: 13,
-    mapTypeId: google.maps.MapTypeId.ROADMAP
-  };
+function loadMap(position) {
+    alert("Cargando mapa");
+    var coordenadas = position.coords;
+    var options = {
+        zoom: 14,
+        center: {lat: coordenadas.latitude, lng: coordenadas.longitude}
+    };
 
-  var map = new google.maps.Map(document.getElementById("sample"), mapOptions);
-  console.log(map);
+    var map = new google.maps.Map(document.getElementById("map"), options);
+
+  var marker = new google.maps.Marker({
+            position: {lat: coordenadas.latitude, lng: coordenadas.longitude},
+            map: map,
+            title: 'Insti',
+            label: 'Mi posicion'
+        });
 }

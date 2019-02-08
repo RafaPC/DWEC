@@ -12,15 +12,29 @@ body{
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    margin: 0 20%;
+}
+
+#container{
+    position: absolute;
+    top: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 600px;
 }
 
 table{
-    height: 60%;
-    overflow: auto;
+    max-height: 400px;
+    overflow: scroll;
     margin: auto;
 }
-tr:hover{
-    
+
+
+form{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 a{
@@ -32,6 +46,8 @@ a{
     height: 100%;
     padding: 15px;
 }
+
+
 
 .clara td a{
     background-color: #e8e6e6;
@@ -47,6 +63,7 @@ tr:hover a{
     background-color:#33d5a8;
 }
 
+
 #filaBotones{
     display: flex;
     flex-direction: row;
@@ -59,4 +76,14 @@ tr:hover a{
 }
 #filaBotones input:hover{
     background-color: #33d5a8;
+}
+
+#filaInputs{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+}
+#filaInputs input{
+    
+    width: 170px;
 }

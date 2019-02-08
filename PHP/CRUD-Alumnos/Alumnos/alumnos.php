@@ -37,13 +37,15 @@ if (isset($_GET['submit'])) {
         }
     }
 }
-if(isset($_SESSION['ID'])) {
+if (isset($_SESSION['ID'])) {
     $alumno = $conex->getAlumnoOrClase("alumnos", $_SESSION['ID']);
 }
 $consulta = $conex->getAllFromX('alumnos');
 $titulo = 'Crud alumnos';
 require_once '../head.php';
+echo '<div>';
 require_once '../tabla.php';
+echo '</div>';
 ?>
 <form method="get" action="<?php echo $url ?>">
     <div id="filaBotones">
@@ -53,14 +55,16 @@ require_once '../tabla.php';
         echo "<input type=\"submit\" name=\"submit\" value=\"Borrar\">";
         ?>
     </div>
-    <?php
-    //No se si al crear se elige el mayor de edad o se mira la fecha y se selecciona solo
-    foreach ($alumno as $clave => $valor) {
-        echo "<input type=\"text\" name=\"$clave\" value=\"$valor\">";
-    }
-    //echo "<input type=\"\"";
-    ?>
-
+    <div id="filaInputs">
+        <?php
+        //No se si al crear se elige el mayor de edad o se mira la fecha y se selecciona solo
+        foreach ($alumno as $clave => $valor) {
+            echo "<input type=\"text\" name=\"$clave\" value=\"$valor\">";
+        }
+        //echo "<input type=\"\"";
+        ?>
+    </div>
 </form>
+</div>
 </body>
 </html>

@@ -84,6 +84,9 @@ tr:hover a{
     margin: 0 auto;
 }
 #filaInputs input{
-    
     width: 170px;
+}
+
+.filaElegida td a{
+    background-color: #009999;
 }

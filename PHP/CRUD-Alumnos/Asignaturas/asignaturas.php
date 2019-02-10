@@ -9,7 +9,7 @@ require_once '../Conexion/conexion.php';
 $conex = Singleton::getConex();
 $url = htmlspecialchars($_SERVER["PHP_SELF"]);
 $campoElegido = false;
-$alumno = ['ID', 'Nombre', 'Fecha de nacimiento'];
+$asignatura = ['ID', 'Nombre', 'Curso', 'Ciclo'];
 if (isset($_GET['ID']) || isset($_SESSION['ID'])) {
     if (isset($_GET['ID'])) {
         $_SESSION['ID'] = $_GET['ID'];
@@ -21,16 +21,16 @@ if (isset($_GET['ID']) || isset($_SESSION['ID'])) {
 if (isset($_GET['submit'])) {
     $funcion = $_GET['submit'];
     if ($funcion === 'Crear') {
-        $conex->crearAlumno($_GET['NOMBRE'], $_GET['FECHA_NACIMIENTO']);
+        $conex->crearAsignatura($_GET['NOMBRE'], $_GET['CURSO'], $_GET['CICLO']);
     } else if ($funcion === 'Actualizar') {
         if (isset($_SESSION['ID'])) {
-            $conex->updateAlumno($_GET['ID'], $_GET['NOMBRE'], $_GET['FECHA_NACIMIENTO']);
+            $conex->updateAsignatura($_GET['ID'], $_GET['NOMBRE'], $_GET['CURSO'], $_GET['CICLO']);
         } else {
             
         }
     } else if ($funcion === 'Borrar') {
         if (isset($_SESSION['ID'])) {
-            $conex->borrarAlumno($_GET['ID']);
+            $conex->borrarAsignatura($_GET['ID']);
             unset($_SESSION['ID']);
         } else {
             
@@ -38,10 +38,10 @@ if (isset($_GET['submit'])) {
     }
 }
 if (isset($_SESSION['ID'])) {
-    $alumno = $conex->getAlumnoOrAsignatura("alumnos", $_SESSION['ID']);
+    $asignatura = $conex->getAlumnoOrAsignatura("asignaturas", $_SESSION['ID']);
 }
-$consulta = $conex->getAllFromX('alumnos');
-$titulo = 'Crud alumnos';
+$consulta = $conex->getAllFromX('asignaturas');
+$titulo = 'Crud asignaturas';
 require_once '../head.php';
 echo '<div>';
 require_once '../tabla.php';
@@ -58,7 +58,7 @@ echo '</div>';
     <div id="filaInputs">
         <?php
         //No se si al crear se elige el mayor de edad o se mira la fecha y se selecciona solo
-        foreach ($alumno as $clave => $valor) {
+        foreach ($asignatura as $clave => $valor) {
             echo "<input type=\"text\" name=\"$clave\" value=\"$valor\">";
         }
         //echo "<input type=\"\"";

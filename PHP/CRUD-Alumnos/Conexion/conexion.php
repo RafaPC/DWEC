@@ -37,7 +37,7 @@ class Singleton {
         }
     }
 
-    public function getAlumnoOrClase($tabla, $id) {
+    public function getAlumnoOrAsignatura($tabla, $id) {
         try {
             $q = $this->Idb->query("SELECT * FROM $tabla WHERE ID ='$id'");
             $q->setFetchMode(PDO::FETCH_ASSOC);
@@ -53,19 +53,29 @@ class Singleton {
         $mayorEdad = $this->checkNac($fechaNac);
         $this->Idb->query("INSERT INTO alumnos (ID, NOMBRE, FECHA_NACIMIENTO, MAYOR_EDAD) VALUES (NULL,'$nombre', '$fechaNac', '$mayorEdad')");
     }
-
-    public function updateAlumno($id, $nombre, $fechaNac, $mayor) {
-        if ($mayor) {
-            $mayorEdad = 1;
-        } else {
-            $mayorEdad = 0;
-        }
+    
+    public function updateAlumno($id, $nombre, $fechaNac) {
+        $mayorEdad = $this->checkNac($fechaNac);
         $this->Idb->query("UPDATE alumnos SET NOMBRE='$nombre', FECHA_NACIMIENTO='$fechaNac', MAYOR_EDAD='$mayorEdad' WHERE ID='$id'");
     }
-
+    
     public function borrarAlumno($id) {
         $this->Idb->query("DELETE FROM notas WHERE ID_ALUMNO = '$id'");
         $this->Idb->query("DELETE FROM alumnos WHERE ID='$id'");
+    }
+    
+    
+    public function crearAsignatura($nombre, $curso, $ciclo) {
+        $this->Idb->query("INSERT INTO asignaturas (ID, NOMBRE, CURSO, CICLO) VALUES (NULL,'$nombre', '$curso', '$ciclo')");
+    }
+    
+    public function updateAsignatura($id, $nombre, $curso, $ciclo) {
+        $this->Idb->query("UPDATE asignaturas SET NOMBRE='$nombre', CURSO='$curso', CICLO='$ciclo' WHERE ID='$id'");
+    }
+  
+    public function borrarAsignatura($id) {
+        $this->Idb->query("DELETE FROM notas WHERE ID_ASIGNATURA = '$id'");
+        $this->Idb->query("DELETE FROM asignaturas WHERE ID='$id'");
     }
 
     private function checkNac($fecha) {
@@ -79,7 +89,6 @@ class Singleton {
             return 1;
         }
     }
-
 }
 
 ?>

@@ -2,8 +2,8 @@
 
 $objetoRespuesta = new stdClass();
 
-if (isset($_GET['cod_cuenta'])) {
-    $codCuenta = $_GET['cod_cuenta'];
+if (isset($_POST['cod_cuenta'])) {
+    $codCuenta = $_POST['cod_cuenta'];
     if (strlen($codCuenta) === 10) {
         $ultimoNumero = substr($codCuenta, 9, 1);
         for ($i = 0, $acum = 0; $i < strlen($codCuenta) - 1; $i++) {

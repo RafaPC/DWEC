@@ -35,7 +35,7 @@ function comprobarCodigoCuenta(codCuenta) {
             // (tambien es posible utilizar una cadena de datos)
             data: {cod_cuenta: codCuenta},
             // especifica si sera una peticion POST o GET
-            type: 'GET',
+            type: 'POST',
             // el tipo de informaciÃ³n que se espera de respuesta
             dataType: 'json',
             success: function (respuesta) {

@@ -25,45 +25,64 @@ $(function () {
 });
 
 function handleCodCuenta(codigoErr) {
-    $(".invalid-feedback").css("display", "block");
-    $("#ncuenta").addClass("is-invalid");
     if (codigoErr === 1) {
+        $(".invalid-feedback").css("display", "none");
+        $("#ncuenta").removeClass("is-invalid");
+        $("#ncuenta").addClass("is-valid");
+        $("#ncuenta").prop("disabled", true);
+        $("#descripcion").removeClass("oculto");
+        $("#botonSiguiente").off("click");
+        $("#botonSiguiente").on("click", checkDescripcion);
+    } else {
         $(".invalid-feedback").css("display", "block");
         $("#ncuenta").addClass("is-invalid");
-        $(".invalid-feedback").html("El código de cuenta ya está registrado");
-    } else {
         if (codigoErr === -1) {
             $(".invalid-feedback").html("El codigo tiene que tener al menos 10 números");
         } else if (codigoErr === -2) {
             $(".invalid-feedback").html("El código no cumple el formato");
         } else if (codigoErr === -3) {
-            //Quito mensaje de error (por si se habia fallado antes)
-            $(".invalid-feedback").css("display", "none");
-            //Quito la clase de error al input(por si se habia fallado antes)
-            $("#ncuenta").removeClass("is-invalid");
-            //Añado la clase de éxito
-            $("#ncuenta").addClass("is-valid");
-            //Añado propiedad de "discapacitado" para que no se pueda cambiar
-            $("#ncuenta").prop("disabled", true);
-            //Quito la clase oculto al siguiente input para mostrarlo
-            $("#form-dni-1").removeClass("oculto");
-            //Quito el listener que tenía el botón de Siguiente
-            botonSiguiente.off("click");
-            //Pongo nuevo listener al botón de siguiente
-            botonSiguiente.on("click", checkCliente);
+            $(".invalid-feedback").html("El código no está registrado");
         } else if (codigoErr === -4) {
             $(".invalid-feedback").html("Error del servidor");
         }
     }
 }
+function checkDescripcion() {
+    var descripcion = $("#input-descripcion").val();
+    if (descripcion.length === 0) {
+        $("#input-descripcion").addClass("is-invalid");
+        $("#descripcion .invalid-feedback").html("El campo debe contener una descripción.");
+        $("#descripcion .invalid-feedback").css("display", "block");
+    } else {
+        $("#input-descripcion").removeClass("is-invalid");
+        $("#input-descripcion").addClass("is-valid");
+        $("#input-descripcion").prop("disabled", true);
+        $("#descripcion .invalid-feedback").css("display", "none");
+        $("#importe").removeClass("oculto");
+        $("#botonSiguiente").off("click");
+        $("#botonSiguiente").on("click", checkImporte);
 
+    }
+}
 function checkImporte() {
     var importe = parseInt($("#input-importe").val());
-    if (importe > 0) {
+    if (importe !== 0) {
+        if (importe < 0) {
+            var x = importeEsMayorQueSaldo();
+            if (x == true) {
+                alert("deberia entrar aqui");
+                $("#input-importe").addClass("is-invalid");
+                $("#importe .invalid-feedback").css("display", "block");
+                $("#importe .invalid-feedback").html("El reintegro supera al saldo total de la cuenta");
+            } else {
+                alert("entra aqui");
+            }
+        }
         $("#input-importe").removeClass("is-invalid");
         $("#input-importe").addClass("is-valid");
         $("#importe .invalid-feedback").css("display", "none");
-        mandarDatos();
+        $("#input-importe").prop("disabled", true);
+        //mandarDatos();
     } else {
         $("#input-importe").addClass("is-invalid");
         $("#importe .invalid-feedback").css("display", "block");
@@ -112,5 +131,38 @@ function mandarDatos() {
     });
 }
 
+function importeEsMayorQueSaldo() {
+    var ncuenta = $("#ncuenta").val();
+    var importe = parseInt($("#input-importe").val());
+    var importeEsMayorQueSaldo;
+    $.ajax({
+        // la URL para la peticion
+        url: 'php/getSaldoFromCuenta.php',
+        // la informacion a enviar
+        // (tambien es posible utilizar una cadena de datos)
+        data: {cod_cuenta: ncuenta},
+        // especifica si sera una peticion POST o GET
+        type: 'POST',
+        // el tipo de informaciÃ³n que se espera de respuesta
+        dataType: 'json',
+        success: function (resultado) {
+            if (typeof resultado.cod_err !== 'undefined') {
+                console.log("hacer algo");
+            } else {
+                if (resultado.saldo < Math.abs(importe)) {
+                    importeEsMayorQueSaldo = true;
+                } else {
+                    importeEsMayorQueSaldo = false;
+                }
+            }
+        },
+        error: function (xhr, status) {
+            alert('Disculpe, existia un problema' + status);
+        },
+        complete: function (xhr, status) {
+        }
+    });
+    return importeEsMayorQueSaldo;
+}
 
 //No poner id a los inputs como tal, solo al div que los rodee y coger ese div por id y luego el input que haya dentro

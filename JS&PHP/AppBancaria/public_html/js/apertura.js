@@ -8,18 +8,16 @@ var inputsCliente;
 var segundoTitular = false;
 var dniPrimerTitular = null;
 var existeCliente1 = false, existeCliente2 = false;
-
 $(function () {
     botonSiguiente = $("#botonSiguiente");
     dni = $("#dni-1");
     datosCliente = $(".datos-cliente-1");
     formularioDNI = $("#form-dni-1");
     inputsCliente = $("#inputs-cliente-1");
-
     $("#num-cuentas-1").val("0");
     $("#num-cuentas-2").val("0");
     botonSiguiente.on("click", function () {
-        var codCuenta = "" + $("#ncuenta").val();
+        var codCuenta = $("#input-codigoCuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
 //        $("#fecha1").datepicker($.datepicker.regional["es"]);
@@ -66,28 +64,18 @@ $(function () {
         return date;
     }
 });
-
 function handleCodCuenta(codigoErr) {
-    $(".invalid-feedback").css("display", "block");
-    $("#ncuenta").addClass("is-invalid");
     if (codigoErr === 1) {
-        $(".invalid-feedback").css("display", "block");
-        $("#ncuenta").addClass("is-invalid");
-        $(".invalid-feedback").html("El código de cuenta ya está registrado");
+        campoErroneo($("#codigoCuenta"), "El código de cuenta ya está registrado.");
     } else {
         if (codigoErr === -1) {
-            $(".invalid-feedback").html("El codigo tiene que tener al menos 10 números");
+            campoErroneo($("#codigoCuenta"), "El código tiene que tener al menos 10 números.");
         } else if (codigoErr === -2) {
-            $(".invalid-feedback").html("El código no cumple el formato");
+            campoErroneo($("#codigoCuenta"), "El código no cumple el formato.");
         } else if (codigoErr === -3) {
-            //Quito mensaje de error (por si se habia fallado antes)
-            $(".invalid-feedback").css("display", "none");
-            //Quito la clase de error al input(por si se habia fallado antes)
-            $("#ncuenta").removeClass("is-invalid");
-            //Añado la clase de éxito
-            $("#ncuenta").addClass("is-valid");
-            //Añado propiedad de "discapacitado" para que no se pueda cambiar
-            $("#ncuenta").prop("disabled", true);
+            //En este caso, el mensaje de error -3, no existe usuario,
+            //es el que da paso a las siguientes fases del formulario
+            campoCorrecto($("#codigoCuenta"));
             //Quito la clase oculto al siguiente input para mostrarlo
             $("#form-dni-1").removeClass("oculto");
             //Quito el listener que tenía el botón de Siguiente
@@ -104,9 +92,10 @@ function checkCliente() {
     var valorDNI = dni.val();
     if (checkDNI()) {
         if (segundoTitular && dniPrimerTitular === valorDNI) {
-            $("#form-dni-2 .invalid-feedback").css("display", "block");
-            $("#form-dni-2 .invalid-feedback").html("Ese DNI pertenece al primer titular");
-            $("#dni-2").addClass("is-invalid");
+            campoErroneo(formularioDNI,"Ese DNI pertenece al primer titular");
+//            $("#form-dni-2 .invalid-feedback").css("display", "block");
+//            $("#form-dni-2 .invalid-feedback").html("Ese DNI pertenece al primer titular");
+//            $("#dni-2").addClass("is-invalid");
         } else {
             $.ajax({
                 // la URL para la peticion
@@ -127,17 +116,13 @@ function checkCliente() {
                         //inputsCliente.prop("disabled", true);
                         datosCliente.addClass("is-valid");
                         datosCliente.prop("disabled", true);
-
                         var cliente = resultado.cliente;
-
                         for (var i = 0; i < 9; i++) {
                             datosCliente[i].value = cliente[i];
                         }
 
                         dni.prop("disabled", true);
-
                         alert("Titular ya registrado, no se necesita completar su información");
-
                         if (segundoTitular) {
                             existeCliente2 = true;
                             $("#importe").removeClass("oculto");
@@ -185,7 +170,7 @@ function checkDatosCliente() {
             botonSiguiente.on("click", checkImporte);
             $("#importe").removeClass("oculto");
         } else {
-            //Ha chequeado los datos del primer titular
+//Ha chequeado los datos del primer titular
             botonSiguiente.on("click", checkSegundoTitular);
             $("#radios").removeClass("oculto");
         }
@@ -196,20 +181,16 @@ function checkDatosCliente() {
 
 function checkSegundoTitular() {
     botonSiguiente.off("click");
-    botonSiguiente.on("click", checkCliente);
-
     if ($("#segundo-titular-si").prop("checked")) {
         formularioDNI = $("#form-dni-2");
         segundoTitular = true;
         formularioDNI.removeClass("oculto");
-        botonSiguiente.off("click");
-        botonSiguiente.on("click", checkCliente);
         dni = $("#dni-2");
         datosCliente = $(".datos-cliente-2");
         inputsCliente = $("#inputs-cliente-2");
+        botonSiguiente.on("click", checkCliente);
     } else {
         $("#importe").removeClass("oculto");
-        botonSiguiente.off("click");
         botonSiguiente.on("click", checkImporte);
     }
     $(".radio-titular").prop("disabled", true);
@@ -218,26 +199,21 @@ function checkSegundoTitular() {
 //Que directamente se llame a dni cuando toque, sin pasar por checkCliente
 function checkDNI() {
     var letrasDNI = ["T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"];
-
     var dniValido;
-
     var expregDni = new RegExp(/^\d{8}[A-Z]$/i);
     var valorDNI = "" + dni.val();
-
+    if (valorDNI.length === 0) {
+        campoErroneo($("#dni"));
+    }
     if (expregDni.exec(valorDNI)) {
         var numeros = parseInt(valorDNI.substr(0, 8));
         var resto = numeros % 23;
         var letra = dni.val().substr(8, 1);
         if (letrasDNI[resto] === letra) {
             dniValido = true;
-            dni.removeClass("is-invalid");
-            dni.addClass("is-valid");
-            //document.getElementById(formularioDNI).getElementsByClassName("invalid-feedback")[0].style.display = "none";
-            formularioDNI.find(".invalid-feedback").css("display", "none");
+            campoCorrecto(formularioDNI);
         } else {
-            //document.getElementById(formularioDNI).getElementsByClassName("invalid-feedback")[0].style.display = "block";
-            formularioDNI.find(".invalid-feedback").css("display", "block");
-            dni.addClass("is-invalid");
+            campoErroneo(formularioDNI, "Formato de DNI incorrecto.");
         }
     } else {
         dniValido = false;
@@ -248,14 +224,13 @@ function checkDNI() {
 
 function checkImporte() {
     var importe = parseInt($("#input-importe").val());
-    if (importe > 0) {
-        $("#input-importe").removeClass("is-invalid");
-        $("#input-importe").addClass("is-valid");
-        $("#importe .invalid-feedback").css("display", "none");
-        mandarDatos();
+    if (importe === NaN) {
+        campoErroneo($("#importe"), "El importe tiene que ser un valor numérico.");
+    } else if (importe <= 0) {
+        campoErroneo($("#importe"), "El importe tiene que ser mayor de 0");
     } else {
-        $("#input-importe").addClass("is-invalid");
-        $("#importe .invalid-feedback").css("display", "block");
+        campoCorrecto($("#importe"));
+        mandarDatos();
     }
 }
 
@@ -263,10 +238,9 @@ function mandarDatos() {
     var llamada = new Object();
     var cliente1 = [];
     var cliente2 = [];
-    llamada.numCuenta = $("#ncuenta").val();
+    llamada.numCuenta = $("#input-codigoCuenta").val();
     llamada.existeCliente1 = existeCliente1;
     llamada.existeCliente2 = existeCliente2;
-
     for (var i = 0; i < $(".datos-cliente-1").length; i++) {
         cliente1.push($(".datos-cliente-1")[i].value);
     }

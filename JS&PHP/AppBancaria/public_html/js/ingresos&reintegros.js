@@ -19,45 +19,35 @@ $(function () {
     $("#num-cuentas-1").val("0");
     $("#num-cuentas-2").val("0");
     botonSiguiente.on("click", function () {
-        var codCuenta = "" + $("#ncuenta").val();
+        var codCuenta = $("#input-codigoCuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
 });
 
 function handleCodCuenta(codigoErr) {
     if (codigoErr === 1) {
-        $(".invalid-feedback").css("display", "none");
-        $("#ncuenta").removeClass("is-invalid");
-        $("#ncuenta").addClass("is-valid");
-        $("#ncuenta").prop("disabled", true);
+        campoCorrecto($("#codigoCuenta"));
         $("#descripcion").removeClass("oculto");
         $("#botonSiguiente").off("click");
         $("#botonSiguiente").on("click", checkDescripcion);
     } else {
-        $(".invalid-feedback").css("display", "block");
-        $("#ncuenta").addClass("is-invalid");
         if (codigoErr === -1) {
-            $(".invalid-feedback").html("El codigo tiene que tener al menos 10 números");
+            campoErroneo($("#codigoCuenta"),"El código tiene que tener al menos 10 números.");
         } else if (codigoErr === -2) {
-            $(".invalid-feedback").html("El código no cumple el formato");
+            campoErroneo($("#codigoCuenta"),"El código no cumple el formato.");
         } else if (codigoErr === -3) {
-            $(".invalid-feedback").html("El código no está registrado");
+            campoErroneo($("#codigoCuenta"),"El código no está registrado.");
         } else if (codigoErr === -4) {
-            $(".invalid-feedback").html("Error del servidor");
+            campoErroneo($("#codigoCuenta"),"Error del servidor.");
         }
     }
 }
 function checkDescripcion() {
     var descripcion = $("#input-descripcion").val();
     if (descripcion.length === 0) {
-        $("#input-descripcion").addClass("is-invalid");
-        $("#descripcion .invalid-feedback").html("El campo debe contener una descripción.");
-        $("#descripcion .invalid-feedback").css("display", "block");
+        campoErroneo($("#descripcion"), "El campo debe contener una descripción.");
     } else {
-        $("#input-descripcion").removeClass("is-invalid");
-        $("#input-descripcion").addClass("is-valid");
-        $("#input-descripcion").prop("disabled", true);
-        $("#descripcion .invalid-feedback").css("display", "none");
+        campoCorrecto($("#descripcion"));
         $("#importe").removeClass("oculto");
         $("#botonSiguiente").off("click");
         $("#botonSiguiente").on("click", checkImporte);
@@ -68,24 +58,12 @@ function checkImporte() {
     var importe = parseInt($("#input-importe").val());
     if (importe !== 0) {
         if (importe < 0) {
-            var x = importeEsMayorQueSaldo();
-            if (x == true) {
-                alert("deberia entrar aqui");
-                $("#input-importe").addClass("is-invalid");
-                $("#importe .invalid-feedback").css("display", "block");
-                $("#importe .invalid-feedback").html("El reintegro supera al saldo total de la cuenta");
-            } else {
-                alert("entra aqui");
-            }
+            importeEsMayorQueSaldo();
         }
-        $("#input-importe").removeClass("is-invalid");
-        $("#input-importe").addClass("is-valid");
-        $("#importe .invalid-feedback").css("display", "none");
-        $("#input-importe").prop("disabled", true);
+        campoCorrecto($("#importe"));
         //mandarDatos();
     } else {
-        $("#input-importe").addClass("is-invalid");
-        $("#importe .invalid-feedback").css("display", "block");
+        campoErroneo($("#importe"), "El importe tiene que ser distinto de 0.");
     }
 }
 
@@ -132,9 +110,8 @@ function mandarDatos() {
 }
 
 function importeEsMayorQueSaldo() {
-    var ncuenta = $("#ncuenta").val();
+    var ncuenta = $("#input-codigoCuenta").val();
     var importe = parseInt($("#input-importe").val());
-    var importeEsMayorQueSaldo;
     $.ajax({
         // la URL para la peticion
         url: 'php/getSaldoFromCuenta.php',
@@ -150,9 +127,9 @@ function importeEsMayorQueSaldo() {
                 console.log("hacer algo");
             } else {
                 if (resultado.saldo < Math.abs(importe)) {
-                    importeEsMayorQueSaldo = true;
+                    campoErroneo($("#importe"), "El reintegro supera al saldo total de la cuenta");
                 } else {
-                    importeEsMayorQueSaldo = false;
+                    campoCorrecto($("#importe"));
                 }
             }
         },
@@ -162,7 +139,8 @@ function importeEsMayorQueSaldo() {
         complete: function (xhr, status) {
         }
     });
-    return importeEsMayorQueSaldo;
 }
+
+
 
 //No poner id a los inputs como tal, solo al div que los rodee y coger ese div por id y luego el input que haya dentro

@@ -46,7 +46,7 @@ $(function () {
 
 //Pongo evento al bot�n de Siguiente
     $("#botonSiguiente").on("click", function () {
-        var codCuenta = "" + $("#ncuenta").val();
+        var codCuenta = $("#input-codigoCuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
 });
@@ -69,7 +69,7 @@ $(function () {
 });
 
 function checkCuenta() {
-    var ncuenta = "" + document.getElementById('ncuenta').value;
+    var ncuenta = $("#input-codigoCuenta").val();
     if (ncuenta.length !== 10) {
         $(".invalid-feedback").html("Por favor introduce in código de cuenta válido");
         $(".invalid-feedback").css("display", "block");
@@ -119,7 +119,7 @@ function checkCuenta() {
 }
 
 function checkFechas() {
-    var ncuenta = $("#ncuenta").val();
+    var ncuenta = $("#input-codigoCuenta").val();
     var fecha1 = $("#fecha1").datepicker("getDate");
     var fecha2 = $("#fecha2").datepicker("getDate");
     document.getElementsByTagName("caption")[0].innerHTML = "Lista de movimientos de " + fecha1.getDate() + "/" + (fecha1.getMonth() + 1) + "/" + fecha1.getFullYear() + " a " + fecha2.getDate() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getFullYear();
@@ -154,25 +154,20 @@ function checkFechas() {
 
 function handleCodCuenta(codigoErr) {
     if (codigoErr === 1) {
-        $(".invalid-feedback").css("display", "none");
-        $("#ncuenta").removeClass("is-invalid");
-        $("#ncuenta").addClass("is-valid");
-        $("#ncuenta").prop("disabled", true);
+        campoCorrecto($("#codigoCuenta"));
         $("#fechas").removeClass("oculto");
         $("#check").removeClass("oculto");
         $("#botonSiguiente").off("click");
         $("#botonSiguiente").on("click", checkFechas);
     } else {
-        $(".invalid-feedback").css("display", "block");
-        $("#ncuenta").addClass("is-invalid");
         if (codigoErr === -1) {
-            $(".invalid-feedback").html("El codigo tiene que tener al menos 10 números");
+            campoErroneo($("#codigoCuenta"),"El código tiene que tener al menos 10 números.");
         } else if (codigoErr === -2) {
-            $(".invalid-feedback").html("El código no cumple el formato");
+            campoErroneo($("#codigoCuenta"),"El código no cumple el formato.");
         } else if (codigoErr === -3) {
-            $(".invalid-feedback").html("El código no está registrado");
+            campoErroneo($("#codigoCuenta"),"El código no está registrado.");
         } else if (codigoErr === -4) {
-            $(".invalid-feedback").html("Error del servidor");
+            campoErroneo($("#codigoCuenta"),"Error del servidor.");
         }
     }
 }

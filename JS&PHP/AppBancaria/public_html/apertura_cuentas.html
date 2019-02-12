@@ -24,13 +24,13 @@ and open the template in the editor.
     <body>
         <div class="container">
             <form>
-                <div class="form-group">
+                <div class="form-group" id="codigoCuenta">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
                         <label for="ncuenta">Número de cuenta</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="ncuenta" aria-describedby="ncuentaHelp" placeholder="1234567890"> 
+                            <input type="text" class="form-control" id="input-codigoCuenta" aria-describedby="ncuentaHelp" placeholder="Ejemplo: 1234567890"> 
                             <div class="invalid-feedback">
-                                Por favor introduce in código de cuenta
+                                Por favor introduce un código de cuenta.
                             </div>
                         </div>
                         <small id="ncuentaHelp" class="form-text text-muted">Cadena de 10 dígitos</small>
@@ -40,16 +40,16 @@ and open the template in the editor.
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
                         <label for="dni-1">Primer titular</label>
                         <div class="input-group">
-                            <input type="text" class="form-control datos-cliente-1" id="dni-1" aria-describedby="dni1-Help" placeholder="49099576G"> 
+                            <input type="text" class="form-control datos-cliente-1" id="dni-1" aria-describedby="dni1-Help" placeholder="Ejemplo: 49099576G"> 
                             <div class="invalid-feedback">
-                                Formato de DNI incorrecto
+                                Formato de DNI incorrecto.
                             </div>
                         </div>
                         <small id="dni1-Help" class="form-text text-muted">DNI</small>
                     </div>
                 </div>
                 <div class="oculto" id="inputs-cliente-1">
-                    <label for="nombre-1">Número de cuenta</label>
+                    <label for="nombre-1">Nombre</label>
                     <input type="text" class="form-control datos-cliente-1" id="nombre-1"> 
                     <label for="direccion-1">Dirección</label>
                     <input type="text" class="form-control datos-cliente-1" id="direccion-1"> 
@@ -65,13 +65,13 @@ and open the template in the editor.
                     <input type="text" class="form-control datos-cliente-1" id="num-cuentas-1" value="0" disabled> 
                     <label for="saldo-1">Saldo</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control datos-cliente-1" id="saldo-1">
+                        <input type="text" class="form-control datos-cliente-1" id="saldo-1" value="0" disabled>
                         <div class="input-group-prepend">
                             <span class="input-group-text">€</span>
                         </div>
                     </div>
                     <div class="invalid-feedback">
-                        Faltan datos por rellenar
+                        Faltan datos por rellenar.
                     </div>
                 </div>
                 <div class="oculto" id="radios">
@@ -93,16 +93,16 @@ and open the template in the editor.
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
                         <label for="dni-2">Segundo titular</label>
                         <div class="input-group">
-                            <input type="text" class="form-control datos-cliente-2" id="dni-2" aria-describedby="dni2-Help" placeholder="49099576G"> 
+                            <input type="text" class="form-control datos-cliente-2" id="dni-2" aria-describedby="dni2-Help" placeholder="Ejemplo: 49099576G"> 
                             <div class="invalid-feedback">
-                                Formato de DNI incorrecto
+                                Formato de DNI incorrecto.
                             </div>
                         </div>
                         <small id="dni2-Help" class="form-text text-muted">DNI</small>
                     </div>
                 </div>
                 <div class="oculto" id="inputs-cliente-2">
-                    <label for="nombre-2">Número de cuenta</label>
+                    <label for="nombre-2">Nombre</label>
                     <input type="text" class="form-control datos-cliente-2" id="nombre-2"> 
                     <label for="direccion-2">Dirección</label>
                     <input type="text" class="form-control datos-cliente-2" id="direccion-2"> 
@@ -118,13 +118,13 @@ and open the template in the editor.
                     <input type="text" class="form-control datos-cliente-2" id="num-cuentas-2"  value="0" disabled> 
                     <label for="saldo-2">Saldo</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control datos-cliente-2" id="saldo-2">
+                        <input type="text" class="form-control datos-cliente-2" id="saldo-2" value="0" disabled>
                         <div class="input-group-prepend">
                             <span class="input-group-text">€</span>
                         </div>
                     </div>
                     <div class="invalid-feedback">
-                        Faltan datos por rellenar
+                        Faltan datos por rellenar.
                     </div>
                 </div>
                 <div class="oculto" id="importe">
@@ -132,7 +132,7 @@ and open the template in the editor.
                     <div class="input-group mb-3">
                         <input type="text" class="form-control" id="input-importe">
                         <div class="invalid-feedback">
-                            El importe tiene que ser mayor de 0
+                            El importe tiene que ser mayor de 0.
                         </div>
                         <div class="input-group-prepend">
                             <span class="input-group-text">€</span>

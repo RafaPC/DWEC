@@ -24,13 +24,48 @@ function handleCodCuenta(codigoErr) {
         //es el que da paso a las siguientes fases del formulario
         campoCorrecto($("#codigoCuenta"));
         //Quito la clase oculto al siguiente input para mostrarlo
-        $("#form-dni-1").removeClass("oculto");
+        $("#datos-cuenta").removeClass("oculto");
         //Quito el listener que tenía el botón de Siguiente
         botonSiguiente.off("click");
         //Pongo nuevo listener al botón de siguiente
-        botonSiguiente.on("click", checkCliente);
-        
+        //botonSiguiente.on("click", checkCliente);
+
         //Hacer llamada ajax para coger datos de la cuenta y rellenarlos
+        var ncuenta = $("#input-codigoCuenta").val();
+        $.ajax({
+            url: 'php/getDatos&ClientesFromCuenta.php',
+            data: {numCuenta: ncuenta},
+            type: 'POST',
+            dataType: 'json',
+            success: function (respuesta) {
+                console.log(respuesta);
+                $("#inputs-cuenta").removeClass("oculto");
+                var datosCuenta = $(".datos-cuenta");
+                for(var i = 0; i < 3; i++){
+                    datosCuenta[i].value = respuesta.cuenta[i];
+                }
+                
+                $("#inputs-cliente-1").removeClass("oculto");
+                campoCorrecto($(".datos-cliente-1"));
+                for (var i = 0; i < 9; i++) {
+                    var x = $(".datos-cliente-1");
+                    x[i].value = respuesta.cliente1[i];
+                }
+                if (!(typeof respuesta.cliente2 === 'undefined')) {
+                    $("#inputs-cliente-2").removeClass("oculto");
+                    campoCorrecto($(".datos-cliente-2"));
+                    for (var i = 0; i < 9; i++) {
+                        $(".datos-cliente-2")[i].value = respuesta.cliente2[i];
+                    }
+                }
+            },
+            error: function (xhr, status) {
+                console.log(xhr);
+            },
+            complete: function (xhr, status) {
+
+            }
+        });
     } else {
         if (codigoErr === -1) {
             campoErroneo($("#codigoCuenta"), "El código tiene que tener al menos 10 números.");

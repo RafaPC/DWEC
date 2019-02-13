@@ -13,82 +13,31 @@ $(function () {
     dni = $("#dni-1");
     datosCliente = $(".datos-cliente-1");
     formularioDNI = $("#form-dni-1");
-    inputsCliente = $("#inputs-cliente-1");
-    $("#num-cuentas-1").val("0");
-    $("#num-cuentas-2").val("0");
     botonSiguiente.on("click", function () {
         var codCuenta = $("#input-codigoCuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
-//        $("#fecha1").datepicker($.datepicker.regional["es"]);
-//        $("#fecha2").datepicker($.datepicker.regional["es"]);
-    var fecha = new Date();
-    var dia = fecha.getDate();
-    var mes = fecha.getMonth() + 1;
-    var año = fecha.getFullYear();
-    mes += "";
-    if (mes.length === 1 && mes !== 0) {
-        mes = "0" + mes;
-    }
-    fecha = dia + "/" + mes + "/" + año;
-    $("#fecha-registro-1").val(fecha);
-    $("#fecha-registro-2").val(fecha);
-    var dateFormat = "dd/mm/yy";
-    var nacimiento1 = $("#fecha-nacimiento-1").datepicker({
-        defaultDate: null,
-        changeMonth: true,
-        changeYear: true,
-        firstDay: 1,
-        maxDate: "-18y"
-    });
-    var nacimiento2 = $("#fecha-nacimiento-2").datepicker({
-        defaultDate: null,
-        changeMonth: true,
-        changeYear: true,
-        firstDay: 1,
-        maxDate: "-18y"
-    });
-    var registro1 = $("#fecha-registro-1").datepicker({
-        defaultDate: null,
-        changeMonth: true,
-        changeYear: true,
-        firstDay: 1
-    });
-    var registro2 = $("#fecha-registro-2").datepicker({
-        defaultDate: null,
-        changeMonth: true,
-        changeYear: true,
-        firstDay: 1
-    });
-    function getDate(element) {
-        var date;
-        try {
-            date = $.datepicker.parseDate(dateFormat, element.value);
-        } catch (error) {
-            date = null;
-        }
-
-        return date;
-    }
 });
 function handleCodCuenta(codigoErr) {
     if (codigoErr === 1) {
-        campoErroneo($("#codigoCuenta"), "El código de cuenta ya está registrado.");
+        //En este caso, el mensaje de error -3, no existe usuario,
+        //es el que da paso a las siguientes fases del formulario
+        campoCorrecto($("#codigoCuenta"));
+        //Quito la clase oculto al siguiente input para mostrarlo
+        $("#form-dni-1").removeClass("oculto");
+        //Quito el listener que tenía el botón de Siguiente
+        botonSiguiente.off("click");
+        //Pongo nuevo listener al botón de siguiente
+        botonSiguiente.on("click", checkCliente);
+        
+        //Hacer llamada ajax para coger datos de la cuenta y rellenarlos
     } else {
         if (codigoErr === -1) {
             campoErroneo($("#codigoCuenta"), "El código tiene que tener al menos 10 números.");
         } else if (codigoErr === -2) {
             campoErroneo($("#codigoCuenta"), "El código no cumple el formato.");
         } else if (codigoErr === -3) {
-            //En este caso, el mensaje de error -3, no existe usuario,
-            //es el que da paso a las siguientes fases del formulario
-            campoCorrecto($("#codigoCuenta"));
-            //Quito la clase oculto al siguiente input para mostrarlo
-            $("#form-dni-1").removeClass("oculto");
-            //Quito el listener que tenía el botón de Siguiente
-            botonSiguiente.off("click");
-            //Pongo nuevo listener al botón de siguiente
-            botonSiguiente.on("click", checkCliente);
+            campoErroneo($("#codigoCuenta"), "El código de cuenta no está registrado.");
         } else if (codigoErr === -4) {
             $(".invalid-feedback").html("Error del servidor");
         }
@@ -177,30 +126,13 @@ function checkDatosCliente() {
             botonSiguiente.on("click", checkImporte);
             $("#importe").removeClass("oculto");
         } else {
-//Ha chequeado los datos del primer titular
+            //Ha chequeado los datos del primer titular
             botonSiguiente.on("click", checkSegundoTitular);
             $("#radios").removeClass("oculto");
         }
     } else {
         inputsCliente.find(".invalid-feedback").css("display", "block");
     }
-}
-
-function checkSegundoTitular() {
-    botonSiguiente.off("click");
-    if ($("#segundo-titular-si").prop("checked")) {
-        formularioDNI = $("#form-dni-2");
-        segundoTitular = true;
-        formularioDNI.removeClass("oculto");
-        dni = $("#dni-2");
-        datosCliente = $(".datos-cliente-2");
-        inputsCliente = $("#inputs-cliente-2");
-        botonSiguiente.on("click", checkCliente);
-    } else {
-        $("#importe").removeClass("oculto");
-        botonSiguiente.on("click", checkImporte);
-    }
-    $(".radio-titular").prop("disabled", true);
 }
 
 //Que directamente se llame a dni cuando toque, sin pasar por checkCliente

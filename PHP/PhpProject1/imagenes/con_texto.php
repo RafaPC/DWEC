@@ -1,6 +1,11 @@
 <?php
+session_start();
 $captcha=  imagecreatetruecolor(240, 75);
-$texto='JUEVES';
+if(isset($_SESSION['palabra'])){
+$texto = $_SESSION['palabra'];
+}else{
+$texto='nohaynada';
+}
 for($i=0;$i<strlen($texto);$i++) {
 //Elegir un color
 $color=imagecolorallocate($captcha,rand(0,255),rand(0,255),rand(0,255));
@@ -12,7 +17,5 @@ $letra= substr($texto,$i,1);
 $fuente = dirname(__FILE__) . '/arial.ttf';
 imagettftext($captcha, 24, $angulo,$abscisa,$ordenada,$color,$fuente, $letra);
 }
-header("Content-type:image/jpeg");
-header("Content-Disposition:inline ; filename=captcha.jpg");
-imagejpeg($captcha);
+$imagen = imagejpeg($captcha);
 ?>

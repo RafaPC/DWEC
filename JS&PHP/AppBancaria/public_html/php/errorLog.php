@@ -7,7 +7,7 @@ function escribirError(PDOException $excepcion) {
     $man = fopen('registro.log', 'a');
     $log = "
 Fecha: $fecha
-        
+       
 Mensaje: $mensaje 
 Trace: $trace
 ********************************************************";

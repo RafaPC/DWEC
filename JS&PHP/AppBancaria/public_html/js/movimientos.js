@@ -180,15 +180,13 @@ function printMovimientos(movimientos) {
         $(".table").removeClass("oculto");
         $(".table").css("display", "none");
 
-        var tbody = document.getElementById("movimientos");
-
+        var tbody = $("#movimientos")[0];
         //Si el tbody ya tiene elementos dentro los borra todos antes de escribir m�s
         if (tbody.childElementCount > 0) {
             while (tbody.firstChild) {
                 tbody.removeChild(tbody.firstChild);
             }
         }
-
 
         for (var i = 0; i < movimientos.length; i++) {
             var tr = document.createElement("tr");
@@ -211,8 +209,7 @@ function printMovimientos(movimientos) {
                 tr.appendChild(td);
             }
         }
-        $(".table").show("fold", {easing: "easeOutExpo"}, 800);
-        //$(".table").toggle("slide");
+        $(".table").show("fold", {easing: "easeOutExpo"}, 1000);
     }
 }
 

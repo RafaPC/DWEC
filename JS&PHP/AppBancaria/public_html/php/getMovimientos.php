@@ -30,6 +30,7 @@ while ($r = $result->fetch()) {
 }
 $objetoRespuesta->movimientos = $filas;
 $objetoJSON = json_encode($objetoRespuesta);
+header('Content-type: application/json; charset=utf-8');
 echo $objetoJSON;
 
 //cerrar conex

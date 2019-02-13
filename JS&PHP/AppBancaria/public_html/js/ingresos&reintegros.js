@@ -32,13 +32,13 @@ function handleCodCuenta(codigoErr) {
         $("#botonSiguiente").on("click", checkDescripcion);
     } else {
         if (codigoErr === -1) {
-            campoErroneo($("#codigoCuenta"),"El código tiene que tener al menos 10 números.");
+            campoErroneo($("#codigoCuenta"), "El código tiene que tener al menos 10 números.");
         } else if (codigoErr === -2) {
-            campoErroneo($("#codigoCuenta"),"El código no cumple el formato.");
+            campoErroneo($("#codigoCuenta"), "El código no cumple el formato.");
         } else if (codigoErr === -3) {
-            campoErroneo($("#codigoCuenta"),"El código no está registrado.");
+            campoErroneo($("#codigoCuenta"), "El código no está registrado.");
         } else if (codigoErr === -4) {
-            campoErroneo($("#codigoCuenta"),"Error del servidor.");
+            campoErroneo($("#codigoCuenta"), "Error del servidor.");
         }
     }
 }
@@ -61,50 +61,37 @@ function checkImporte() {
             importeEsMayorQueSaldo();
         }
         campoCorrecto($("#importe"));
-        //mandarDatos();
+        mandarDatos();
     } else {
         campoErroneo($("#importe"), "El importe tiene que ser distinto de 0.");
     }
 }
 
 function mandarDatos() {
-    var llamada = new Object();
-    var cliente1 = [];
-    var cliente2 = [];
-    llamada.numCuenta = $("#ncuenta").val();
-    llamada.existeCliente1 = existeCliente1;
-    llamada.existeCliente2 = existeCliente2;
-
-    for (var i = 0; i < $(".datos-cliente-1").length; i++) {
-        cliente1.push($(".datos-cliente-1")[i].value);
-    }
-    llamada.cliente1 = cliente1;
-    if (segundoTitular) {
-        for (var i = 0; i < $(".datos-cliente-2").length; i++) {
-            cliente2.push($(".datos-cliente-2")[i].value);
-        }
-        llamada.cliente2 = cliente2;
-    }
-    llamada.saldo = $("#input-importe").val();
-    console.log(llamada);
+    var numCuenta = $("#input-codigoCuenta").val();
+    var descripcion = $("#input-descripcion").val();
+    var importe = $("#input-importe").val();
     $.ajax({
         // la URL para la peticion
-        url: 'php/aperturaCuenta.php',
+        url: 'php/insertarMovimiento.php',
         // la informacion a enviar
         // (tambien es posible utilizar una cadena de datos)
-        data: llamada,
+        data: {numcuenta: numCuenta, descripcion: descripcion, importe: importe},
         // especifica si sera una peticion POST o GET
         type: 'POST',
         // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
         success: function (resultado) {
-            alert(resultado.mensaje);
             console.log(resultado);
+            alert("llega");
         },
         error: function (xhr, status) {
             alert('Disculpe, existia un problema' + status);
+            console.log(xhr);
+            console.log(status);
         },
         complete: function (xhr, status) {
+        alert("complete");
         }
     });
 }

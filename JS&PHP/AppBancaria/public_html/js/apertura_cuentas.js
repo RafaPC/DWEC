@@ -23,19 +23,26 @@ $(function () {
 //        $("#fecha1").datepicker($.datepicker.regional["es"]);
 //        $("#fecha2").datepicker($.datepicker.regional["es"]);
     var fecha = new Date();
-    fecha = fecha.getFullYear() + "/" + fecha.getMonth() + "/" + fecha.getDate();
+    var dia = fecha.getDate();
+    var mes = fecha.getMonth() + 1;
+    var año = fecha.getFullYear();
+    mes += "";
+    if (mes.length === 1 && mes !== 0) {
+        mes = "0" + mes;
+    }
+    fecha = dia + "/" + mes + "/" + año;
     $("#fecha-registro-1").val(fecha);
     $("#fecha-registro-2").val(fecha);
     var dateFormat = "dd/mm/yy";
     var nacimiento1 = $("#fecha-nacimiento-1").datepicker({
-        defaultDate: "+1m +7d",
+        defaultDate: null,
         changeMonth: true,
         changeYear: true,
         firstDay: 1,
         maxDate: "-18y"
     });
     var nacimiento2 = $("#fecha-nacimiento-2").datepicker({
-        defaultDate: "+1m +7d",
+        defaultDate: null,
         changeMonth: true,
         changeYear: true,
         firstDay: 1,
@@ -92,7 +99,7 @@ function checkCliente() {
     var valorDNI = dni.val();
     if (checkDNI()) {
         if (segundoTitular && dniPrimerTitular === valorDNI) {
-            campoErroneo(formularioDNI,"Ese DNI pertenece al primer titular");
+            campoErroneo(formularioDNI, "Ese DNI pertenece al primer titular");
 //            $("#form-dni-2 .invalid-feedback").css("display", "block");
 //            $("#form-dni-2 .invalid-feedback").html("Ese DNI pertenece al primer titular");
 //            $("#dni-2").addClass("is-invalid");

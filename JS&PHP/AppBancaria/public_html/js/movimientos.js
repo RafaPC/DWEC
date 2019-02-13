@@ -161,23 +161,25 @@ function handleCodCuenta(codigoErr) {
         $("#botonSiguiente").on("click", checkFechas);
     } else {
         if (codigoErr === -1) {
-            campoErroneo($("#codigoCuenta"),"El código tiene que tener al menos 10 números.");
+            campoErroneo($("#codigoCuenta"), "El código tiene que tener al menos 10 números.");
         } else if (codigoErr === -2) {
-            campoErroneo($("#codigoCuenta"),"El código no cumple el formato.");
+            campoErroneo($("#codigoCuenta"), "El código no cumple el formato.");
         } else if (codigoErr === -3) {
-            campoErroneo($("#codigoCuenta"),"El código no está registrado.");
+            campoErroneo($("#codigoCuenta"), "El código no está registrado.");
         } else if (codigoErr === -4) {
-            campoErroneo($("#codigoCuenta"),"Error del servidor.");
+            campoErroneo($("#codigoCuenta"), "Error del servidor.");
         }
     }
 }
 
 function printMovimientos(movimientos) {
-    //Si no se ha devuelto ning�n movimiento
+    //Si no se ha devuelto ningun movimiento
     if (movimientos.length === 0) {
         alert("No hay ningún movimiento entre esas dos fechas");
     } else {
         $(".table").removeClass("oculto");
+        $(".table").css("display", "none");
+
         var tbody = document.getElementById("movimientos");
 
         //Si el tbody ya tiene elementos dentro los borra todos antes de escribir m�s
@@ -209,6 +211,8 @@ function printMovimientos(movimientos) {
                 tr.appendChild(td);
             }
         }
+        $(".table").show("fold", {easing: "easeOutExpo"}, 800);
+        //$(".table").toggle("slide");
     }
 }
 

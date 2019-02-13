@@ -1,0 +1,5 @@
+Animaciones para hacer aparecer cosas
+https://jqueryui.com/show/
+
+Demostraciones de easings
+https://easings.net/es

@@ -25,13 +25,13 @@ $numCuenta = $_POST['numCuenta'];
 
 if (isset($_POST['cliente2'])) {
     $dni2 = $_POST['cliente2'][0];
-    $insertCuenta = "INSERT INTO `cuentas` (`cod_cuenta`, `dni1`, `dni2`, `saldo`) VALUES ('$numCuenta', '$dni1', '$dni2', '$saldo')";
+    $insertCuenta = "INSERT INTO `cuentas` (`cod_cuenta`, `dni1`, `dni2`, `saldo`) VALUES ('$numCuenta', '$dni1', '$dni2', 0)";
 } else {
-    $insertCuenta = "INSERT INTO `cuentas` (`cod_cuenta`, `dni1`, `dni2`, `saldo`) VALUES ('$numCuenta', '$dni1', NULL, '$saldo')";
+    $insertCuenta = "INSERT INTO `cuentas` (`cod_cuenta`, `dni1`, `dni2`, `saldo`) VALUES ('$numCuenta', '$dni1', NULL, 0)";
 }
 
-
 $conex->query($insertCuenta);
+
 $fecha = date("Y-m-d");
 $hora = date("H:i:s");
 $insertMovimiento = "INSERT INTO `movimientos`(`cod_cuenta`, `fecha`, `hora`, `descripcion`, `importe`) VALUES ('$numCuenta','$fecha','$hora','Apertura de cuenta', $saldo)";

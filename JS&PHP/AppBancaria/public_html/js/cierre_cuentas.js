@@ -17,6 +17,11 @@ $(function () {
         var codCuenta = $("#input-codigoCuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
+    $("#tabs").tabs({
+        collapsible: true,
+        hide: 'fold',
+        show: 'fold'
+    });
 });
 function handleCodCuenta(codigoErr) {
     if (codigoErr === 1) {
@@ -39,6 +44,7 @@ function handleCodCuenta(codigoErr) {
             dataType: 'json',
             success: function (respuesta) {
                 console.log(respuesta);
+                $("#tabs").removeClass("oculto");
                 $("#inputs-cuenta").removeClass("oculto");
                 var datosCuenta = $(".datos-cuenta");
                 for(var i = 0; i < 3; i++){
@@ -52,6 +58,8 @@ function handleCodCuenta(codigoErr) {
                     x[i].value = respuesta.cliente1[i];
                 }
                 if (!(typeof respuesta.cliente2 === 'undefined')) {
+                    $("#lista-primerCliente a").html("Primer titular");
+                    $("#lista-segundoCliente").removeClass("oculto");
                     $("#inputs-cliente-2").removeClass("oculto");
                     campoCorrecto($(".datos-cliente-2"));
                     for (var i = 0; i < 9; i++) {

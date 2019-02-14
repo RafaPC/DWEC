@@ -11,3 +11,8 @@ and open the template in the editor.
 .oculto{
     display: none;
 }
+
+.ui-tabs .ui-tabs-nav li{
+    border-bottom-width: 1px;
+    margin-bottom: 0.65%;
+}

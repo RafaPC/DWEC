@@ -35,24 +35,23 @@ and open the template in the editor.
                         <small id="ncuentaHelp" class="form-text text-muted">Cadena de 10 dígitos</small>
                     </div>
                 </div>
-                <div class="oculto" id="inputs-cuenta">
-                    <label for="direccion">Cliente 1</label>
-                    <input type="text" class="form-control datos-cuenta" id="cliente1">    
-                    <label for="direccion">Cliente 2</label>
-                    <input type="text" class="form-control datos-cuenta" id="cliente2">
-                    <div class="input-group mb-3">
-                        <input type="text" class="form-control datos-cuenta" id="saldo" value="0" disabled>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">€</span>
+                <div class="form-group">
+                    <div class="input-field col l3 m3 s12 offset-l4 offset-m4 oculto">
+                        <label for="saldo">Saldo</label>
+                        <div class="input-group mb-3">
+                            <input type="text" class="form-control datos-cuenta" id="saldo" value="0" disabled>
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">€</span>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="oculto" id="tabs">
                     <ul>
-                        <li id="lista-primerCliente" class="shit"><a href="#inputs-cliente-1">Titular</a></li>
+                        <li id="lista-primerCliente"><a href="#inputs-cliente-1">Titular</a></li>
                         <li class="oculto" id="lista-segundoCliente"><a href="#inputs-cliente-2">Segundo titular</a></li>
                     </ul>
-                    <div class="oculto" id="inputs-cliente-1">
+                    <div id="inputs-cliente-1">
                         <label for="dni-1">DNI</label>
                         <input type="text" class="form-control datos-cliente-1" id="dni-1" disabled> 
                         <label for="nombre-1">Nombre</label>
@@ -80,7 +79,7 @@ and open the template in the editor.
                             Faltan datos por rellenar.
                         </div>
                     </div>
-                    <div class="oculto" id="inputs-cliente-2">
+                    <div id="inputs-cliente-2">
                         <label for="dni-2">DNI</label>
                         <input type="text" class="form-control datos-cliente-2" id="dni-2" disabled> 
                         <label for="nombre-2">Nombre</label>

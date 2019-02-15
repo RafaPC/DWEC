@@ -45,14 +45,10 @@ function handleCodCuenta(codigoErr) {
             success: function (respuesta) {
                 console.log(respuesta);
                 $("#tabs").removeClass("oculto");
-                $("#inputs-cuenta").removeClass("oculto");
-                var datosCuenta = $(".datos-cuenta");
-                for(var i = 0; i < 3; i++){
-                    datosCuenta[i].value = respuesta.cuenta[i];
-                }
-                
-                $("#inputs-cliente-1").removeClass("oculto");
-                campoCorrecto($(".datos-cliente-1"));
+                $("#saldo").parent().parent().removeClass("oculto");
+                $("#saldo").val(respuesta.saldo);
+                 
+               campoCorrecto($(".datos-cliente-1"));
                 for (var i = 0; i < 9; i++) {
                     var x = $(".datos-cliente-1");
                     x[i].value = respuesta.cliente1[i];
@@ -60,7 +56,6 @@ function handleCodCuenta(codigoErr) {
                 if (!(typeof respuesta.cliente2 === 'undefined')) {
                     $("#lista-primerCliente a").html("Primer titular");
                     $("#lista-segundoCliente").removeClass("oculto");
-                    $("#inputs-cliente-2").removeClass("oculto");
                     campoCorrecto($(".datos-cliente-2"));
                     for (var i = 0; i < 9; i++) {
                         $(".datos-cliente-2")[i].value = respuesta.cliente2[i];

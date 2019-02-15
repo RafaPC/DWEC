@@ -3,3 +3,14 @@ https://jqueryui.com/show/
 
 Demostraciones de easings
 https://easings.net/es
+
+Gradiente de color con animación
+https://generadordni.es/#dni
+
+JQuery slice
+https://api.jquery.com/slice/
+
+Crear un escuchador para cambios de estilos css
+https://stackoverflow.com/questions/2157963/is-it-possible-to-listen-to-a-style-change-event
+
+https://css-tricks.com/zooming-background-images/

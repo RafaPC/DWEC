@@ -30,6 +30,8 @@ if ($objetoRespuesta->cuenta[1] !== NULL) {
     $cliente2 = $resultadoCliente2->fetchAll(PDO::FETCH_NUM);
     $objetoRespuesta->cliente2 = $cliente2[0];
 }
+$objetoRespuesta->saldo = $objetoRespuesta->cuenta[2];
+unset($objetoRespuesta->cuenta);
 //consulta
 $objetoRespuesta->mensaje = 'todo ok';
 

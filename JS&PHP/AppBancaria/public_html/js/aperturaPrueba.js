@@ -8,7 +8,11 @@ var inputsCliente;
 var segundoTitular = false;
 var dniPrimerTitular = null;
 var existeCliente1 = false, existeCliente2 = false;
+var fechaActual;
 $(function () {
+    $("#prueba").click(function(){
+        alert("pene");
+    });
     botonSiguiente = $("#botonSiguiente");
     dni = $("#dni-1");
     datosCliente = $(".datos-cliente-1");
@@ -30,9 +34,7 @@ $(function () {
     if (mes.length === 1 && mes !== 0) {
         mes = "0" + mes;
     }
-    fecha = dia + "/" + mes + "/" + año;
-    $("#fecha-registro-1").val(fecha);
-    $("#fecha-registro-2").val(fecha);
+    fechaActual = dia + "/" + mes + "/" + año;
     var dateFormat = "dd/mm/yy";
     var nacimiento1 = $("#fecha-nacimiento-1").datepicker({
         defaultDate: null,
@@ -153,6 +155,8 @@ function checkCliente() {
                     } else {
                         //Quito la propiedad disabled a todos los inputs
                         datosCliente.slice(1).prop("disabled", false);
+                        //Pongo al input de fecha de registro la fecha actual
+                        $(datosCliente).find(".hasDatepicker")[1].val(fecha);
                         //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
                         botonSiguiente.off("click");
                         botonSiguiente.on("click", checkDatosCliente);

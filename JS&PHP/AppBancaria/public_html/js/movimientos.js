@@ -183,19 +183,18 @@ function printMovimientos(movimientos) {
         var tbody = $("#movimientos")[0];
         //Si el tbody ya tiene elementos dentro los borra todos antes de escribir m�s
         if (tbody.childElementCount > 0) {
-            while (tbody.firstChild) {
-                tbody.removeChild(tbody.firstChild);
-            }
+//            while (tbody.firstChild) {
+//                tbody.removeChild(tbody.firstChild);
+//            }
+            tbody.innerHTML = "";
         }
 
         for (var i = 0; i < movimientos.length; i++) {
             var tr = document.createElement("tr");
-            tbody.appendChild(tr);
-            var ultimo_tr = tbody.lastChild;
             if (movimientos[i]['importe'] > 0) {
-                ultimo_tr.classList = "table-success";
+                tr.classList = "table-success";
             } else {
-                ultimo_tr.classList = "table-danger";
+                tr.classList = "table-danger";
             }
 
             for (var clave in movimientos[i]) {
@@ -206,9 +205,11 @@ function printMovimientos(movimientos) {
                 }
                 var txtNode = document.createTextNode(txt);
                 td.appendChild(txtNode);
-                tr.appendChild(td);
+                tr.appendChild(td);             
             }
+            tbody.appendChild(tr);
         }
+
         $(".table").show("fold", {easing: "easeOutExpo"}, 1000);
     }
 }

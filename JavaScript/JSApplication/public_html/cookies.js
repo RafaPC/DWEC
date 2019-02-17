@@ -1,6 +1,22 @@
 'use strict';
 
-function setCookie(cname, cvalue, exdays) {
+//document.addEventListener("readyStateChange",function(){
+//   if(document.readyState === 'loaded'){
+//       //Aqui se ponen cosas
+//   } 
+//});
+
+document.onreadystatechange = function(){
+  alert('ha cambiado el estado');
+    if(document.readyState === 'complete'){
+      alert('cargado');
+  }  
+};
+
+function setCookie() {
+    var cname = prompt("Nombre cookie");
+    var cvalue = prompt("Valor cookie");
+    var exdays = prompt("Duración en días");
     var d = new Date();
     d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
     //Segundos
@@ -9,7 +25,8 @@ function setCookie(cname, cvalue, exdays) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
-function getCookie(cname) {
+function getCookie() {
+    var cname = prompt("Nombre cookie","");
     var name = cname + "=";
     var decodedCookie = decodeURIComponent(document.cookie);
     var ca = decodedCookie.split(';');
@@ -19,27 +36,28 @@ function getCookie(cname) {
             c = c.substring(1);
         }
         if (c.indexOf(name) === 0) {
-            return c.substring(name.length, c.length);
+            alert(c.substring(name.length));
         }
     }
     return "";
 }
 
-function deleteCookie(cname) {
+function deleteCookie() {
+    var cname = prompt("Nombre cookie");
     var d = new Date();
-    d.setTime(d.getTime() -1);
+    d.setTime(d.getTime() - 1);
     var expires = "expires=" + d.toUTCString();
     document.cookie = cname + "=;" + expires + ";path=/";
 }
 
 
 
-var contador = getCookie("contador");
-
-if (contador === "") {
-    contador = 1;
-} else {
-    contador++;
-}
-setCookie("contador", contador, 5);
-document.title = "Contador " + contador;
+//var contador = getCookie("contador");
+//
+//if (contador === "") {
+//    contador = 1;
+//} else {
+//    contador++;
+//}
+//setCookie("contador", contador, 5);
+//document.title = "Contador " + contador;

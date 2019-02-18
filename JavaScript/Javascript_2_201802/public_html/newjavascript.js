@@ -27,8 +27,11 @@ document.addEventListener("readystatechange", function () {
                 }
             });
         }
+        window.addEventListener("unload", function () {
+            alert("x");
+        });
         window.setInterval(function () {
-            //local storage
+            //pongo cookie de fecha
             setCookie("fecha", new Date().toUTCString());
             navigator.geolocation.getCurrentPosition(function (position) {
                 var coords = position.coords;
@@ -44,6 +47,7 @@ document.addEventListener("readystatechange", function () {
                 }
             }
             localStorage.setItem("carrito", carrito);
+            localStorage.setItem("caducaCarrito", new Date().getTime() + 1 * 3600 * 24 * 30 * 60);
         }, "3000");
 
         cargarDatos();
@@ -72,10 +76,10 @@ function cargarDatos() {
 }
 
 function mandarDatos() {
-    var opciones = document.getElementsByName("regalo");
+    var inputs = document.getElementsByName("regalo");
     var contador = 0;
-    for (var i = 0; i < opciones.length; i++) {
-        if (opciones[i].checked) {
+    for (var i = 0; i < inputs.length; i++) {
+        if (inputs[i].checked) {
             contador++;
         }
     }
@@ -83,17 +87,17 @@ function mandarDatos() {
         document.getElementById("carga").style.display = "block";
         //Hacer ajax
         $.ajax({
-           url: 'algo.php',
-           data: {latitude: "x", longitude: "x"},
-           type: 'POST',
+            url: 'algo.php',
+            data: {latitude: "x", longitude: "x"},
+            type: 'POST',
             dataType: 'json',
-            success: function(resultado){
+            success: function (resultado) {
                 document.getElementById("datos").innerHTML = resultado;
             },
-            error: function(xhr, status){
-                
+            error: function (xhr, status) {
+                document.getElementById("error").style.display = "block";
             },
-            complete: function(xhr, status){
+            complete: function (xhr, status) {
                 document.getElementById("carga").style.display = "none";
             }
         });

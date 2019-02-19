@@ -1,4 +1,5 @@
 <?php 
+	require_once('head.html');
         if ($resultadoConsulta) {
             ?><table><thead><tr><?php
             foreach ($resultadoConsulta[0] as $clave => $valor) {

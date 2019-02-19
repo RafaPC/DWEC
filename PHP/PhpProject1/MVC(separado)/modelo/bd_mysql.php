@@ -22,20 +22,15 @@ class conectaBD {
     public function __destruct() { // Cierra conexión asignándole valor null
         $this->conn = null;
     }
+    
+    public function obtenerConexion(){
+        return $this->conn;
+    }
+    
+    public function cierraConexion(){
+        $this->conn = null;
+    }
 
-	public function getPresentadores(){
-		try {
-            $q = $this->conn->query("SELECT * FROM presentadores");
-            $filas = array();
-            $q->setFetchMode(PDO::FETCH_ASSOC);
-            while ($r = $q->fetch()) {
-                $filas[] = $r;
-            }
-            return $filas;
-        } catch (PDOException $e) {
-            echo ( "¡Error! al ejecutar consulta: " . $e->getMessage() . "<br/>");
-            return false;
-        }
-	}
 }
+
 ?>

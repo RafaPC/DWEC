@@ -2,5 +2,5 @@
 require_once('modelo/modelo.php');
 $presentadores = new Presentadores();
 $resultadoConsulta = $presentadores->getPresentadores();
-include_once('vista.php');
+require_once('vista.php');
 ?>

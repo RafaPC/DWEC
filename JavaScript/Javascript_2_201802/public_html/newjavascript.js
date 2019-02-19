@@ -13,13 +13,14 @@ document.addEventListener("readystatechange", function () {
         var inputs = document.getElementsByName("regalo");
         for (var i = 0; i < inputs.length; i++) {
             inputs[i].addEventListener("change", function () {
-                var inputs = document.getElementsByName("regalo");
-                var contador = 0;
-                for (var i = 0; i < inputs.length; i++) {
-                    if (inputs[i].checked) {
-                        contador++;
-                    }
-                }
+//                var inputs = document.getElementsByName("regalo");   
+//                var contador = 0;
+//                for (var i = 0; i < inputs.length; i++) {
+//                    if (inputs[i].checked) {
+//                        contador++;
+//                    }
+//                }
+                var contador = document.querySelectorAll("name=regalo,:checked").length;
                 if (contador > 0) {
                     document.getElementsByTagName("img")[0].style.display = "block";
                 } else {
@@ -73,13 +74,14 @@ function cargarDatos() {
 }
 
 function mandarDatos() {
-    var inputs = document.getElementsByName("regalo");
-    var contador = 0;
-    for (var i = 0; i < inputs.length; i++) {
-        if (inputs[i].checked) {
-            contador++;
-        }
-    }
+//    var inputs = document.getElementsByName("regalo");
+//    var contador = 0;
+//    for (var i = 0; i < inputs.length; i++) {
+//        if (inputs[i].checked) {
+//            contador++;
+//        }
+//    }
+    var contador = document.querySelectorAll("name=regalo,:checked").length;
     if (contador >= 2) {
         document.getElementById("carga").style.display = "block";
         //Hacer ajax

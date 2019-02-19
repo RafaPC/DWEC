@@ -9,6 +9,6 @@
         </style>
     </head>
     <body>
-        <?php echo $contenido;?>
+        <?php require_once $contenido; ?>
     </body>
 </html>

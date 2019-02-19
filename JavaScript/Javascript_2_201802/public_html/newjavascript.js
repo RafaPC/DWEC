@@ -28,9 +28,6 @@ document.addEventListener("readystatechange", function () {
             });
         }
         window.addEventListener("unload", function () {
-            alert("x");
-        });
-        window.setInterval(function () {
             //pongo cookie de fecha
             setCookie("fecha", new Date().toUTCString());
             navigator.geolocation.getCurrentPosition(function (position) {
@@ -48,14 +45,14 @@ document.addEventListener("readystatechange", function () {
             }
             localStorage.setItem("carrito", carrito);
             localStorage.setItem("caducaCarrito", new Date().getTime() + 1 * 3600 * 24 * 30 * 60);
-        }, "3000");
+        });
 
         cargarDatos();
     }
 });
 
 function cargarDatos() {
-    if (getCookie("fecha") === "" && getCookie("location") === "") {
+    if (getCookie("fecha") === "" && getCookie("posicion") === "") {
         document.getElementsByTagName("p")[2].style.display = "block";
     } else {
         var fecha = getCookie('fecha');

@@ -6,11 +6,11 @@
  * and open the template in the editor.
  */
 
-class conectaBD {
+class ConectaBD {
 
     private $conn = null;
 
-    public function __construct($database = 'entrada') {
+    public function __construct($database = 'entrada_datos') {
         $dsn = "mysql:host=localhost;dbname=$database;charset=UTF8";
         try {
             $this->conn = new PDO($dsn, 'root', '1234');

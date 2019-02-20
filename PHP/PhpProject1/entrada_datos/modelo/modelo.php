@@ -5,10 +5,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-function filtrar($string) {
-    
-}
+require_once('bd_mysql.php');
 
 function test_input($data) {
     $data = trim($data);
@@ -19,6 +16,10 @@ function test_input($data) {
     return $data;
 }
 
+function checkDatosInput() {
+    $patronDNI = "/^\d{8}$/";
+}
+
 class Usuario {
 
     public function __construct() {
@@ -26,27 +27,43 @@ class Usuario {
     }
 
     private function getUsuario($id) {
-        require_once('bd_mysql.php');
-        
+        $conecta = new ConectaBD();
+        $conex = $conecta->obtenerConexion();
         try {
-            $resultado = $conn->query("SELECT * FROM usuarios WHERE id = $conn->quote($id)");
+            $resultado = $conex->query("SELECT * FROM usuarios WHERE id = " . $conex->quote($id));
             $usuario = $resultado->fetchAll();
-            $conexion->cierraConexion();
-            return $usuario;
+            $conecta->cierraConexion();
+            return $usuario[0];
         } catch (PDOException $ex) {
-            echo ( "Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
+            echo ( "Ã‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
+            return false;
+        }
+    }
+
+    public function insertUsuario($id, $password) {
+        $id = test_input($id);
+        $password = test_input($password);
+        $conecta = new ConectaBD();
+        $conex = $conecta->obtenerConexion();
+        $password = Password::hash($password);
+        try {
+            $resultado = $conex->query("INSERT INTO `usuarios`(`id`, `password`) VALUES (" . $conex->quote($id) . "," . $conex->quote($password) . ")");
+            $conecta->cierraConexion();
+            return true;
+        } catch (PDOException $ex) {
+            echo ( "Ã‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
             return false;
         }
     }
 
     public function checkUsuario($id, $password) {
         $id = test_input($id);
-        $usuario = $this->getUsuario($id);
-        if($usuario === NULL){
+        $user = $this->getUsuario($id);
+        if ($user === NULL) {
             return NULL;
         }
         $password = test_input($password);
-        return Password::verify($password, $usuario[1]);
+        return Password::verify($password, $user['password']);
     }
 
 }
@@ -58,16 +75,15 @@ class Comentario {
     }
 
     public function selectTodos() {
-        require_once('bd_mysql.php');
         $conexion = new conectaBD();
         $conn = $conexion->obtenerConexion();
         try {
-            $resultado = $conn->query("SELECT * FROM comentarios");
+            $resultado = $conn->query("SELECT * FROM comentarios", PDO::FETCH_NUM);
             $filas = $resultado->fetchAll();
             $conexion->cierraConexion();
             return $filas;
         } catch (PDOException $ex) {
-            echo ( "Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
+            echo ( "Ã‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
             return false;
         }
     }
@@ -77,7 +93,7 @@ class Comentario {
 class Password {
 
     const HASH = PASSWORD_DEFAULT;
-    const COST = 14;
+    const COST = 10;
 
     public static function hash($password) {
         return password_hash($password, self::HASH, ['cost' => self::COST]);

@@ -46,7 +46,7 @@ $correos = array('luis@ab.com', 'luis.garcia@ab.jz.es', 'luis.@ab.com', 'x@ab.jz
 $ips = array('192.168.102.3', '0.0.0.0', '10.50.65.35.45', '256.12.30.45', '196.6a.64.32');
 $telefonos = array('916080978', '686080978');
 $codigo = array('ZAZ-4567', 'POV-333', 'LOL-99956', 'RAR-32');
-$passwords = array('contrasenA1', 'nohay2sin3');
+$passwords = array('1contrasenA', 'nohay2sin3');
 for ($i = 0; $i < count($correos); $i++) {
     if (test_email($correos[$i]))
         echo " el email $correos[$i] es correcto <br>";

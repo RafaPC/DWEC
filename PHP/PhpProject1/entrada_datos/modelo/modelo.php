@@ -12,7 +12,6 @@ function test_input($data) {
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
     //$data = filter_var($data, FILTER_SANITIZE_STRING);
-
     return $data;
 }
 
@@ -28,8 +27,7 @@ function checkDatosRegistro() {
         echo 'fecha mal formato';
         echo $_POST['fecha_nacimiento'];
     }
-
-    if (preg_match("/^\d{8}[A-Z]$", $_POST['dni'])) {
+    if (preg_match("/^\d{8}[A-Z]$/", $_POST['dni'])) {
         echo "dni en buen formato";
     } else {
         echo 'dni mal formato';
@@ -44,7 +42,7 @@ class Usuario {
         
     }
 
-    private function getUsuario($id) {
+    private static function getUsuario($id) {
         $conecta = new ConectaBD();
         $conex = $conecta->obtenerConexion();
         try {
@@ -61,21 +59,21 @@ class Usuario {
         }
     }
 
-    public function insertUsuario() {
+    public static function insertUsuario() {
         $conecta = new ConectaBD();
         $conex = $conecta->obtenerConexion();
-
-        $id = $conn->quote($_POST['id']);
-        $password = $conn->quote($_POST['password']);
-        $dni = $conn->quote($_POST['dni']);
-        $telefono = $conn->quote($_POST['telefono']);
-        $fecha_nacimiento = $conn->quote($_POST['fecha_nacimiento']);
-        $email = $conn->quote($_POST['email']);
-        $saldo = $conn->quote($_POST['saldo']);
-
-        $password = Password::hash($password);
+        $id = $conex->quote($_POST['id']);
+        $dni = $conex->quote($_POST['dni']);
+        $telefono = $conex->quote($_POST['telefono']);
+        $fecha_nacimiento = $conex->quote($_POST['fecha_nacimiento']);
+        $email = $conex->quote($_POST['email']);
+        $saldo = $conex->quote($_POST['saldo']);
+        $password = Password::hash($_POST['password']);
+        $password = $conex->quote($password);
         try {
-            $resultado = $conex->query("INSERT INTO `usuarios`(`id`, `password`) VALUES (" . $conex->quote($id) . "," . $conex->quote($password) . ")");
+            $sql = "INSERT INTO `usuarios`(`id`, `password`, `dni`, `telefono`, `fecha_nacimiento`, `email`, `saldo`) VALUES ($id, $password, $dni, $telefono, $fecha_nacimiento, $email, $saldo)";
+            echo $sql;
+            $resultado = $conex->query($sql);
             $conecta->cierraConexion();
             return true;
         } catch (PDOException $ex) {
@@ -84,9 +82,9 @@ class Usuario {
         }
     }
 
-    public function checkUsuario($id, $password) {
+    public static function checkUsuario($id, $password) {
         $id = test_input($id);
-        $user = $this->getUsuario($id);
+        $user = self::getUsuario($id);
         if ($user === NULL) {
             return NULL;
         }
@@ -96,17 +94,32 @@ class Usuario {
 
 }
 
-class Comentario {
+class Comentarios {
 
     public function __construct() {
         
     }
 
-    public function selectTodos() {
+    public static function selectTodos() {
         $conexion = new conectaBD();
-        $conn = $conexion->obtenerConexion();
+        $conex = $conexion->obtenerConexion();
         try {
-            $resultado = $conn->query("SELECT * FROM comentarios", PDO::FETCH_NUM);
+            $resultado = $conex->query("SELECT * FROM comentarios", PDO::FETCH_NUM);
+            $filas = $resultado->fetchAll();
+            $conexion->cierraConexion();
+            return $filas;
+        } catch (PDOException $ex) {
+            echo ( "Ãƒâ€šÃ‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
+            return false;
+        }
+    }
+
+    public static function insertComentario() {
+        $conexion = new conectaBD();
+        $conex = $conexion->obtenerConexion();
+        $comentario = test_input($_POST['comentario']);
+        try {
+            $resultado = $conex->query('INSERT INTO `comentarios`(`texto`, `fecha`) VALUES (' . $conex->quote($comentario) . ',CURDATE())');
             $filas = $resultado->fetchAll();
             $conexion->cierraConexion();
             return $filas;

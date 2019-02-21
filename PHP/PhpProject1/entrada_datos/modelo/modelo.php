@@ -16,8 +16,26 @@ function test_input($data) {
     return $data;
 }
 
-function checkDatosInput() {
-    $patronDNI = "/^\d{8}$/";
+function checkDatosRegistro() {
+    //$patronDNI = "/^\d{8}$/";
+    $error = false;
+    foreach ($_POST as $clave => $valor) {
+        $_POST[$clave] = test_input($_POST[$clave]);
+    }
+    if (preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_POST['fecha_nacimiento'])) {
+        echo "fecha en buen formato";
+    } else {
+        echo 'fecha mal formato';
+        echo $_POST['fecha_nacimiento'];
+    }
+
+    if (preg_match("/^\d{8}[A-Z]$", $_POST['dni'])) {
+        echo "dni en buen formato";
+    } else {
+        echo 'dni mal formato';
+    }
+    //filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
+    return $error;
 }
 
 class Usuario {
@@ -33,25 +51,35 @@ class Usuario {
             $resultado = $conex->query("SELECT * FROM usuarios WHERE id = " . $conex->quote($id));
             $usuario = $resultado->fetchAll();
             $conecta->cierraConexion();
+            if (count($usuario) === 0) {
+                return NULL;
+            }
             return $usuario[0];
         } catch (PDOException $ex) {
-            echo ( "Ã‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
+            echo ( "Ãƒâ€šÃ‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
             return false;
         }
     }
 
-    public function insertUsuario($id, $password) {
-        $id = test_input($id);
-        $password = test_input($password);
+    public function insertUsuario() {
         $conecta = new ConectaBD();
         $conex = $conecta->obtenerConexion();
+
+        $id = $conn->quote($_POST['id']);
+        $password = $conn->quote($_POST['password']);
+        $dni = $conn->quote($_POST['dni']);
+        $telefono = $conn->quote($_POST['telefono']);
+        $fecha_nacimiento = $conn->quote($_POST['fecha_nacimiento']);
+        $email = $conn->quote($_POST['email']);
+        $saldo = $conn->quote($_POST['saldo']);
+
         $password = Password::hash($password);
         try {
             $resultado = $conex->query("INSERT INTO `usuarios`(`id`, `password`) VALUES (" . $conex->quote($id) . "," . $conex->quote($password) . ")");
             $conecta->cierraConexion();
             return true;
         } catch (PDOException $ex) {
-            echo ( "Ã‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
+            echo ( "Ãƒâ€šÃ‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
             return false;
         }
     }
@@ -83,7 +111,7 @@ class Comentario {
             $conexion->cierraConexion();
             return $filas;
         } catch (PDOException $ex) {
-            echo ( "Ã‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
+            echo ( "Ãƒâ€šÃ‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
             return false;
         }
     }

@@ -13,4 +13,5 @@
 <form method="post" action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>">
     <textarea name="comentario" value=""></textarea>
     <button type="submit" name="crearComentario" value="crearComentario">Tweet</button>
+    <button type="submit" name="salir" value="salir">Salir</button>
 </form>

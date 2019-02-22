@@ -6,9 +6,12 @@ require_once 'modelo/modelo.php';
 $mostrarLogin = true;
 $pantallaComentarios = false;
 $pantallaRegistro = false;
+if (isset($_POST['salir'])) {
+    session_destroy();
+}
 if (isset($_SESSION['id'])) {
-    if(isset($_POST['crearComentario'])){
-        
+    if (isset($_POST['crearComentario'])) {
+
         Comentarios::insertComentario();
     }
     $comentarios = Comentarios::selectTodos();
@@ -29,50 +32,32 @@ if (isset($_SESSION['id'])) {
             } else {
                 $error = "No existe el usuario.";
             }
-        } else if ($_POST['submit'] === 'registrar1') {
+        } else if (strcmp($_POST['submit'], "registrar1") === 0) {
             if (Usuario::checkUsuario($_POST['id'], $_POST['password']) === NULL) {
                 $pantallaRegistro = true;
                 $mostrarLogin = false;
+            } else {
+                $error = 'Ese usuario ya existe';
             }
-        } else if ($_POST['submit'] === "registrar2") {
-            if (!checkDatosRegistro()) {
+        } else if (strcmp($_POST['submit'], "registrar2") === 0) {
+            $check = checkDatosRegistro();
+            if ($check === TRUE) {
                 Usuario::insertUsuario();
+                $mostrarLogin = true;
+            } else {
+                $error = $check;
+                $pantallaRegistro = true;
+                $mostrarLogin = false;
             }
             //$usuario->insertUsuario($_POST['id'], $_POST['password']);
         }
     }
     if ($mostrarLogin) {
-        ?>
-        <form method="post" action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>">  
-            <input type="text" name="id" value="Nombre">
-            <input type="text" name="password" value="ContraseÃƒÂ±a">
-            <input type="submit" name="submit" value="entrar">
-            <button type="submit" name="submit" value="registrar1">Registrar</button>
-            <?php
-            if (isset($error)) {
-                echo "<span style=\"color:red;\">$error</span>";
-            }
-            ?>
-        </form>  
-        <?php
+        require_once 'vista/login.php';
     } else if ($pantallaComentarios) {
-        $comentario = new Comentario();
-        $coments = $comentario->selectTodos();
+        $coments = Comentario::selectTodos();
     } else if ($pantallaRegistro) {
-        ?>
-        <form method="post" action="<?php htmlspecialchars($_SERVER['PHP_SELF']); ?>">  
-            <input type="text" name="id" value="<?php echo $_POST['id']; ?>" readonly="readonly">
-            <input type="text" name="password" value="<?php echo $_POST['password']; ?>" readonly="readonly">
-            <input type="text" name="dni" value="dni">
-            <input type="text" name="telefono" value="telefono">
-            <input type="date" name="fecha_nacimiento" value="">
-            <input type="text" name="email" value="email">
-            <input type="number" name="saldo" value="0">
-
-            <button type="submit" name="submit" value="registrar2">Registrar</button>
-        </form>  
-
-        <?php
+        require_once 'vista/registro.php';
     }
 }
 ?>

@@ -7,7 +7,7 @@
  */
 require_once('bd_mysql.php');
 
-function test_input($data) {
+function validar($data) {
     $data = trim($data);
     $data = stripslashes($data);
     $data = htmlspecialchars($data);
@@ -16,24 +16,26 @@ function test_input($data) {
 }
 
 function checkDatosRegistro() {
-    //$patronDNI = "/^\d{8}$/";
-    $error = false;
     foreach ($_POST as $clave => $valor) {
-        $_POST[$clave] = test_input($_POST[$clave]);
+        $_POST[$clave] = validar($_POST[$clave]);
     }
     if (preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_POST['fecha_nacimiento'])) {
-        echo "fecha en buen formato";
+        
     } else {
-        echo 'fecha mal formato';
-        echo $_POST['fecha_nacimiento'];
+        $error = 'Formato de fecha incorrecto';
     }
     if (preg_match("/^\d{8}[A-Z]$/", $_POST['dni'])) {
-        echo "dni en buen formato";
+        
     } else {
-        echo 'dni mal formato';
+        $error = 'Formato de DNI erróneo.';
+    }
+    if (isset($error)) {
+        return $error;
+    } else {
+        return true;
     }
     //filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-    return $error;
+    //return $error;
 }
 
 class Usuario {
@@ -71,9 +73,7 @@ class Usuario {
         $password = Password::hash($_POST['password']);
         $password = $conex->quote($password);
         try {
-            $sql = "INSERT INTO `usuarios`(`id`, `password`, `dni`, `telefono`, `fecha_nacimiento`, `email`, `saldo`) VALUES ($id, $password, $dni, $telefono, $fecha_nacimiento, $email, $saldo)";
-            echo $sql;
-            $resultado = $conex->query($sql);
+            $resultado = $conex->query("INSERT INTO `usuarios`(`id`, `password`, `dni`, `telefono`, `fecha_nacimiento`, `email`, `saldo`) VALUES ($id, $password, $dni, $telefono, $fecha_nacimiento, $email, $saldo)");
             $conecta->cierraConexion();
             return true;
         } catch (PDOException $ex) {
@@ -83,12 +83,12 @@ class Usuario {
     }
 
     public static function checkUsuario($id, $password) {
-        $id = test_input($id);
+        $id = validar($id);
         $user = self::getUsuario($id);
         if ($user === NULL) {
             return NULL;
         }
-        $password = test_input($password);
+        $password = validar($password);
         return Password::verify($password, $user['password']);
     }
 
@@ -117,9 +117,9 @@ class Comentarios {
     public static function insertComentario() {
         $conexion = new conectaBD();
         $conex = $conexion->obtenerConexion();
-        $comentario = test_input($_POST['comentario']);
+        $comentario = validar($_POST['comentario']);
         try {
-            $resultado = $conex->query('INSERT INTO `comentarios`(`texto`, `fecha`) VALUES (' . $conex->quote($comentario) . ',CURDATE())');
+            $resultado = $conex->query('INSERT INTO `comentarios`(`texto`, `fecha`) VALUES (' . $conex->quote($comentario) . ',NOW())');
             $filas = $resultado->fetchAll();
             $conexion->cierraConexion();
             return $filas;
@@ -134,7 +134,7 @@ class Comentarios {
 class Password {
 
     const HASH = PASSWORD_DEFAULT;
-    const COST = 10;
+    const COST = 14;
 
     public static function hash($password) {
         return password_hash($password, self::HASH, ['cost' => self::COST]);

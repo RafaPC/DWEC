@@ -10,9 +10,9 @@ $conex = Singleton::getConex();
 $url = htmlspecialchars($_SERVER["PHP_SELF"]);
 $campoElegido = false;
 $alumno = ['ID', 'Nombre', 'Fecha de nacimiento'];
-if (isset($_GET['ID']) || isset($_SESSION['ID'])) {
-    if (isset($_GET['ID'])) {
-        $_SESSION['ID'] = $_GET['ID'];
+if (isset($_GET['alumno']) || isset($_SESSION['alumno'])) {
+    if (isset($_GET['alumno'])) {
+        $_SESSION['alumno'] = $_GET['alumno'];
     }
     $campoElegido = true;
     //Hacer funcion de rellenar campos que sirva para notas y alumnos, 
@@ -23,29 +23,28 @@ if (isset($_GET['submit'])) {
     if ($funcion === 'Crear') {
         $conex->crearAlumno($_GET['NOMBRE'], $_GET['FECHA_NACIMIENTO']);
     } else if ($funcion === 'Actualizar') {
-        if (isset($_SESSION['ID'])) {
+        if (isset($_SESSION['alumno'])) {
             $conex->updateAlumno($_GET['ID'], $_GET['NOMBRE'], $_GET['FECHA_NACIMIENTO']);
         } else {
             
         }
     } else if ($funcion === 'Borrar') {
-        if (isset($_SESSION['ID'])) {
+        if (isset($_SESSION['alumno'])) {
             $conex->borrarAlumno($_GET['ID']);
-            unset($_SESSION['ID']);
+            unset($_SESSION['alumno']);
         } else {
             
         }
     }
 }
-if (isset($_SESSION['ID'])) {
-    $alumno = $conex->getAlumnoOrAsignatura("alumnos", $_SESSION['ID']);
+if (isset($_SESSION['alumno'])) {
+    $alumno = $conex->getAlumno($_SESSION['alumno']);
 }
-$consulta = $conex->getAllFromX('alumnos');
+$consulta = $conex->getAllAlumnos();
 $titulo = 'Crud alumnos';
 require_once '../head.php';
-echo '<div>';
+$tabla = 'alumno';
 require_once '../tabla.php';
-echo '</div>';
 ?>
 <form method="get" action="<?php echo $url ?>">
     <div id="filaBotones">
@@ -59,9 +58,13 @@ echo '</div>';
         <?php
         //No se si al crear se elige el mayor de edad o se mira la fecha y se selecciona solo
         foreach ($alumno as $clave => $valor) {
-            echo "<input type=\"text\" name=\"$clave\" value=\"$valor\">";
+            echo "<label for=\"$clave\">$clave</label>";
+            if ($clave === 'MAYOR_EDAD' || $clave === 'ID') {
+                echo "<input type=\"text\" name=\"$clave\" value=\"$valor\" id=\"$clave\" readonly=\"readonly\">";
+            } else {
+                echo "<input type=\"text\" name=\"$clave\" value=\"$valor\" id=\"$clave\">";
+            }
         }
-        //echo "<input type=\"\"";
         ?>
     </div>
 </form>

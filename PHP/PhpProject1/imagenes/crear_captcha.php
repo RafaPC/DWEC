@@ -1,15 +1,11 @@
 <?php
-
-session_start();
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
 $arrayPalabras = ['cosa', 'willyrex', 'otracosa', 'yotramas'];
 $texto = $arrayPalabras[random_int(0, 3)];
-$_SESSION['palabra'] = $texto;
+$_SESSION['captcha'] = $texto;
 $captcha = imagecreatetruecolor(350, 75);
-//if(isset($_SESSION['palabra'])){
-//$texto = $_SESSION['palabra'];
-//}else{
-//$texto='nohaynada';
-//}
 for ($i = 0; $i < strlen($texto); $i++) {
 //Elegir un color
     $color = imagecolorallocate($captcha, rand(0, 255), rand(0, 255), rand(0, 255));

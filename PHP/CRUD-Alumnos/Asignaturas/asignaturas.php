@@ -5,14 +5,14 @@
  * and open the template in the editor.
  */
 session_start();
-require_once '../Conexion/conexion.php';
-$conex = Singleton::getConex();
+require_once '../Conexion/mysqli.php';
+$conex = new ConexionBD();
 $url = htmlspecialchars($_SERVER["PHP_SELF"]);
 $campoElegido = false;
 $asignatura = ['ID', 'Nombre', 'Curso', 'Ciclo'];
-if (isset($_GET['ID']) || isset($_SESSION['ID'])) {
-    if (isset($_GET['ID'])) {
-        $_SESSION['ID'] = $_GET['ID'];
+if (isset($_GET['asignatura']) || isset($_SESSION['asignatura'])) {
+    if (isset($_GET['asignatura'])) {
+        $_SESSION['asignatura'] = $_GET['asignatura'];
     }
     $campoElegido = true;
     //Hacer funcion de rellenar campos que sirva para notas y alumnos, 
@@ -23,29 +23,28 @@ if (isset($_GET['submit'])) {
     if ($funcion === 'Crear') {
         $conex->crearAsignatura($_GET['NOMBRE'], $_GET['CURSO'], $_GET['CICLO']);
     } else if ($funcion === 'Actualizar') {
-        if (isset($_SESSION['ID'])) {
+        if (isset($_SESSION['asignatura'])) {
             $conex->updateAsignatura($_GET['ID'], $_GET['NOMBRE'], $_GET['CURSO'], $_GET['CICLO']);
         } else {
             
         }
     } else if ($funcion === 'Borrar') {
-        if (isset($_SESSION['ID'])) {
+        if (isset($_SESSION['asignatura'])) {
             $conex->borrarAsignatura($_GET['ID']);
-            unset($_SESSION['ID']);
+            unset($_SESSION['asignatura']);
         } else {
             
         }
     }
 }
-if (isset($_SESSION['ID'])) {
-    $asignatura = $conex->getAlumnoOrAsignatura("asignaturas", $_SESSION['ID']);
+if (isset($_SESSION['asignatura'])) {
+    $asignatura = $conex->getAsignatura($_SESSION['asignatura']);
 }
-$consulta = $conex->getAllFromX('asignaturas');
+$consulta = $conex->getAllAsignaturas();
 $titulo = 'Crud asignaturas';
 require_once '../head.php';
-echo '<div>';
+$tabla = 'asignatura';
 require_once '../tabla.php';
-echo '</div>';
 ?>
 <form method="get" action="<?php echo $url ?>">
     <div id="filaBotones">
@@ -59,7 +58,11 @@ echo '</div>';
         <?php
         //No se si al crear se elige el mayor de edad o se mira la fecha y se selecciona solo
         foreach ($asignatura as $clave => $valor) {
-            echo "<input type=\"text\" name=\"$clave\" value=\"$valor\">";
+            if ($clave === 'ID') {
+                echo "<input type=\"text\" name=\"$clave\" value=\"$valor\" id=\"$clave\" readonly=\"readonly\">";
+            } else {
+                echo "<input type=\"text\" name=\"$clave\" value=\"$valor\" id=\"$clave\">";
+            }
         }
         //echo "<input type=\"\"";
         ?>

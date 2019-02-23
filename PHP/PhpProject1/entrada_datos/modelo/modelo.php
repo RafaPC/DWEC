@@ -19,23 +19,24 @@ function checkDatosRegistro() {
     foreach ($_POST as $clave => $valor) {
         $_POST[$clave] = validar($_POST[$clave]);
     }
-    if (preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_POST['fecha_nacimiento'])) {
-        
-    } else {
+    if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+        $error = 'Formato de email incorrecto.';
+    }
+    if (!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_POST['fecha_nacimiento'])) {
         $error = 'Formato de fecha incorrecto';
     }
-    if (preg_match("/^\d{8}[A-Z]$/", $_POST['dni'])) {
-        
-    } else {
-        $error = 'Formato de DNI erróneo.';
+    if (!preg_match("/^91\d{7}$/", $_POST['telefono'])) {
+        $error = 'Formato de telefono incorrecto.';
     }
+    if (!preg_match("/^\d{8}[A-Z]$/", $_POST['dni'])) {
+        $error = 'Formato de DNI incorrecto.';
+    }
+
     if (isset($error)) {
         return $error;
     } else {
         return true;
     }
-    //filter_var($_POST['email'], FILTER_VALIDATE_EMAIL);
-    //return $error;
 }
 
 class Usuario {

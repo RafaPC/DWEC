@@ -22,7 +22,7 @@ $captchaCorrecto = false;
                 <input type="text" name="palabra" value="cosa">
                 <input type="submit" name="Mandar">
             </form>
-            <img src='crear_captcha.php' alt='meh' width='350' height="100">
+            <img src="crear_captcha.php" alt="meh" width="350" height="100">
         <?php } ?>
     </body>
 </html>

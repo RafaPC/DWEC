@@ -1,5 +1,5 @@
 <?php
-require_once('head.html');
+require_once('vista/head.html');
 session_start();
 //unset($_SESSION['id']);
 require_once 'modelo/modelo.php';
@@ -7,7 +7,7 @@ $mostrarLogin = true;
 $pantallaComentarios = false;
 $pantallaRegistro = false;
 if (isset($_POST['salir'])) {
-    session_destroy();
+    unset($_SESSION['id']);
 }
 if (isset($_SESSION['id'])) {
     if (isset($_POST['crearComentario'])) {
@@ -27,7 +27,7 @@ if (isset($_SESSION['id'])) {
                     $_SESSION['id'] = $_POST['id'];
                     header("Refresh:0");
                 } else if ($existe === FALSE) {
-                    $error = 'Contraseña errónea.';
+                    $error = 'Contrasena incorrecta.';
                 }
             } else {
                 $error = "No existe el usuario.";

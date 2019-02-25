@@ -7,7 +7,7 @@
         <meta name="author" content="Rafael Prieto Ciprian">
         <meta name="keywords" content="ejercicio php">
         <meta name="description" content="Ejercicio de php">
-        <link href="../css.css" rel="stylesheet" type="text/css"/>
+        <link href="css.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
         <div id="container">

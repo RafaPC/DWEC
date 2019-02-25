@@ -4,8 +4,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-session_start();
-require_once '../Conexion/mysqli.php';
+if(isset($_GET['salir'])){
+    session_unset();
+    header("Refresh:0");
+}
+require_once 'Conexion/mysqliPOO.php';
 $conex = new ConexionBD();
 $url = htmlspecialchars($_SERVER["PHP_SELF"]);
 $campoElegido = false;
@@ -42,9 +45,9 @@ if (isset($_SESSION['asignatura'])) {
 }
 $consulta = $conex->getAllAsignaturas();
 $titulo = 'Crud asignaturas';
-require_once '../head.php';
+require_once 'head.php';
 $tabla = 'asignatura';
-require_once '../tabla.php';
+require_once 'tabla.php';
 ?>
 <form method="get" action="<?php echo $url ?>">
     <div id="filaBotones">
@@ -64,9 +67,9 @@ require_once '../tabla.php';
                 echo "<input type=\"text\" name=\"$clave\" value=\"$valor\" id=\"$clave\">";
             }
         }
-        //echo "<input type=\"\"";
         ?>
     </div>
+    <button type="submit" name="salir">Salir</button>
 </form>
 </div>
 </body>

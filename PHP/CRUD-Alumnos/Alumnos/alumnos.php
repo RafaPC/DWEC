@@ -4,8 +4,11 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-session_start();
-require_once '../Conexion/conexion.php';
+if (isset($_GET['salir'])) {
+    session_unset();
+    header("Refresh:0");
+}
+require_once 'Conexion/conexion.php';
 $conex = Singleton::getConex();
 $url = htmlspecialchars($_SERVER["PHP_SELF"]);
 $campoElegido = false;
@@ -42,9 +45,9 @@ if (isset($_SESSION['alumno'])) {
 }
 $consulta = $conex->getAllAlumnos();
 $titulo = 'Crud alumnos';
-require_once '../head.php';
+require_once 'head.php';
 $tabla = 'alumno';
-require_once '../tabla.php';
+require_once 'tabla.php';
 ?>
 <form method="get" action="<?php echo $url ?>">
     <div id="filaBotones">
@@ -67,6 +70,7 @@ require_once '../tabla.php';
         }
         ?>
     </div>
+    <button type="submit" name="salir">Salir</button>
 </form>
 </div>
 </body>

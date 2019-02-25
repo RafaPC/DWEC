@@ -5,16 +5,18 @@
  * and open the template in the editor.
  */
 $titulo = 'Crud notas';
-require_once '../head.php';
+if (isset($_GET['salir'])) {
+    session_unset();
+    header("Refresh:0");
+}
+require_once 'head.php';
 $url = htmlspecialchars($_SERVER["PHP_SELF"]);
-session_start();
-//session_unset();
-require_once '../Conexion/mysqli_.php';
+require_once 'Conexion/mysqli_.php';
 $conex = new ConexionBD();
 if (filter_input(INPUT_GET, 'cambiar_nota') !== null) {
-    if($conex->cambiarNota($_SESSION['alumno'], $_SESSION['asignatura'], filter_input(INPUT_GET, 'nota'))){
+    if ($conex->cambiarNota($_SESSION['alumno'], $_SESSION['asignatura'], filter_input(INPUT_GET, 'nota'))) {
         echo '<h3>Nota cambiada</h3>';
-    }else{
+    } else {
         echo '<h3>Error al cambiar la nota</h3>';
     }
 }
@@ -26,10 +28,10 @@ if (filter_input(INPUT_GET, 'alumno') !== null) {
 
 $consulta = $conex->getAllAlumnos();
 $tabla = 'alumno';
-require '../tabla.php';
+require 'tabla.php';
 $consulta = $conex->getAllAsignaturas();
 $tabla = 'asignatura';
-require '../tabla.php';
+require 'tabla.php';
 
 
 if (isset($_SESSION['alumno']) && isset($_SESSION['asignatura'])) {
@@ -44,6 +46,7 @@ if (isset($_SESSION['alumno']) && isset($_SESSION['asignatura'])) {
             <div id = "filaBotones">
                 <input type="submit" name="cambiar_nota" value="Cambiar Nota">
             </div>
+            <button type="submit" name="salir">Salir</button>
         </form>
         <?php
     }

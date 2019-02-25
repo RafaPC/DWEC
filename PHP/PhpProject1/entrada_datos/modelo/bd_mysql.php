@@ -13,7 +13,7 @@ class conectaBD {
     public function __construct($database = 'entrada_datos') {
         $dsn = "mysql:host=localhost;dbname=$database;charset=UTF8";
         try {
-            $this->conn = new PDO($dsn, 'root', '1234');
+            $this->conn = new PDO($dsn, 'user_entrada', '1234');
         } catch (PDOException $ex) {
             die("Â¡Error!: " . $ex->getMessage() . "<br/>");
         }

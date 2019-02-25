@@ -8,7 +8,7 @@ $captchaCorrecto = false;
     <body>
         <?php
         if (isset($_GET['palabra'])) {
-            if (strcmp($_SESSION['palabra'], $_GET['palabra']) === 0) {
+            if (strcmp($_SESSION['captcha'], $_GET['palabra']) === 0) {
                 $captchaCorrecto = true;
             } else {
                 echo "no ha entrado";

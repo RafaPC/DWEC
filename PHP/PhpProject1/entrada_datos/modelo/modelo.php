@@ -15,20 +15,20 @@ function validar($data) {
     return $data;
 }
 
-function checkDatosRegistro() {
-    foreach ($_POST as $clave => $valor) {
-        $_POST[$clave] = validar($_POST[$clave]);
+function checkDatosRegistro($post) {
+    foreach ($post as $clave => $valor) {
+        $post[$clave] = validar($post[$clave]);
     }
-    if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    if (!filter_var($post['email'], FILTER_VALIDATE_EMAIL)) {
         $error = 'Formato de email incorrecto.';
     }
-    if (!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $_POST['fecha_nacimiento'])) {
+    if (!preg_match("/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/", $post['fecha_nacimiento'])) {
         $error = 'Formato de fecha incorrecto';
     }
-    if (!preg_match("/^91\d{7}$/", $_POST['telefono'])) {
+    if (!preg_match("/^91\d{7}$/", $post['telefono'])) {
         $error = 'Formato de telefono incorrecto.';
     }
-    if (!preg_match("/^\d{8}[A-Z]$/", $_POST['dni'])) {
+    if (!preg_match("/^\d{8}[A-Z]$/", $post['dni'])) {
         $error = 'Formato de DNI incorrecto.';
     }
 
@@ -57,39 +57,37 @@ class Usuario {
             }
             return $usuario[0];
         } catch (PDOException $ex) {
-            echo ( "Ãƒâ€šÃ‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
+            echo ( "�Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
             return false;
         }
     }
 
-    public static function insertUsuario() {
+    public static function insertUsuario($usuario) {
         $conecta = new ConectaBD();
         $conex = $conecta->obtenerConexion();
-        $id = $conex->quote($_POST['id']);
-        $dni = $conex->quote($_POST['dni']);
-        $telefono = $conex->quote($_POST['telefono']);
-        $fecha_nacimiento = $conex->quote($_POST['fecha_nacimiento']);
-        $email = $conex->quote($_POST['email']);
-        $saldo = $conex->quote($_POST['saldo']);
-        $password = Password::hash($_POST['password']);
+        $id = $conex->quote($usuario['id']);
+        $dni = $conex->quote($usuario['dni']);
+        $telefono = $conex->quote($usuario['telefono']);
+        $fecha_nacimiento = $conex->quote($usuario['fecha_nacimiento']);
+        $email = $conex->quote($usuario['email']);
+        $saldo = $conex->quote($usuario['saldo']);
+        $password = Password::hash($usuario['password']);
         $password = $conex->quote($password);
         try {
             $resultado = $conex->query("INSERT INTO `usuarios`(`id`, `password`, `dni`, `telefono`, `fecha_nacimiento`, `email`, `saldo`) VALUES ($id, $password, $dni, $telefono, $fecha_nacimiento, $email, $saldo)");
             $conecta->cierraConexion();
             return true;
         } catch (PDOException $ex) {
-            echo ( "Ãƒâ€šÃ‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
+            echo ( "�Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
             return false;
         }
     }
 
     public static function checkUsuario($id, $password) {
-        $id = validar($id);
         $user = self::getUsuario($id);
         if ($user === NULL) {
             return NULL;
         }
-        $password = validar($password);
         return Password::verify($password, $user['password']);
     }
 
@@ -110,22 +108,21 @@ class Comentarios {
             $conexion->cierraConexion();
             return $filas;
         } catch (PDOException $ex) {
-            echo ( "Ãƒâ€šÃ‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
+            echo ( "�Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
             return false;
         }
     }
 
-    public static function insertComentario() {
+    public static function insertComentario($comentario, $id) {
         $conexion = new conectaBD();
         $conex = $conexion->obtenerConexion();
-        $comentario = validar($_POST['comentario']);
         try {
-            $resultado = $conex->query('INSERT INTO `comentarios`(`texto`, `fecha`) VALUES (' . $conex->quote($comentario) . ',NOW())');
-            $filas = $resultado->fetchAll();
+            $conex->query('INSERT INTO `comentarios`(`texto`, `fecha`, `id_usuario`) VALUES (' . $conex->quote($comentario) . ',NOW(),' . $conex->quote($id) . ' )');
+            //$filas = $resultado->fetchAll();
             $conexion->cierraConexion();
-            return $filas;
+            //return $filas;
         } catch (PDOException $ex) {
-            echo ( "Ãƒâ€šÃ‚Â¡Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
+            echo ( "�Error! al ejecutar consulta: " . $ex->getMessage() . "<br/>");
             return false;
         }
     }

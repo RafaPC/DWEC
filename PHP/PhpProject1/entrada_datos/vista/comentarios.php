@@ -2,6 +2,9 @@
     <?php
     for ($i = 0; $i < count($comentarios); $i++) {
         echo '<div style="width:100%;margin-bottom: 10px;border: 1px dotted red">';
+        echo '<span style="display:block;text-align:left; font-weight: bold">';
+        echo 'Usuario: ' . $comentarios[$i][2];
+        echo '</span>';
         echo $comentarios[$i][0];
         echo '<span style="display:block;text-align: right">';
         echo $comentarios[$i][1];

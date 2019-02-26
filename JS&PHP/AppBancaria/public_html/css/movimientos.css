@@ -24,7 +24,7 @@ body * input{
     background-size: 500% 500%;
     border-radius: 100%;
     background: radial-gradient(circle,#1abc9c,#2ecc71,#3498db,#9b59b6,#16a085,#27ae60,#2980b9,#8e44ad,#f1c40f,#e67e22,#95a5a6);
-    animation: Prueba 4s linear infinite; 
+    animation: Prueba 4s linear infinite;
 }
 @-webkit-keyframes Gradient {
     0% {

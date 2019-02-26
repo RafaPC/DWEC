@@ -8,7 +8,11 @@ var inputsCliente;
 var segundoTitular = false;
 var dniPrimerTitular = null;
 var existeCliente1 = false, existeCliente2 = false;
+var fechaActual;
 $(function () {
+    $("#prueba").click(function () {
+        alert("pene");
+    });
     botonSiguiente = $("#botonSiguiente");
     dni = $("#dni-1");
     datosCliente = $(".datos-cliente-1");
@@ -30,9 +34,7 @@ $(function () {
     if (mes.length === 1 && mes !== 0) {
         mes = "0" + mes;
     }
-    fecha = dia + "/" + mes + "/" + año;
-    $("#fecha-registro-1").val(fecha);
-    $("#fecha-registro-2").val(fecha);
+    fechaActual = dia + "/" + mes + "/" + año;
     var dateFormat = "dd/mm/yy";
     var nacimiento1 = $("#fecha-nacimiento-1").datepicker({
         defaultDate: null,
@@ -70,6 +72,11 @@ $(function () {
 
         return date;
     }
+    $("#tabs").tabs({
+        collapsible: true,
+        hide: 'fold',
+        show: 'fold'
+    });
 });
 function handleCodCuenta(codigoErr) {
     if (codigoErr === 1) {
@@ -80,11 +87,13 @@ function handleCodCuenta(codigoErr) {
         } else if (codigoErr === -2) {
             campoErroneo($("#codigoCuenta"), "El código no cumple el formato.");
         } else if (codigoErr === -3) {
+            //Quito la clase oculto a #tabs
+            $("#tabs").removeClass("oculto");
             //En este caso, el mensaje de error -3, no existe usuario,
             //es el que da paso a las siguientes fases del formulario
             campoCorrecto($("#codigoCuenta"));
             //Quito la clase oculto al siguiente input para mostrarlo
-            $("#form-dni-1").removeClass("oculto");
+            $("#lista-primerCliente").removeClass("oculto");
             //Quito el listener que tenía el botón de Siguiente
             botonSiguiente.off("click");
             //Pongo nuevo listener al botón de siguiente
@@ -98,64 +107,66 @@ function handleCodCuenta(codigoErr) {
 function checkCliente() {
     var valorDNI = dni.val();
     if (checkDNI()) {
-        if (segundoTitular && dniPrimerTitular === valorDNI) {
-            campoErroneo(formularioDNI, "Ese DNI pertenece al primer titular");
-//            $("#form-dni-2 .invalid-feedback").css("display", "block");
-//            $("#form-dni-2 .invalid-feedback").html("Ese DNI pertenece al primer titular");
-//            $("#dni-2").addClass("is-invalid");
-        } else {
-            $.ajax({
-                // la URL para la peticion
-                url: 'php/comprobarCliente.php',
-                // la informacion a enviar
-                // (tambien es posible utilizar una cadena de datos)
-                data: {dni: valorDNI},
-                // especifica si sera una peticion POST o GET
-                type: 'POST',
-                // el tipo de informaciÃ³n que se espera de respuesta
-                dataType: 'json',
-                success: function (resultado) {
-                    inputsCliente.removeClass("oculto");
-                    //Si me ha devuelto un cliente
-                    botonSiguiente.off("click");
-                    if (resultado.cliente[0] !== undefined) {
-                        dniPrimerTitular = valorDNI;
-                        //inputsCliente.prop("disabled", true);
-                        datosCliente.addClass("is-valid");
-                        datosCliente.prop("disabled", true);
-                        var cliente = resultado.cliente;
-                        for (var i = 0; i < 9; i++) {
-                            datosCliente[i].value = cliente[i];
-                        }
-
-                        dni.prop("disabled", true);
-                        alert("Titular ya registrado, no se necesita completar su información");
-                        if (segundoTitular) {
-                            existeCliente2 = true;
-                            $("#importe").removeClass("oculto");
-                            botonSiguiente.off("click");
-                            botonSiguiente.on("click", checkImporte);
-                        } else {
-                            existeCliente1 = true;
-                            botonSiguiente.on("click", checkSegundoTitular);
-                            $("#radios").removeClass("oculto");
-                        }
-                    } else {
-                        //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
-                        botonSiguiente.off("click");
-                        botonSiguiente.on("click", checkDatosCliente);
-                        alert("Titular no registrado, se necesita rellenar los campos.");
+        $.ajax({
+            // la URL para la peticion
+            url: 'php/comprobarCliente.php',
+            // la informacion a enviar
+            // (tambien es posible utilizar una cadena de datos)
+            data: {dni: valorDNI},
+            // especifica si sera una peticion POST o GET
+            type: 'POST',
+            // el tipo de informaciÃ³n que se espera de respuesta
+            dataType: 'json',
+            success: function (resultado) {
+                console.log(resultado);
+                //Si me ha devuelto un cliente
+                botonSiguiente.off("click");
+                //Si existe el cliente
+                if (resultado.cliente[0] !== undefined) {
+                    dniPrimerTitular = valorDNI;
+                    //inputsCliente.prop("disabled", true);
+                  //datosCliente.addClass("is-valid");
+                    //datosCliente.prop("disabled", true);
+                    campoCorrecto(datosCliente);
+                    var cliente = resultado.cliente;
+                    for (var i = 1; i < 9; i++) {
+                        datosCliente[i].value = cliente[i];
                     }
-                },
-                error: function (xhr, status) {
-                    alert('Disculpe, existia un problema' + status);
-                },
-                complete: function (xhr, status) {
+
+                    dni.prop("disabled", true);
+                    alert("Titular ya registrado, no se necesita completar su información");
+                    if (segundoTitular) {
+                        $("#lista-segundoCliente").removeClass("oculto");
+                        existeCliente2 = true;
+                        $("#importe").removeClass("oculto");
+                        botonSiguiente.off("click");
+                        botonSiguiente.on("click", checkImporte);
+                    } else {
+                        existeCliente1 = true;
+                        botonSiguiente.on("click", checkSegundoTitular);
+                        $("#radios").removeClass("oculto");
+                    }
+                } else {
+                    //Quito la propiedad disabled a todos los inputs
+                    datosCliente.slice(1).prop("disabled", false);
+                    //Pongo al input de fecha de registro la fecha actual
+                    $(datosCliente).find(".hasDatepicker")[1].val(fecha);
+                    //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
+                    botonSiguiente.off("click");
+                    botonSiguiente.on("click", checkDatosCliente);
+                    alert("Titular no registrado, se necesita rellenar los campos.");
                 }
-            });
-        }
+            },
+            error: function (xhr, status) {
+                console.log(xhr);
+                alert('Disculpe, existia un problema' + status);
+            },
+            complete: function (xhr, status) {
+            }
+        });
     }
 }
+
 
 function checkDatosCliente() {
     datosCliente.removeClass("is-invalid");
@@ -189,9 +200,13 @@ function checkDatosCliente() {
 function checkSegundoTitular() {
     botonSiguiente.off("click");
     if ($("#segundo-titular-si").prop("checked")) {
+
+        $("#lista-segundoCliente").removeClass("oculto");
+        //Abro el segundo panel de #tabs
+        $('#tabs').tabs("option", "active", 1);
+        $("#lista-primerCliente").find("a").html("Primer titular");
         formularioDNI = $("#form-dni-2");
         segundoTitular = true;
-        formularioDNI.removeClass("oculto");
         dni = $("#dni-2");
         datosCliente = $(".datos-cliente-2");
         inputsCliente = $("#inputs-cliente-2");
@@ -200,30 +215,38 @@ function checkSegundoTitular() {
         $("#importe").removeClass("oculto");
         botonSiguiente.on("click", checkImporte);
     }
-    $(".radio-titular").prop("disabled", true);
+    $("#radios").addClass("oculto");
 }
 
 //Que directamente se llame a dni cuando toque, sin pasar por checkCliente
 function checkDNI() {
     var letrasDNI = ["T", "R", "W", "A", "G", "M", "Y", "F", "P", "D", "X", "B", "N", "J", "Z", "S", "Q", "V", "H", "L", "C", "K", "E"];
-    var dniValido;
+    var dniValido = false;
     var expregDni = new RegExp(/^\d{8}[A-Z]$/i);
     var valorDNI = "" + dni.val();
-    if (valorDNI.length === 0) {
-        campoErroneo($("#dni"));
-    }
-    if (expregDni.exec(valorDNI)) {
-        var numeros = parseInt(valorDNI.substr(0, 8));
-        var resto = numeros % 23;
-        var letra = dni.val().substr(8, 1);
-        if (letrasDNI[resto] === letra) {
-            dniValido = true;
-            campoCorrecto(formularioDNI);
-        } else {
-            campoErroneo(formularioDNI, "Formato de DNI incorrecto.");
-        }
+    //Si es el dni del segundo titular y es igual al del primer
+    if (segundoTitular && dniPrimerTitular === valorDNI) {
+        campoErroneo(formularioDNI, "Ese DNI pertenece al primer titular");
     } else {
-        dniValido = false;
+        if (valorDNI.length === 0) {
+            campoErroneo(formularioDNI, "Hay que rellenar este campo.");
+        } else if (valorDNI.length < 9) {
+            campoErroneo(formularioDNI, "El DNI tiene que constar de 8 números y una letra.");
+        } else {
+            if (expregDni.exec(valorDNI)) {
+                var numeros = parseInt(valorDNI.substr(0, 8));
+                var resto = numeros % 23;
+                var letra = dni.val().substr(8, 1);
+                if (letrasDNI[resto] === letra) {
+                    dniValido = true;
+                    campoCorrecto(formularioDNI);
+                } else {
+                    campoErroneo(formularioDNI, "La cifra de control del DNI es errónea.");
+                }
+            } else {
+                campoErroneo(formularioDNI, "Formato de DNI incorrecto.");
+            }
+        }
     }
 
     return dniValido;

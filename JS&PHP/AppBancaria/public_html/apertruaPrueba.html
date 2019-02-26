@@ -22,14 +22,13 @@ and open the template in the editor.
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
-        <div id="prueba"></div>
         <div class="container">
             <form>
                 <div class="form-group" id="codigoCuenta">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
                         <label for="ncuenta">Número de cuenta</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="input-codigoCuenta" aria-describedby="ncuentaHelp" placeholder="Ejemplo: 1234567890"> 
+                            <input type="text" maxlength="10" class="form-control" id="input-codigoCuenta" aria-describedby="ncuentaHelp" placeholder="Ejemplo: 1234567890"> 
                             <div class="invalid-feedback">
                                 Por favor introduce un código de cuenta.
                             </div>

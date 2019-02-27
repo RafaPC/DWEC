@@ -38,35 +38,38 @@ and open the template in the editor.
                 </div>
                 <div class="oculto" id="tabs">
                     <ul>
-                        <li class="oculto" id="lista-primerCliente"><a href="#inputs-cliente-1">Titular</a></li>
-                        <li class="oculto" id="lista-segundoCliente"><a href="#inputs-cliente-2">Segundo titular</a></li>
+                        <li class="oculto" id="lista-primerCliente"><a href="#inputs-cliente-1"><i class="material-icons">
+                                    account_circle
+                                </i><span>Titular</span></a></li>
+                        <li class="oculto" id="lista-segundoCliente"><a href="#inputs-cliente-2"><i class="material-icons">
+                                    account_circle
+                                </i>Segundo titular</a></li>
                     </ul>
                     <div id="inputs-cliente-1">
-                        <label for="dni-1">Primer titular</label>
+                        <label for="dni-1">DNI</label>
                         <div class="input-group" id="form-dni-1">
                             <input type="text" class="form-control datos-cliente-1" id="dni-1" aria-describedby="dni1-Help" placeholder="Ejemplo: 49099576G"> 
                             <div class="invalid-feedback">
                                 Formato de DNI incorrecto.
                             </div>
                         </div>
-                        <small id="dni1-Help" class="form-text text-muted">DNI</small> 
                         <label for="nombre-1">Nombre</label>
-                        <input type="text" maxlength="9" class="form-control datos-cliente-1" id="nombre-1" disabled> 
+                        <input type="text" maxlength="9" class="form-control datos-cliente-1" id="nombre-1" disabled="disabled"> 
                         <label for="direccion-1">Dirección</label>
-                        <input type="text" class="form-control datos-cliente-1" id="direccion-1" disabled> 
+                        <input type="text" class="form-control datos-cliente-1" id="direccion-1" disabled="disabled"> 
                         <label for="telefono-1">Teléfono</label>
-                        <input type="text" maxlength="9" class="form-control datos-cliente-1" id="telefono-1" disabled> 
+                        <input type="text" maxlength="9" class="form-control datos-cliente-1" id="telefono-1" disabled="disabled"> 
                         <label for="email-1">Email</label>
-                        <input type="text" class="form-control datos-cliente-1" id="email-1" disabled> 
+                        <input type="text" class="form-control datos-cliente-1" id="email-1" disabled="disabled"> 
                         <label for="fecha-nacimiento-1">Fecha de nacimiento</label>
-                        <input type="text" class="form-control datos-cliente-1" id="fecha-nacimiento-1" disabled> 
+                        <input type="text" class="form-control datos-cliente-1" id="fecha-nacimiento-1" disabled="disabled"> 
                         <label for="fecha-registro-1">Fecha de registro</label>
-                        <input type="text" class="form-control datos-cliente-1" id="fecha-registro-1" disabled> 
+                        <input type="text" class="form-control datos-cliente-1" id="fecha-registro-1" disabled="disabled"> 
                         <label for="num-cuentas-1">Número de cuentas</label>
-                        <input type="text" class="form-control datos-cliente-1" id="num-cuentas-1" value="0" disabled> 
+                        <input type="text" class="form-control datos-cliente-1" id="num-cuentas-1" value="0" disabled="disabled"> 
                         <label for="saldo-1">Saldo</label>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control datos-cliente-1" id="saldo-1" value="0" disabled>
+                            <input type="text" class="form-control datos-cliente-1" id="saldo-1" value="0" disabled="disabled">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">€</span>
                             </div>
@@ -76,7 +79,7 @@ and open the template in the editor.
                         </div>
                     </div>
                     <div id="inputs-cliente-2">
-                        <label for="dni-2">Primer titular</label>
+                        <label for="dni-2">DNI</label>
                         <div class="input-group" id="form-dni-2">
                             <input type="text" class="form-control datos-cliente-2" id="dni-2" aria-describedby="dni2-Help" placeholder="Ejemplo: 49099576G"> 
                             <div class="invalid-feedback">
@@ -84,22 +87,22 @@ and open the template in the editor.
                             </div>
                         </div> 
                         <label for="nombre-2">Nombre</label>
-                        <input type="text" maxlength="9" class="form-control datos-cliente-2" id="nombre-2" disabled> 
+                        <input type="text" maxlength="9" class="form-control datos-cliente-2" id="nombre-2" disabled="disabled"> 
                         <label for="direccion-2">Dirección</label>
-                        <input type="text" class="form-control datos-cliente-2" id="direccion-2" disabled> 
+                        <input type="text" class="form-control datos-cliente-2" id="direccion-2" disabled="disabled"> 
                         <label for="telefono-2">Teléfono</label>
-                        <input type="text" maxlength="9" class="form-control datos-cliente-2" id="telefono-2" disabled> 
+                        <input type="text" maxlength="9" class="form-control datos-cliente-2" id="telefono-2" disabled="disabled"> 
                         <label for="email-2">Email</label>
-                        <input type="text" class="form-control datos-cliente-2" id="email-2" disabled> 
+                        <input type="text" class="form-control datos-cliente-2" id="email-2" disabled="disabled"> 
                         <label for="fecha-nacimiento-2">Fecha de nacimiento</label>
-                        <input type="text" class="form-control datos-cliente-2" id="fecha-nacimiento-2" disabled> 
+                        <input type="text" class="form-control datos-cliente-2" id="fecha-nacimiento-2" disabled="disabled"> 
                         <label for="fecha-registro-2">Fecha de registro</label>
-                        <input type="text" class="form-control datos-cliente-2" id="fecha-registro-2" disabled> 
+                        <input type="text" class="form-control datos-cliente-2" id="fecha-registro-2" disabled="disabled"> 
                         <label for="num-cuentas-2">Número de cuentas</label>
-                        <input type="text" class="form-control datos-cliente-2" id="num-cuentas-2"  value="0" disabled> 
+                        <input type="text" class="form-control datos-cliente-2" id="num-cuentas-2"  value="0" disabled="disabled"> 
                         <label for="saldo-2">Saldo</label>
                         <div class="input-group mb-3">
-                            <input type="text" class="form-control datos-cliente-2" id="saldo-2" value="0" disabled>
+                            <input type="text" class="form-control datos-cliente-2" id="saldo-2" value="0" disabled="disabled">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">€</span>
                             </div>

@@ -7,7 +7,7 @@ and open the template in the editor.
     Created on : 16-ene-2019, 22:47:42
     Author     : Los Prieto
 */
-body * input{
+#x{
     background: linear-gradient(-45deg,#1abc9c,#2ecc71,#3498db,#9b59b6,#16a085,#27ae60,#2980b9,#8e44ad,#f1c40f,#e67e22,#95a5a6);
     background-size: 1100% 100%;
     border-radius: 10px !important;

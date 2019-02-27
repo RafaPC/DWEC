@@ -64,7 +64,7 @@ function campoCorrecto(campo) {
 }
 
 function campoErroneo(campo, textoError){
-    campo.find(":input").addClass("is-invalid");
+    campo.find("input").addClass("is-invalid");
     campo.find(".invalid-feedback").css("display", "block");
     campo.find(".invalid-feedback").html(textoError);
 }

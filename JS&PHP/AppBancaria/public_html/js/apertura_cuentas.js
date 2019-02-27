@@ -111,28 +111,25 @@ function checkCliente() {
             // la URL para la peticion
             url: 'php/comprobarCliente.php',
             // la informacion a enviar
-            // (tambien es posible utilizar una cadena de datos)
             data: {dni: valorDNI},
             // especifica si sera una peticion POST o GET
             type: 'POST',
-            // el tipo de informaciÃ³n que se espera de respuesta
+            // el tipo de información que se espera de respuesta
             dataType: 'json',
-            success: function (resultado) {
-                console.log(resultado);
+            success: function (respuesta) {
                 //Si me ha devuelto un cliente
                 botonSiguiente.off("click");
                 //Si existe el cliente
-                if (resultado.cliente[0] !== undefined) {
+                if (respuesta.cliente[0] !== undefined) {
                     dniPrimerTitular = valorDNI;
                     //inputsCliente.prop("disabled", true);
-                  //datosCliente.addClass("is-valid");
+                    //datosCliente.addClass("is-valid");
                     //datosCliente.prop("disabled", true);
-                    campoCorrecto(datosCliente);
-                    var cliente = resultado.cliente;
+                    campoCorrecto(inputsCliente);
+                    var cliente = respuesta.cliente;
                     for (var i = 1; i < 9; i++) {
                         datosCliente[i].value = cliente[i];
                     }
-
                     dni.prop("disabled", true);
                     alert("Titular ya registrado, no se necesita completar su información");
                     if (segundoTitular) {
@@ -150,7 +147,10 @@ function checkCliente() {
                     //Quito la propiedad disabled a todos los inputs
                     datosCliente.slice(1).prop("disabled", false);
                     //Pongo al input de fecha de registro la fecha actual
-                    $(datosCliente).find(".hasDatepicker")[1].val(fecha);
+                    console.log(datosCliente);
+                    datosCliente[6].value = fechaActual;
+                    datosCliente.slice(6).prop("disabled", true);
+                    datosCliente.slice(6).addClass("is-valid");
                     //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
                     botonSiguiente.off("click");
                     botonSiguiente.on("click", checkDatosCliente);
@@ -188,7 +188,7 @@ function checkDatosCliente() {
             botonSiguiente.on("click", checkImporte);
             $("#importe").removeClass("oculto");
         } else {
-//Ha chequeado los datos del primer titular
+            //Ha chequeado los datos del primer titular
             botonSiguiente.on("click", checkSegundoTitular);
             $("#radios").removeClass("oculto");
         }
@@ -204,7 +204,7 @@ function checkSegundoTitular() {
         $("#lista-segundoCliente").removeClass("oculto");
         //Abro el segundo panel de #tabs
         $('#tabs').tabs("option", "active", 1);
-        $("#lista-primerCliente").find("a").html("Primer titular");
+        $("#lista-primerCliente").find("span").html("Primer titular");
         formularioDNI = $("#form-dni-2");
         segundoTitular = true;
         dni = $("#dni-2");

@@ -1,9 +1,9 @@
 <?php
 
 $objetoRespuesta = new stdClass();
-$numCuenta = $_GET['numcuenta'];
-$descripcion = $_GET['descripcion'];
-$importe = $_GET['importe'];
+$numCuenta = $_POST['numcuenta'];
+$descripcion = $_POST['descripcion'];
+$importe = $_POST['importe'];
 $fecha = date("Y-m-d");
 $hora = date("H:i:s");
 require_once 'configuracion/constantes_bbdd.php';

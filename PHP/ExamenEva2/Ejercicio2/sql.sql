@@ -1,0 +1,3 @@
+GRANT USAGE ON *.* TO 'examen'@'localhost' IDENTIFIED BY PASSWORD '*A4B6157319038724E3560894F7F932C8886EBFCF';
+
+GRANT SELECT, UPDATE ON `examen`.`usuarios` TO 'examen'@'localhost';

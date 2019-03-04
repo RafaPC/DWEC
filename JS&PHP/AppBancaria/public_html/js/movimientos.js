@@ -120,11 +120,11 @@ function checkCuenta() {
 
 function checkFechas() {
     var ncuenta = $("#input-codigoCuenta").val();
-    var fecha1 = $("#fecha1").datepicker("getDate");
-    var fecha2 = $("#fecha2").datepicker("getDate");
-    document.getElementsByTagName("caption")[0].innerHTML = "Lista de movimientos de " + fecha1.getDate() + "/" + (fecha1.getMonth() + 1) + "/" + fecha1.getFullYear() + " a " + fecha2.getDate() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getFullYear();
-    fecha1 = fecha1.getFullYear() + "/" + (fecha1.getMonth() + 1) + "/" + fecha1.getDate();
-    fecha2 = fecha2.getFullYear() + "/" + (fecha2.getMonth() + 1) + "/" + fecha2.getDate();
+//    var fecha1 = $("#fecha1").datepicker("getDate");
+//    var fecha2 = $("#fecha2").datepicker("getDate");
+    var fecha1 = $("#fecha1").val();
+    var fecha2 = $("#fecha2").val();
+    $("caption").eq(0).html("Lista de movimientos del " + fecha1 + " al " + fecha2 + ".");
     var llamada = {numcuenta: ncuenta, fecha1: fecha1, fecha2: fecha2};
     if ($("#checkBox-importe").prop("checked")) {
         llamada.importeMinimo = $("#slider-range").slider("values", 0);
@@ -181,12 +181,12 @@ function printMovimientos(movimientos) {
         $(".table").css("display", "none");
 
         var tbody = $("#movimientos")[0];
-        //Si el tbody ya tiene elementos dentro los borra todos antes de escribir m�s
+        //Si el tbody ya tiene elementos dentro los borra todos antes de escribir más
         if (tbody.childElementCount > 0) {
-//            while (tbody.firstChild) {
-//                tbody.removeChild(tbody.firstChild);
-//            }
-            tbody.innerHTML = "";
+            while (tbody.firstChild) {
+                tbody.removeChild(tbody.firstChild);
+            }
+            //tbody.innerHTML = "";
         }
 
         for (var i = 0; i < movimientos.length; i++) {
@@ -205,7 +205,7 @@ function printMovimientos(movimientos) {
                 }
                 var txtNode = document.createTextNode(txt);
                 td.appendChild(txtNode);
-                tr.appendChild(td);             
+                tr.appendChild(td);
             }
             tbody.appendChild(tr);
         }

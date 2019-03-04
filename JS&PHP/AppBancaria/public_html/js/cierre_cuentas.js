@@ -47,8 +47,8 @@ function handleCodCuenta(codigoErr) {
                 $("#tabs").removeClass("oculto");
                 $("#saldo").parent().parent().removeClass("oculto");
                 $("#saldo").val(respuesta.saldo);
-                 
-               campoCorrecto($(".datos-cliente-1"));
+
+                campoCorrecto($(".datos-cliente-1"));
                 for (var i = 0; i < 9; i++) {
                     var x = $(".datos-cliente-1");
                     x[i].value = respuesta.cliente1[i];
@@ -165,7 +165,8 @@ function checkDatosCliente() {
             $("#importe").removeClass("oculto");
         } else {
             //Ha chequeado los datos del primer titular
-            botonSiguiente.on("click", checkSegundoTitular);
+            //MIRAR ESTO********************
+            //botonSiguiente.on("click", checkSegundoTitular);
             $("#radios").removeClass("oculto");
         }
     } else {

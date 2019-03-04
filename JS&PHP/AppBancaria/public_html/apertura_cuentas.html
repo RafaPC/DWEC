@@ -12,18 +12,82 @@ and open the template in the editor.
         <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
         <script src="js/apertura_cuentas.js" type="text/javascript"></script>
+        <script src="js/caminoMigas.js" type="text/javascript"></script>
         <script src="js/comprobarCodigoCuenta.js" type="text/javascript"></script>
+        <script src="js/funciones.js" type="text/javascript"></script>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" crossorigin="anonymous"> 
+        <link href="css/sideNav.css" rel="stylesheet" type="text/css"/>
         <link href="css/movimientos.css" rel="stylesheet" type="text/css"/>
+        <link href="css/animaciones.css" rel="stylesheet" type="text/css"/>
+        <link href="css/breadcrump.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="js/i18n-datepicker-es.js"></script>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" crossorigin="anonymous"> 
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
+        <!--Camino de migas-->
+        <div id="linea">
+            <div id="caminoMigas">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+        <!--Flecha a la izquierda que indica el menú desplegable-->
+        <i class="material-icons" id="flecha">
+            arrow_back_ios
+        </i>
+        <!--Menú desplegable oculto a la izquierda-->
+        <div id="sidenav">
+            <a href="#" id="home">Home</a>
+            <a href="#" id="activo">Abrir cuentas.</a>
+            <a href="#">Ingresos y reintegros.</a>
+            <a href="#">Movimientos.</a>
+            <a href="#">Cerrar cuentas.</a>
+        </div>
+        <!-- Add all page content inside this div if you want the side nav to push page content to the right (not used if you only want the sidenav to sit on top of the page -->
         <div class="container">
-            <form>
+            <div class="spinner-border" id="carga" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <!-- Modal cliente -->
+            <div class="modal fade" id="modal-datosCliente" tabindex="-1" role="dialog" aria-labelledby="modal-datosCliente-label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-datosCliente-label">Información.</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Titular ya registrado, no se necesita rellenar su información.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Modal segundoCliente-->
+            <div class="modal fade" id="modal-segundoCliente" tabindex="-1" role="dialog" aria-labelledby="modal-segundoCliente-label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-segundoCliente-label">Siguiente paso</h5>
+                        </div>
+                        <div class="modal-body">
+                            ¿Añadir segundo titular?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="botonSegundoCliente-si" data-dismiss="modal">Sí</button>
+                            <button type="button" class="btn btn-primary" id="botonSegundoCliente-no" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <form autocomplete="off">
                 <div class="form-group" id="codigoCuenta">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
                         <label for="ncuenta">Número de cuenta</label>
@@ -48,23 +112,23 @@ and open the template in the editor.
                     <div id="inputs-cliente-1">
                         <label for="dni-1">DNI</label>
                         <div class="input-group" id="form-dni-1">
-                            <input type="text" class="form-control datos-cliente-1" id="dni-1" aria-describedby="dni1-Help" placeholder="Ejemplo: 49099576G"> 
+                            <input type="text" maxlength="9" class="form-control datos-cliente-1" id="dni-1" aria-describedby="dni1-Help" placeholder="Ejemplo: 49099576G"> 
                             <div class="invalid-feedback">
                                 Formato de DNI incorrecto.
                             </div>
                         </div>
                         <label for="nombre-1">Nombre</label>
-                        <input type="text" maxlength="9" class="form-control datos-cliente-1" id="nombre-1" disabled="disabled"> 
+                        <input type="text" maxlength="50" class="form-control datos-cliente-1" id="nombre-1" disabled="disabled"> 
                         <label for="direccion-1">Dirección</label>
-                        <input type="text" class="form-control datos-cliente-1" id="direccion-1" disabled="disabled"> 
+                        <input type="text" maxlength="60" class="form-control datos-cliente-1" id="direccion-1" disabled="disabled"> 
                         <label for="telefono-1">Teléfono</label>
-                        <input type="text" maxlength="9" class="form-control datos-cliente-1" id="telefono-1" disabled="disabled"> 
+                        <input type="text" maxlength="9" class="form-control datos-cliente-1" id="telefono-1" data-type="telefono" disabled="disabled"> 
                         <label for="email-1">Email</label>
-                        <input type="text" class="form-control datos-cliente-1" id="email-1" disabled="disabled"> 
+                        <input type="text" maxlength="65" class="form-control datos-cliente-1" id="email-1" data-type="email" disabled="disabled"> 
                         <label for="fecha-nacimiento-1">Fecha de nacimiento</label>
-                        <input type="text" class="form-control datos-cliente-1" id="fecha-nacimiento-1" disabled="disabled"> 
+                        <input type="text" maxlength="10" class="form-control datos-cliente-1" id="fecha-nacimiento-1" data-type="fecha" disabled="disabled"> 
                         <label for="fecha-registro-1">Fecha de registro</label>
-                        <input type="text" class="form-control datos-cliente-1" id="fecha-registro-1" disabled="disabled"> 
+                        <input type="text" maxlength="10" class="form-control datos-cliente-1" id="fecha-registro-1" disabled="disabled"> 
                         <label for="num-cuentas-1">Número de cuentas</label>
                         <input type="text" class="form-control datos-cliente-1" id="num-cuentas-1" value="0" disabled="disabled"> 
                         <label for="saldo-1">Saldo</label>
@@ -81,23 +145,23 @@ and open the template in the editor.
                     <div id="inputs-cliente-2">
                         <label for="dni-2">DNI</label>
                         <div class="input-group" id="form-dni-2">
-                            <input type="text" class="form-control datos-cliente-2" id="dni-2" aria-describedby="dni2-Help" placeholder="Ejemplo: 49099576G"> 
+                            <input type="text" maxlength="9" class="form-control datos-cliente-2" id="dni-2" aria-describedby="dni2-Help" placeholder="Ejemplo: 49099576G"> 
                             <div class="invalid-feedback">
                                 Formato de DNI incorrecto.
                             </div>
                         </div> 
                         <label for="nombre-2">Nombre</label>
-                        <input type="text" maxlength="9" class="form-control datos-cliente-2" id="nombre-2" disabled="disabled"> 
+                        <input type="text" maxlength="50" class="form-control datos-cliente-2" id="nombre-2" disabled="disabled"> 
                         <label for="direccion-2">Dirección</label>
-                        <input type="text" class="form-control datos-cliente-2" id="direccion-2" disabled="disabled"> 
+                        <input type="text" maxlength="60" class="form-control datos-cliente-2" id="direccion-2" disabled="disabled"> 
                         <label for="telefono-2">Teléfono</label>
-                        <input type="text" maxlength="9" class="form-control datos-cliente-2" id="telefono-2" disabled="disabled"> 
+                        <input type="text" maxlength="9" class="form-control datos-cliente-2" id="telefono-2" data-type="telefono" disabled="disabled"> 
                         <label for="email-2">Email</label>
-                        <input type="text" class="form-control datos-cliente-2" id="email-2" disabled="disabled"> 
+                        <input type="text" maxlength="65" class="form-control datos-cliente-2" id="email-2" data-type="email" disabled="disabled"> 
                         <label for="fecha-nacimiento-2">Fecha de nacimiento</label>
-                        <input type="text" class="form-control datos-cliente-2" id="fecha-nacimiento-2" disabled="disabled"> 
+                        <input type="text" maxlength="10" class="form-control datos-cliente-2" id="fecha-nacimiento-2" data-type="fecha" disabled="disabled"> 
                         <label for="fecha-registro-2">Fecha de registro</label>
-                        <input type="text" class="form-control datos-cliente-2" id="fecha-registro-2" disabled="disabled"> 
+                        <input type="text" maxlength="10" class="form-control datos-cliente-2" id="fecha-registro-2" disabled="disabled"> 
                         <label for="num-cuentas-2">Número de cuentas</label>
                         <input type="text" class="form-control datos-cliente-2" id="num-cuentas-2"  value="0" disabled="disabled"> 
                         <label for="saldo-2">Saldo</label>
@@ -110,33 +174,6 @@ and open the template in the editor.
                         <div class="invalid-feedback">
                             Faltan datos por rellenar.
                         </div>
-                    </div>
-                </div>
-                <div class="oculto" id="radios">
-                    <label for="segundo-titular-si">Añadir segundo titular</label>
-                    <div class="form-check">
-                        <input class="form-check-input radio-titular" type="radio" name="segundo-titular-radios" id="segundo-titular-si" value="si">
-                        <label class="form-check-label" for="segundo-titular-si">
-                            Sí
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input radio-titular" type="radio" name="segundo-titular-radios" id="segundo-titular-no" value="no" checked>
-                        <label class="form-check-label" for="segundo-titular-no">
-                            No
-                        </label>
-                    </div>
-                </div>
-                <div class="form-group oculto" id="form-dni-2">
-                    <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
-                        <label for="dni-2">Segundo titular</label>
-                        <div class="input-group">
-                            <input type="text" class="form-control datos-cliente-2" id="dni-2" aria-describedby="dni2-Help" placeholder="Ejemplo: 49099576G"> 
-                            <div class="invalid-feedback">
-                                Formato de DNI incorrecto.
-                            </div>
-                        </div>
-                        <small id="dni2-Help" class="form-text text-muted">DNI</small>
                     </div>
                 </div>
                 <div class="oculto" id="importe">

@@ -1,0 +1,92 @@
+@keyframes Error {
+    0% {
+        font-size: 80%;
+    }
+    50% {
+        font-size: 95%;
+    } 
+    100% {
+        font-size: 80%;
+    }
+}
+
+@keyframes ErrorInput {
+    0% {
+        border-width: 1px;
+    }
+    50% {
+        border-width: 2px;
+    } 
+    100% {
+        border-width: 1px;
+    }
+}
+
+@-webkit-keyframes Gradient {
+    0% {
+        background-position:0 50%;
+    }
+    50% {
+        background-position:100% 50%;
+    }
+    100% {
+        background-position:0 50%;
+    }
+}
+
+@-moz-keyframes Gradient {
+    0% {
+        background-position:0 50%;
+    }
+    50% {
+        background-position:100% 50%;
+    }
+    100% {
+        background-position:0 50%;
+    }
+}
+@keyframes Gradient {
+    0% {
+        background-position:0 50%;
+    }
+    5% {
+        background-position: 90% 50%:
+    }
+    50% {
+        background-position:100% 50%;
+    }
+    100% {
+        background-position:0 50%;
+    }
+}
+
+@keyframes Prueba {
+    0% {
+        background-size: 0% 0%;
+        transform: rotate(0deg);
+        background-position:0% 0%;
+        left: 50%;
+        top: 0%;
+    }
+    25% {
+        top: 50%;
+        left: 0%;
+    }
+    50% {
+        background-size: 100% 100%;
+        background-position:100% 0%;
+        left: 50%;
+        top: 95%;
+    }
+    75%{
+        left: 98%;
+        top: 50%;
+    }
+    100% {
+        background-size: 0% 0%;
+        transform: rotate(1080deg);
+        background-position:0% 0%;
+        left: 50%;
+        top: 0%;
+    }
+}

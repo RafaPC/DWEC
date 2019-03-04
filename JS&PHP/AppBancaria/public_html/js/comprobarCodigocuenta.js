@@ -28,6 +28,7 @@ function comprobarCodigoCuenta(codCuenta) {
     if (cod_err < 0) {
         handleCodCuenta(cod_err);
     } else {
+        setCarga();
         $.ajax({
             // la URL para la peticion
             url: 'php/comprobarCodigoCuenta.php',
@@ -46,25 +47,8 @@ function comprobarCodigoCuenta(codCuenta) {
                 handleCodCuenta(-4);
             },
             complete: function (xhr, status) {
+                unsetCarga();
             }
         });
     }
-}
-
-function campoCorrecto(campo) {
-    //Se recibe un elemento de jQuery
-    //Se coge el input de ese elemento y se le quita la clase is-invalid por si han saltado errores antes
-    campo.find(":input").removeClass("is-invalid");
-    //Se le añade la clase is-valid
-    campo.find(":input").addClass("is-valid");
-    //Se pone display:none al elemento invalid-feedback para ocultar los errores que hayan salido
-    campo.find(".invalid-feedback").css("display", "none");
-    //Se pone la propiedad disabled al input para que no se pueda cambiar
-    campo.find(":input").prop("disabled", true);
-}
-
-function campoErroneo(campo, textoError){
-    campo.find("input").addClass("is-invalid");
-    campo.find(".invalid-feedback").css("display", "block");
-    campo.find(".invalid-feedback").html(textoError);
 }

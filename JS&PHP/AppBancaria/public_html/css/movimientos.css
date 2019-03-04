@@ -10,11 +10,9 @@ and open the template in the editor.
 #x{
     background: linear-gradient(-45deg,#1abc9c,#2ecc71,#3498db,#9b59b6,#16a085,#27ae60,#2980b9,#8e44ad,#f1c40f,#e67e22,#95a5a6);
     background-size: 1100% 100%;
-    border-radius: 10px !important;
     -webkit-animation: Gradient 30s linear infinite;
     -moz-animation: Gradient 30s linear infinite;
     animation: Gradient 30s linear infinite;
-
 }
 #prueba{
     display: inline-block;
@@ -26,73 +24,26 @@ and open the template in the editor.
     background: radial-gradient(circle,#1abc9c,#2ecc71,#3498db,#9b59b6,#16a085,#27ae60,#2980b9,#8e44ad,#f1c40f,#e67e22,#95a5a6);
     animation: Prueba 4s linear infinite;
 }
-@-webkit-keyframes Gradient {
-    0% {
-        background-position:0 50%;
-    }
-    50% {
-        background-position:100% 50%;
-    }
-    100% {
-        background-position:0 50%;
-    }
+
+.error-feedback{
+    animation: Error 0.35s linear;
 }
-@-moz-keyframes Gradient {
-    0% {
-        background-position:0 50%;
-    }
-    50% {
-        background-position:100% 50%;
-    }
-    100% {
-        background-position:0 50%;
-    }
-}
-@keyframes Gradient {
-    0% {
-        background-position:0 50%;
-        border-radius: 20px !important;
-    }
-    50% {
-        background-position:100% 50%;
-        border-radius: 10px !important;
-    }
-    100% {
-        background-position:0 50%;
-        border-radius: 1px !important;
-    }
+.error-input{
+    animation: ErrorInput 0.35s linear;
 }
 
-@keyframes Prueba {
-    0% {
-        background-size: 0% 0%;
-        transform: rotate(0deg);
-        background-position:0% 0%;
-        left: 50%;
-        top: 0%;
-    }
-    25% {
-        top: 50%;
-        left: 0%;
-    }
-    50% {
-        background-size: 100% 100%;
-        background-position:100% 0%;
-        left: 50%;
-        top: 95%;
-    }
-    75%{
-        left: 98%;
-        top: 50%;
-    }
-    100% {
-        background-size: 0% 0%;
-        transform: rotate(1080deg);
-        background-position:0% 0%;
-        left: 50%;
-        top: 0%;
-    }
+#carga{
+    display: none;
+    position: absolute;
+    top: 48%;
+    right: 48%;
+    width: 6rem; height: 6rem;
+    z-index: 999;
 }
+.animacionCarga{
+    animation: Carga 1s linear infinite, Carga2 4s linear infinite;
+}
+
 .oculto{
     display: none;
 }
@@ -106,4 +57,8 @@ and open the template in the editor.
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-active{
     margin-bottom: 5px;    
+}
+
+
+#modal-datosCliente{
 }

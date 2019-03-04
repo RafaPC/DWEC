@@ -22,6 +22,17 @@ $(function () {
         var codCuenta = $("#input-codigoCuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
+    var conceptos = [
+        "Comunidad",
+        "Letra hipoteca",
+        "Seguro hogar",
+        "Seguro moto",
+        "Seguro coche",
+        "Wallapop"
+    ];
+    $("#input-descripcion").autocomplete({
+        source: conceptos
+    });
 });
 
 function handleCodCuenta(codigoErr) {
@@ -91,7 +102,7 @@ function mandarDatos() {
             console.log(status);
         },
         complete: function (xhr, status) {
-        alert("complete");
+            alert("complete");
         }
     });
 }

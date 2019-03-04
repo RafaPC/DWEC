@@ -14,3 +14,8 @@ Crear un escuchador para cambios de estilos css
 https://stackoverflow.com/questions/2157963/is-it-possible-to-listen-to-a-style-change-event
 
 https://css-tricks.com/zooming-background-images/
+
+https://stackoverflow.com/questions/10367790/php-date-string-format
+
+//Como cambiar el valor de pseudo elementos "via css"
+https://stackoverflow.com/questions/10495243/how-change-content-value-of-pseudo-before-element-by-javascript/42000085#42000085

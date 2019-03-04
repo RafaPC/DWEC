@@ -1,21 +1,28 @@
 <?php
 
 $objetoRespuesta = new stdClass();
-
 require_once 'configuracion/constantes_bbdd.php';
+require_once 'fechas.php';
+
 try {
     $conex = new PDO(DSN, USER, PASSWORD);
 } catch (PDOException $ex) {
     die("Error!: " . $ex->getMessage() . "<br>");
 }
 
+
+
 $sql = 'INSERT INTO clientes (dni,nombre,direccion,telefono,email,fecha_nacimiento,fecha_registro,numero_cuentas,saldo) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ';
 $q = $conex->prepare($sql);
 
 if ($_POST['existeCliente1'] === "false") {
+    $_POST['cliente1'][5] = convertirFecha($_POST['cliente1'][5]);
+    $_POST['cliente1'][6] = convertirFecha($_POST['cliente1'][6]);
     $q->execute($_POST['cliente1']);
 }
 if (isset($_POST['cliente2']) && $_POST['existeCliente2'] === "false") {
+    $_POST['cliente2'][5] = convertirFecha($_POST['cliente2'][5]);
+    $_POST['cliente2'][6] = convertirFecha($_POST['cliente2'][6]);
     $q->execute($_POST['cliente2']);
 }
 

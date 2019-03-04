@@ -1,0 +1,41 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 04-mar-2019, 1:11:00
+    Author     : Los Prieto
+*/
+@migaTop: 100;
+
+#linea{
+    z-index: 1;
+    position: fixed;
+    right: 70px;
+    margin-top: 150px;
+    width: 30px;
+    background-image: linear-gradient(to top, rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,255,1), rgba(0,0,255,1), rgba(0,0,255,1), rgba(0,0,255,1), rgba(0,0,255,1));
+    background-size: 100% 1000%;
+    background-position-y: 48%;
+    border-width: 0 2px;
+    border-color: #666666;
+    border-style: solid;
+    height: 750px;
+    transition: background-position-y 0.8s;
+}
+
+#caminoMigas{
+    z-index: 2;
+    position: fixed;
+    right: 25px;
+    border-radius: 50%;
+    border: 1px solid black;
+    width: 120px;
+    height: 120px;
+    background-color: red;
+}
+
+#caminoMigas:nth-child(1){
+    top: 100px;
+}

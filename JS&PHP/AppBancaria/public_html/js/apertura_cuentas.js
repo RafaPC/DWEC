@@ -164,7 +164,7 @@ function handleCodCuenta(codigoErr) {
             }, 800);
             //En este caso, el mensaje de error -3, no existe usuario,
             //es el que da paso a las siguientes fases del formulario
-            campoCorrecto($("#codigoCuenta"));
+            campoCompleto($("#codigoCuenta"));
             //Quito la clase oculto al siguiente input para mostrarlo
             $("#lista-primerCliente").removeClass("oculto");
             //Quito el listener que tenía el botón de Siguiente
@@ -199,7 +199,7 @@ function checkCliente() {
                     //inputsCliente.prop("disabled", true);
                     //datosCliente.addClass("is-valid");
                     //datosCliente.prop("disabled", true);
-                    campoCorrecto(inputsCliente);
+                    campoCompleto(inputsCliente);
                     var cliente = respuesta.cliente;
                     for (var i = 1; i < 9; i++) {
                         datosCliente[i].value = cliente[i];
@@ -340,7 +340,7 @@ function checkDNI() {
                 var letra = dni.val().substr(8, 1);
                 if (letrasDNI[resto] === letra) {
                     dniValido = true;
-                    campoCorrecto(formularioDNI);
+                    campoCompleto(formularioDNI);
                 } else {
                     campoErroneo(formularioDNI, "La letra del DNI es errónea.");
                 }
@@ -364,7 +364,7 @@ function checkImporte() {
         } else if (importe <= 0) {
             campoErroneo($("#importe"), "El importe tiene que ser mayor de 0");
         } else {
-            campoCorrecto($("#importe"));
+            campoCompleto($("#importe"));
             setCarga();
             mandarDatos();
         }

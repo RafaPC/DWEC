@@ -180,7 +180,7 @@ function printMovimientos(movimientos) {
 }
 
 function codigoCuentaCorrecto() {
-    campoCorrecto($("#codigoCuenta"));
+    campoCompleto($("#codigoCuenta"));
     $("#fechas").removeClass("oculto");
     $("#check").removeClass("oculto");
     $("#botonSiguiente").off("click");

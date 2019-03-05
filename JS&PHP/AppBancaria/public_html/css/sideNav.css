@@ -70,4 +70,6 @@
     position: fixed;
     left: 15px;
     font-size: 48px;
+    height: 50%;
+    bottom: 0;
 }

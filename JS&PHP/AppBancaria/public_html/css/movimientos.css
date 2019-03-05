@@ -96,3 +96,34 @@ header{
 .ui-state-hover{
     border: 1px solid blue !important;
 }
+
+
+#mensajes{
+    position: fixed;
+    right: 50px;
+    min-height: 200px;
+    min-width: 200px;
+    margin-top: 50px;
+}
+
+#mensajes .toast{
+    position: relative;
+    margin-top: 100%;
+    transition:  margin-top 0.6s;
+}
+
+.toast-añadido .toast-header{
+    background-color: rgba(47,228,29,0.5);
+}
+
+.toast-añadido #toast-cuerpo{
+    background-color: rgba(47,228,29,0.2);
+}
+
+.toast-retirado .toast-header{
+    background-color: rgba(227,7,7,0.5);
+}
+
+.toast-retirado #toast-cuerpo{
+    background-color: rgba(227,7,7,0.2);
+}

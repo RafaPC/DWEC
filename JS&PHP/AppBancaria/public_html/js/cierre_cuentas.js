@@ -32,7 +32,7 @@ function handleCodCuenta(codigoErr) {
     if (codigoErr === 1) {
         //En este caso, el mensaje de error -3, no existe usuario,
         //es el que da paso a las siguientes fases del formulario
-        campoCorrecto($("#codigoCuenta"));
+        campoCompleto($("#codigoCuenta"));
         //Quito la clase oculto al siguiente input para mostrarlo
         $("#datos-cuenta").removeClass("oculto");
         //Quito el listener que tenía el botón de Siguiente
@@ -71,7 +71,7 @@ function buscarCuenta() {
             $("#saldo").parent().parent().removeClass("oculto");
             $("#saldo").val(respuesta.saldo);
 
-            campoCorrecto($(".datos-cliente-1"));
+            campoCompleto($(".datos-cliente-1"));
             for (var i = 0; i < 9; i++) {
                 var valor = respuesta.cliente1[i];
                 if (i === 5 | i === 6) {
@@ -85,7 +85,7 @@ function buscarCuenta() {
                 $("#lista-primerCliente a").html("Primer titular");
                 //$("#lista-primerCliente span").html("Primer titular");
                 $("#lista-segundoCliente").removeClass("oculto");
-                campoCorrecto($(".datos-cliente-2"));
+                campoCompleto($(".datos-cliente-2"));
                 for (var i = 0; i < 9; i++) {
                     var valor = respuesta.cliente2[i];
                     if (i === 5 | i === 6) {

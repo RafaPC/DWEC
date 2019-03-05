@@ -8,7 +8,7 @@ var inputsCliente;
 var segundoTitular = false;
 var dniPrimerTitular = null;
 var existeCliente1 = false, existeCliente2 = false;
-var toast;
+var primerToast;
 
 $(function () {
     $("#input-codigoCuenta").focus();
@@ -19,7 +19,8 @@ $(function () {
     datosCliente = $(".datos-cliente-1");
     formularioDNI = $("#form-dni-1");
     inputsCliente = $("#inputs-cliente-1");
-    toast = $("#toast");
+    primerToast = $("#mensajes .toast").eq(0);
+    primerToast.css("display", "none");
     //Por si lo rellena automáticamente el navegador
     $("#num-cuentas-1").val("0");
     $("#num-cuentas-2").val("0");
@@ -32,6 +33,7 @@ $(function () {
     //Autocomplete de jQuery UI
     var conceptos = [
         "Comunidad",
+        "Factura compañía eléctrica",
         "Letra hipoteca",
         "Seguro hogar",
         "Seguro moto",
@@ -42,6 +44,24 @@ $(function () {
     $("#input-descripcion").autocomplete({
         source: conceptos
     });
+
+    $("#mensajes").on("hidden.bs.toast", function (event) {
+        var toasts = $("#mensajes .toast");
+        for (var i = 0; i < toasts.length; i++) {
+            if (toasts.get(i) === event.target) {
+                //Utilizo remove porque aunque es más lento,
+                //quita los eventos y los datos del elemento
+                toasts.eq(i).remove();
+                i = toasts.length;
+            }
+        }
+    });
+
+    $("#input-codigoCuenta").get(0).addEventListener("blur", function () {
+
+    }, true);
+
+
 });
 
 function handleCodCuenta(codigoErr) {
@@ -68,6 +88,7 @@ function checkDescripcion() {
     if (descripcion.length === 0) {
         campoErroneo($("#descripcion"), "El campo debe contener una descripción.");
     } else {
+        //utilizar .text()
         campoCorrecto($("#descripcion"));
         $("#importe").removeClass("oculto");
         $("#botonSiguiente").off("click");
@@ -83,44 +104,10 @@ function checkImporte() {
             importeEsMayorQueSaldo();
         }
         //campoCorrecto($("#importe"));
-        mandarDatos();
+        hacerMovimiento();
     } else {
         campoErroneo($("#importe"), "El importe tiene que ser distinto de 0.");
     }
-}
-
-function mandarDatos() {
-    var numCuenta = $("#input-codigoCuenta").val();
-    var descripcion = $("#input-descripcion").val();
-    var importe = $("#input-importe").val();
-    $.ajax({
-        // la URL para la peticion
-        url: 'php/insertarMovimiento.php',
-        // la informacion a enviar
-        // (tambien es posible utilizar una cadena de datos)
-        data: {numcuenta: numCuenta, descripcion: descripcion, importe: importe},
-        // especifica si sera una peticion POST o GET
-        type: 'POST',
-        // el tipo de informaciÃ³n que se espera de respuesta
-        dataType: 'json',
-        success: function (resultado) {
-            if(toast.css("display") === "block"){
-               var otroToast = toast.clone();
-               otroToast.find(".toast-body").html("otro toast");
-            }
-            console.log($("#toast"));
-            toast.toast("show");
-            console.log($("#toast"));
-
-
-        },
-        error: function (xhr, status) {
-            alert('Disculpe, existia un problema' + status);
-            console.log(xhr);
-        },
-        complete: function (xhr, status) {
-        }
-    });
 }
 
 function importeEsMayorQueSaldo() {
@@ -155,6 +142,48 @@ function importeEsMayorQueSaldo() {
     });
 }
 
+function hacerMovimiento() {
+    var numCuenta = $("#input-codigoCuenta").val();
+    var descripcion = $("#input-descripcion").val();
+    var importe = $("#input-importe").val();
+    $.ajax({
+        // la URL para la peticion
+        url: 'php/insertarMovimiento.php',
+        // la informacion a enviar
+        // (tambien es posible utilizar una cadena de datos)
+        data: {numcuenta: numCuenta, descripcion: descripcion, importe: importe},
+        // especifica si sera una peticion POST o GET
+        type: 'POST',
+        // el tipo de informaciÃ³n que se espera de respuesta
+        dataType: 'json',
+        success: function (resultado) {
+            if (importe > 0) {
+                crearToast("añadido");
+            } else {
+                crearToast("retirado");
+            }
+        },
+        error: function (xhr, status) {
+            alert('Disculpe, existia un problema' + status);
+            console.log(xhr);
+        },
+        complete: function (xhr, status) {
+        }
+    });
+}
+
+function crearToast(tipoMovimiento) {
+    var nuevoToast = primerToast.clone().css("display", "block");
+    nuevoToast.find("#toast-titulo").html("Cuenta: " + $("#input-codigoCuenta").val() + "");
+    var mensaje = "Se han " + tipoMovimiento + " ";
+    nuevoToast.addClass("toast-" + tipoMovimiento);
+    mensaje += $("#input-importe").val() + " euros.";
+    nuevoToast.find("#toast-cuerpo").html(mensaje);
+    nuevoToast.css("marginTop", "100%");
+    $("#mensajes").append(nuevoToast);
+    nuevoToast.toast("show");
+    nuevoToast.css("marginTop", "0");
+}
 
 
 //No poner id a los inputs como tal, solo al div que los rodee y coger ese div por id y luego el input que haya dentro

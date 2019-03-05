@@ -25,7 +25,7 @@ and open the template in the editor.
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
-        <header class="d-flex flex-row justify-content-between">
+        <header id="header" class="d-flex flex-row justify-content-between">
             <img  id="logoBanco" src="resources/simboloConFondoPeque.png" alt="Logo de Singer & Durden Asociados">
             <div>
                 <div class="row">
@@ -51,21 +51,24 @@ and open the template in the editor.
             <a href="cierre_cuentas.html">Cerrar cuentas</a>
         </div>
         <div id="mensajes">
-            <div id="toast" role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-delay="8000">
+            <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
                 <div class="toast-header">
                     <!--img src="..." class="rounded mr-2" alt="..."-->
-                    <strong class="mr-auto">Bootstrap</strong>
-                    <small>11 mins ago</small>
+                    <strong class="mr-auto" id="toast-titulo">Bootstrap</strong>
+                    <!--small>11 mins ago</small-->
                     <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="toast-body">
+                <div class="toast-body" id="toast-cuerpo">
                     Hello, world! This is a toast message.
                 </div>
             </div>
         </div>
         <div class="container">
+            <div class="spinner-border" id="carga" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
             <form>
                 <div class="form-group" id="codigoCuenta">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
@@ -93,7 +96,7 @@ and open the template in the editor.
                 <div class="oculto" id="importe">
                     <label for="input-importe">Importe de la operacion</label>
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control" id="input-importe">
+                        <input type="text" maxlength="5" class="form-control" id="input-importe">
                         <div class="invalid-feedback">
                             El importe no puede ser 0.
                         </div>

@@ -4,10 +4,6 @@ var mouseY;
 var windowMaxY;
 var min, max;
 $(function () {
-    windowMaxY = $(window).height();
-    $("#flecha").css("top", windowMaxY / 100 * 49 + "px");
-    min = ((windowMaxY / 100 * 49.5) - 120);
-    max = ((windowMaxY / 100 * 49.5) + 120);
     //Pongo focus al input de numero de cuenta
     $("#input-codigoCuenta").focus();
 
@@ -36,6 +32,11 @@ $(function () {
     //Si el cursor está tocando el panel lateral y está a una altura 
     //por la mitad de la ventana (aproximadamente), abrirá el panel cambiando su anchura  
     $("#sidenav").mousemove(function (event) {
+        //Al coger la altura de la ventana, funciona si cambia
+        // el tamaño de la página después de la carga
+        var windowMaxY = $(window).height();
+        var min = (windowMaxY / 100 * 40);
+        var max = (windowMaxY / 100 * 63);
         //Coge altura de la ventana
         var posicionMouseY = event.clientY;
         if (posicionMouseY > min && posicionMouseY < max) {
@@ -62,8 +63,17 @@ $(function () {
             }
         });
     }
+
+    //Para limpiar el valor de todos los inputs, ya que "autocomplete=off" hace lo que quiere
+    $("input").val("");
 });
 
+
+function campoCompleto(campo) {
+    campoCorrecto(campo);
+    //Se pone la propiedad disabled al input para que no se pueda cambiar
+    campo.find(":input").prop("disabled", true);
+}
 
 function campoCorrecto(campo) {
     //Se recibe un elemento de jQuery
@@ -73,8 +83,6 @@ function campoCorrecto(campo) {
     campo.find(":input").addClass("is-valid");
     //Se pone display:none al elemento invalid-feedback para ocultar los errores que hayan salido
     campo.find(".invalid-feedback").css("display", "none");
-    //Se pone la propiedad disabled al input para que no se pueda cambiar
-    campo.find(":input").prop("disabled", true);
 }
 
 function campoErroneo(campo, textoError) {
@@ -94,6 +102,7 @@ function campoErroneo(campo, textoError) {
         campo.find("input").addClass("is-invalid");
     }
 }
+
 //Convierte fecha de yyyy-mm-dd a dd/mm/yyyy
 function convertirFecha(fecha) {
     var año = fecha.substr(0, 4);

@@ -19,3 +19,9 @@ https://stackoverflow.com/questions/10367790/php-date-string-format
 
 //Como cambiar el valor de pseudo elementos "via css"
 https://stackoverflow.com/questions/10495243/how-change-content-value-of-pseudo-before-element-by-javascript/42000085#42000085
+
+//Meter un background con gradiente de color e imagen
+https://stackoverflow.com/questions/2504071/how-do-i-combine-a-background-image-and-css3-gradient-on-the-same-element
+
+//Referenciar colores de bootstrap con sass/less
+https://stackoverflow.com/questions/42573590/how-to-reference-bootstrap-colors-as-a-variable-in-css

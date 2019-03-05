@@ -3,7 +3,7 @@
     height: 100%; /* 100% Full-height */
     width: 0.1px; /* 0 width - change this with JavaScript */
     position: fixed; /* Stay in place */
-    z-index: 1; /* Stay on top */
+    z-index: 1000; /* Stay on top */
     top: 0; /* Stay at the top */
     left: 0;
     background-color: #cccccc; /* Black*/
@@ -19,6 +19,7 @@
     color: #818181;
     display: block;
     transition: 0.3s;
+    cursor: default;
 }
 
 /* When you mouse over the navigation links, change their color */
@@ -26,18 +27,20 @@
     color: #f1f1f1;
     background: linear-gradient(-45deg,#1abc9c,#2ecc71,#3498db,#9b59b6,#16a085,#27ae60,#2980b9,#8e44ad,#f1c40f,#e67e22,#95a5a6);
     background-size: 1100% 100%;
-    animation: Gradient 10s linear infinite;
+    animation: Gradient 4s linear infinite;
 }
 
-#home{
+#sidenav #home{
+    height: 100px;
     color: white !important;
     background: linear-gradient(-45deg,#1abc9c,#2ecc71,#3498db,#9b59b6,#16a085,#27ae60,#2980b9,#8e44ad,#f1c40f,#e67e22,#95a5a6);
     background-size: 1100% 100%;
     animation: Gradient 15s linear infinite;
-    margin-bottom: 60px;
+    margin-bottom: 80px;
+    font-size: 48px;
 }
 
-#activo{
+#sidenav #activo{
     background-color: #00cc99 !important;
 }
 
@@ -63,7 +66,7 @@
 }
 
 #flecha{
-    position: relative;
-    top: 430px;
-    margin-left: 5px;
+    position: fixed;
+    left: 15px;
+    font-size: 48px;
 }

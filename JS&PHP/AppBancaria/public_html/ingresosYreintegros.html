@@ -14,7 +14,9 @@ and open the template in the editor.
         <script src="js/ingresos&reintegros.js" type="text/javascript"></script>
         <script src="js/comprobarCodigoCuenta.js" type="text/javascript"></script>
         <script src="js/funciones.js" type="text/javascript"></script>
+        <link href="css/sideNav.css" rel="stylesheet" type="text/css"/>
         <link href="css/movimientos.css" rel="stylesheet" type="text/css"/>
+        <link href="css/animaciones.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="js/i18n-datepicker-es.js"></script>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" crossorigin="anonymous"> 
@@ -23,6 +25,18 @@ and open the template in the editor.
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
+        <!--Flecha a la izquierda que indica el menú desplegable-->
+        <i class="material-icons md-36" id="flecha">
+            arrow_back_ios
+        </i>
+        <!--Menú desplegable oculto a la izquierda-->
+        <div id="sidenav">
+            <a href="#" id="home">Home</a>
+            <a href="apertura_cuentas.html">Abrir cuentas</a>
+            <a href="ingresosYreintegros.html" id="activo">Ingresos y reintegros</a>
+            <a href="movimientos.html">Movimientos</a>
+            <a href="cierre_cuentas.html">Cerrar cuentas</a>
+        </div>
         <div class="container">
             <form>
                 <div class="form-group" id="codigoCuenta">

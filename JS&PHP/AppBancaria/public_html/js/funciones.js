@@ -1,14 +1,57 @@
 
 var margenIzq;
-$(document).ready(function () {
-//    margenIzq = $(".container").css("marginLeft");
-    $("#sidenav").hover(function () {
-        $("#sidenav").css("width", "250px");
-//        $(".container").css("marginLeft", "250px");
-    }, function () {
-        $("#sidenav").css("width", "0.1px");
-//        $(".container").css("marginLeft", margenIzq);
+var mouseY;
+var windowMaxY;
+var min, max;
+$(function () {
+    windowMaxY = $(window).height();
+    $("#flecha").css("top", windowMaxY / 100 * 49 + "px");
+    min = ((windowMaxY / 100 * 49.5) - 120);
+    max = ((windowMaxY / 100 * 49.5) + 120);
+    //Pongo focus al input de numero de cuenta
+    $("#input-codigoCuenta").focus();
+
+    //Cuando se aprete enter se hará click al botón siguiente
+    $(document).keypress(function (event) {
+        if (event.key === "Enter") {
+            $("#botonSiguiente").click();
+        }
     });
+
+    //Cuando se aprieta el enter se quita el focus del input
+    $("input").keydown(function (event) {
+        if (event.key === "Escape") {
+            if ($(this).hasClass("hasDatepicker")) {
+                $(this).blur();
+            }
+        }
+    });
+
+    //PONER
+    $("#sidenav").mousemove(function (event) {
+        var posicionMouseY = event.clientY;
+        if (posicionMouseY > min && posicionMouseY < max) {
+            //Si se tiene seleccionado un campo y sigue en foco cuando se muestra el menú,
+            //el campo aparecerá por encima del menú lateral
+            $(":focus").blur();
+            $("#sidenav a").css("cursor", "pointer");
+            $("#sidenav").css("width", "250px");
+        }
+    });
+    //Cierra el panel lateral al sacar el cursor de él
+    $("#sidenav").mouseleave(function () {
+        $("#sidenav").css("width", "0.1px");
+        $("#sidenav a").css("cursor", "default");
+    });
+
+    //Si hay datepickers evita que se pueda escribir en ellos
+    if ($(".hasDatepicker").length) {
+        $(".hasDatepicker").keydown(function (event) {
+            if (event.key !== "Tab") {
+                event.preventDefault();
+            }
+        });
+    }
 });
 
 

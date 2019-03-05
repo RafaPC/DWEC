@@ -4,28 +4,31 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
 /* 
-    Created on : 04-mar-2019, 1:11:00
+    Created on : 03-mar-2019, 23:58:51
     Author     : Los Prieto
 */
-@migaTop: 100;
 
 #linea{
     z-index: 1;
     position: fixed;
     right: 70px;
-    margin-top: 150px;
+    margin-top: 80px;
     width: 30px;
-    background-image: linear-gradient(to top, rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,0,0.1), rgba(0,0,255,1), rgba(0,0,255,1), rgba(0,0,255,1), rgba(0,0,255,1), rgba(0,0,255,1));
+    /*
+    * Al definir el gradiente con porcentajes se pueden crear colores solidos
+    * Se define donde empieza y acaba cada sección y de que color es
+    */
+    background: linear-gradient(to bottom, rgba(73,218,240,0.3) 50% , white 50%, white 100%);
     background-size: 100% 1000%;
-    background-position-y: 48%;
+    background-position-y: 55%;
     border-width: 0 2px;
     border-color: #666666;
     border-style: solid;
     height: 750px;
-    transition: background-position-y 0.8s;
+    transition: background-position-y 1.2s;
 }
 
-#caminoMigas{
+#caminoMigas div{
     z-index: 2;
     position: fixed;
     right: 25px;
@@ -33,9 +36,21 @@ and open the template in the editor.
     border: 1px solid black;
     width: 120px;
     height: 120px;
-    background-color: red;
+    background-size: 100% 200%;
+    background-position: 0% 100%;
+    background-image: radial-gradient(circle, white, white);
+    transition: background-size 1.2s;
 }
 
-#caminoMigas:nth-child(1){
-    top: 100px;
+#caminoMigas div::before{
+    content: attr(data-before);
+    z-index: 2;
+    position: absolute;
+    right: 140px;
+    top: 45px;
+    border: 1px solid black;
+    display: inline-block;
+    width: 100px;
+    border: none;
+    border-bottom: 3px solid black;
 }

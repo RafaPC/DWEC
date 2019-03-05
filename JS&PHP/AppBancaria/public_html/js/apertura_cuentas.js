@@ -1,5 +1,4 @@
 'use strict';
-var cliente = 1;
 var botonSiguiente;
 var dni;
 var datosCliente;
@@ -11,7 +10,7 @@ var existeCliente1 = false, existeCliente2 = false;
 var fechaActual;
 var regexps = [];
 var letrasDNI = [];
-var contenidoMigas = ["Comienzo", "Número de cuenta", "Primer titular", "Segundo titular", "Importe"];
+var contenidoObjetivos = ["Comienzo", "Número de cuenta", "Primer titular", "Segundo titular", "Importe"];
 $(function () {
     //Regexps necesarios para checkear datos
     regexps["telefono"] = /^91\d{7}$/;
@@ -35,35 +34,48 @@ $(function () {
     });
 
     //---------------------VENTANAS MODALES--------------------
-    $("#botonSegundoCliente-si").click(function () {
-        cliente = 2;
+    //Si se clicka que se quiere incluir segundo titular
+    $("#boton-segundoCliente-si").click(function () {
+        //Quito los event listener puestos para las teclas "Escape" y "Enter"
+        $("#modal-segundoCliente").off("keypress keydown");
+
         $("#lista-segundoCliente").removeClass("oculto");
+        //Focus en el dni del primer cliente
+        $("#dni-2").focus();
         //Abro el segundo panel de #tabs
         $('#tabs').tabs("option", "active", 1);
         //span para no borrar el icono
-        $("#lista-primerCliente").find("span").html("Primer titular");
+        $("#lista-primerCliente span").html("Primer titular");
         formularioDNI = $("#form-dni-2");
         segundoTitular = true;
         dni = $("#dni-2");
         datosCliente = $(".datos-cliente-2");
         inputsCliente = $("#inputs-cliente-2");
         botonSiguiente.on("click", checkCliente);
+        setTimeout(function () {
+            dni.focus();
+        }, 500);
     });
 
-    $("#botonSegundoCliente-no").click(function () {
-        $("#importe").removeClass("oculto");
-        $('html, body').animate({
-            scrollTop: ($('#importe').offset().top)
-        }, 500);
-        botonSiguiente.on("click", checkImporte);
+    //Si se clicka que no se quiere añadir segundo titular
+    $("#boton-segundoCliente-no").click(function () {
+        //Quito los event listener puestos para las teclas "Escape" y "Enter"
+        $("#modal-segundoCliente").off("keypress keydown");
+
         migaOmitida();
+        descubrirImporte();
+    });
+
+
+    $("#modal-segundoCliente").one("shown.bs.modal", function () {
+
     });
 
 
 //        $("#fecha1").datepicker($.datepicker.regional["es"]);
 //        $("#fecha2").datepicker($.datepicker.regional["es"]);
     //----------------------FECHAS--------------------
-    var fecha = new Date();
+    var fecha = Date.now();
     var dia = fecha.getDate();
     var mes = fecha.getMonth() + 1;
     var año = fecha.getFullYear();
@@ -124,6 +136,7 @@ $(function () {
         event.preventDefault();
     });
 
+    //----------------TABS DE JQUERY UI----------------- 
     $("#tabs").tabs({
         collapsible: true,
         hide: 'fold',
@@ -144,6 +157,11 @@ function handleCodCuenta(codigoErr) {
             migaCompleta();
             //Quito la clase oculto a #tabs
             $("#tabs").removeClass("oculto");
+            //Focus en el dni del primer cliente
+            $("#dni-1").focus();
+            $('html, body').animate({
+                scrollTop: (botonSiguiente.offset().top)
+            }, 800);
             //En este caso, el mensaje de error -3, no existe usuario,
             //es el que da paso a las siguientes fases del formulario
             campoCorrecto($("#codigoCuenta"));
@@ -197,10 +215,13 @@ function checkCliente() {
                         botonSiguiente.off("click");
                         botonSiguiente.on("click", checkImporte);
                     } else {
+                        //Completo la miga
                         migaCompleta();
                         existeCliente1 = true;
-                        //Listener al modal
-                        $("#modal-datosCliente button").one("click", function () {
+                        //Listener al modal que informa de que el usuario ya existe
+                        // para que cuando se cierre abra el siguiente modal
+                        //Pongo el evento una sola vez
+                        $("#modal-datosCliente").one("hidden.bs.modal", function () {
                             setModal();
                         });
                     }
@@ -216,6 +237,10 @@ function checkCliente() {
                     botonSiguiente.off("click");
                     botonSiguiente.on("click", checkDatosCliente);
                     $("#modal-datosCliente").find(".modal-body").html("El titular no está registrado, se necesitan rellenar su información.");
+
+                    $("#modal-datosCliente").one("hidden.bs.modal", function () {
+                        datosCliente.eq(1).focus();
+                    });
                 }
 
                 $("#modal-datosCliente").modal("show");
@@ -285,11 +310,7 @@ function checkDatosCliente() {
         //Ha chequeado los datos del segundo titular
         if (segundoTitular) {
             migaCompleta();
-            botonSiguiente.on("click", checkImporte);
-            $("#importe").removeClass("oculto");
-            $('html, body').animate({
-                scrollTop: ($('#importe').offset().top)
-            }, 800);
+            descubrirImporte();
         } else {
             migaCompleta();
             //El primer titular no existía, pero ya se han checkeado sus datos y son correctos
@@ -400,6 +421,28 @@ function setModal() {
         //No cierra el modal al presionar Esc
         keyboard: false
     });
+
+    $("#modal-segundoCliente").keypress(function (event) {
+        if (event.key === "Enter") {
+            $("#boton-segundoCliente-si").click();
+        }
+    });
+    $("#modal-segundoCliente").keydown(function (event) {
+        if (event.key === "Escape") {
+            $("#boton-segundoCliente-no").click();
+        }
+    });
+
 }
 
-//No poner id a los inputs como tal, solo al div que los rodee y coger ese div por id y luego el input que haya dentro
+function descubrirImporte() {
+    botonSiguiente.on("click", checkImporte);
+    $("#importe").removeClass("oculto");
+    $('html, body').animate({
+        scrollTop: (botonSiguiente.offset().top)
+    }, 800);
+    setTimeout(function () {
+        $("#input-importe").focus();
+    }, 100);
+
+}

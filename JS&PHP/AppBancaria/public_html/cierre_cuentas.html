@@ -19,10 +19,58 @@ and open the template in the editor.
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" crossorigin="anonymous"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <link href="css/sideNav.css" rel="stylesheet" type="text/css"/>
         <link href="css/movimientos.css" rel="stylesheet" type="text/css"/>
+        <link href="css/animaciones.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
+        <header class="d-flex flex-row justify-content-between">
+            <img  id="logoBanco" src="resources/simboloConFondoPeque.png" alt="Logo de Singer & Durden Asociados">
+            <div>
+                <div class="row">
+                    <h1 id="titulo">Singer & Durden Asociados</h1>
+                </div>
+                <div class="row">
+                    <h5 class="offset-4">Banca de fondo público desde 1999</h5>
+                </div>
+            </div>
+            <div id="imagenFondo">
+            </div>
+        </header>
+        <!--Flecha a la izquierda que indica el menú desplegable-->
+        <i class="material-icons md-36" id="flecha">
+            arrow_back_ios
+        </i>
+        <!--Menú desplegable oculto a la izquierda-->
+        <div id="sidenav">
+            <a href="#" id="home">Home</a>
+            <a href="apertura_cuentas.html">Abrir cuentas</a>
+            <a href="ingresosYreintegros.html">Ingresos y reintegros</a>
+            <a href="movimientos.html" id="enlaceMovimientos">Movimientos</a>
+            <a href="cierre_cuentas.html" id="activo">Cerrar cuentas</a>
+        </div>
         <div class="container">
+            <div class="spinner-border" id="carga" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+            <!-- Modal que pregunta si se quieren ver los movimientos del titular -->
+            <div class="modal fade" id="modal-verMovimientos" tabindex="-1" role="dialog" aria-labelledby="modal-verMovimientos-label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-verMovimientos-label">Siguiente paso</h5>
+                        </div>
+                        <div class="modal-body">
+                            ¿No se puede borrar la cuenta porque todavía tiene saldo?
+                            ¿Quiere ver sus movimientos del último mes?
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" id="boton-verMovimientos-si" data-dismiss="modal">Sí</button>
+                            <button type="button" class="btn btn-primary" id="boton-verMovimientos-no" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form>
                 <div class="form-group" id="codigoCuenta">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">

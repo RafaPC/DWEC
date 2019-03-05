@@ -1,28 +1,34 @@
 'use strict';
 var filtrarPorImporte = false;
-
+var botonSiguiente;
+var inputFechaInicio, inputFechaFin;
 //Configuro los datepickers
 $(function () {
+    inputFechaInicio = $("#fecha1");
+    inputFechaFin = $("#fecha2");
+    botonSiguiente = $("#botonSiguiente");
+    $("#input-codigoCuenta").focus();
+
 //        $("#fecha1").datepicker($.datepicker.regional["es"]);
 //        $("#fecha2").datepicker($.datepicker.regional["es"]);
     var dateFormat = "dd/mm/yy";
-    var from = $("#fecha1").datepicker({
+    var fechaInicio = $("#fecha1").datepicker({
         defaultDate: "+1w",
         changeMonth: true,
         changeYear: true,
         firstDay: 1
     })
             .on("change", function () {
-                to.datepicker("option", "minDate", getDate(this));
+                fechaFin.datepicker("option", "minDate", getDate(this));
             });
-    var to = $("#fecha2").datepicker({
+    var fechaFin = $("#fecha2").datepicker({
         defaultDate: "+1w",
         changeMonth: true,
         changeYear: true,
         firstDay: 1
     })
             .on("change", function () {
-                from.datepicker("option", "maxDate", getDate(this));
+                fechaInicio.datepicker("option", "maxDate", getDate(this));
             });
 
     function getDate(element) {
@@ -35,20 +41,30 @@ $(function () {
 
         return date;
     }
-});
 
-$(function () {
-//A�ado listener al checkbox, al cambiar mostrar� el rango de dinero
-    $("#checkBox-importe").on("change", function () {
+//Añado listener al checkbox, al cambiar mostrará el rango de dinero
+    $("#checkBox-importe").change(function () {
         filtrarPorImporte = $("#checkBox-importe").checked;
         $("#sliderRangePrecio").toggleClass("oculto");
     });
 
-//Pongo evento al bot�n de Siguiente
-    $("#botonSiguiente").on("click", function () {
-        var codCuenta = $("#input-codigoCuenta").val();
-        comprobarCodigoCuenta(codCuenta);
+//Pongo evento al botón de Siguiente
+    botonSiguiente.on("click", function () {
+        var codigoCuenta = $("#input-codigoCuenta").val();
+        comprobarCodigoCuenta(codigoCuenta);
     });
+
+    //Mira si existe la cookie "codigoCuenta", si existe es que viene de cerrar cuentas
+    var cookie = document.cookie;
+    if (cookie.indexOf("codigoCuenta") !== -1) {
+        var comienzo = cookie.indexOf("codigoCuenta") + 13;
+        var codigoCuenta = cookie.substr(comienzo, 10);
+        $("#input-codigoCuenta").val(codigoCuenta);
+        codigoCuentaCorrecto();
+        fechaInicio.datepicker("setDate", "-1m");
+        fechaFin.datepicker("setDate", "0d");
+        checkFechas();
+    }
 });
 
 //Para inicializar el slider
@@ -68,57 +84,8 @@ $(function () {
             "€ y " + $("#slider-range").slider("values", 1) + "€");
 });
 
-function checkCuenta() {
-    var ncuenta = $("#input-codigoCuenta").val();
-    if (ncuenta.length !== 10) {
-        $(".invalid-feedback").html("Por favor introduce in código de cuenta válido");
-        $(".invalid-feedback").css("display", "block");
-        $("#ncuenta").addClass("is-invalid");
-    } else {
-        var ultimoNumero = parseInt(ncuenta.substr(9, 1));
-        for (var i = 0, acum = 0; i < ncuenta.length - 1; i++) {
-            acum += parseInt(ncuenta[i]);
-        }
-        if (acum % 9 === ultimoNumero) {
-            $.ajax({
-                // la URL para la peticion
-                url: 'php/comprobarCodigoCuenta.php',
-                // la informacion a enviar
-                // (tambien es posible utilizar una cadena de datos)
-                data: {cod_cuenta: ncuenta},
-                // especifica si sera una peticion POST o GET
-                type: 'POST',
-                // el tipo de informaciÃ³n que se espera de respuesta
-                dataType: 'json',
-                success: function (resultado) {
-                    if (resultado.existe === true) {
-                        $("#ncuenta").prop("disabled", true);
-                        $("#fechas").removeClass("oculto");
-                        $("#cosa").removeClass("oculto");
-                        $("#botonSiguiente").off("click");
-                        $("#botonSiguiente").on("click", checkFechas);
-                        $(".invalid-feedback").css("display", "none");
-                        $("#ncuenta").removeClass("is-invalid");
-                        $("#ncuenta").addClass("is-valid");
-                    } else {
-                        $(".invalid-feedback").html("No existe ese código de cuenta.");
-                        $(".invalid-feedback").css("display", "block");
-                        $("#ncuenta").addClass("is-invalid");
-                    }
-                },
-                error: function (xhr, status) {
-                    alert('Disculpe, existia un problema' + status);
-                },
-                complete: function (xhr, status) {
-                }
-            });
-        } else {
-            $("#ncuenta_err").html("Ese codigo no vale");
-        }
-    }
-}
-
 function checkFechas() {
+    setCarga();
     var ncuenta = $("#input-codigoCuenta").val();
 //    var fecha1 = $("#fecha1").datepicker("getDate");
 //    var fecha2 = $("#fecha2").datepicker("getDate");
@@ -148,17 +115,14 @@ function checkFechas() {
             alert('Disculpe, existia un problema');
         },
         complete: function (xhr, status) {
+            unsetCarga();
         }
     });
 }
 
 function handleCodCuenta(codigoErr) {
     if (codigoErr === 1) {
-        campoCorrecto($("#codigoCuenta"));
-        $("#fechas").removeClass("oculto");
-        $("#check").removeClass("oculto");
-        $("#botonSiguiente").off("click");
-        $("#botonSiguiente").on("click", checkFechas);
+        codigoCuentaCorrecto();
     } else {
         if (codigoErr === -1) {
             campoErroneo($("#codigoCuenta"), "El código tiene que tener al menos 10 números.");
@@ -186,7 +150,6 @@ function printMovimientos(movimientos) {
             while (tbody.firstChild) {
                 tbody.removeChild(tbody.firstChild);
             }
-            //tbody.innerHTML = "";
         }
 
         for (var i = 0; i < movimientos.length; i++) {
@@ -200,7 +163,9 @@ function printMovimientos(movimientos) {
             for (var clave in movimientos[i]) {
                 var td = document.createElement("td");
                 var txt = movimientos[i][clave];
-                if (clave === "importe") {
+                if ("fecha" === clave) {
+                    txt = convertirFecha(txt);
+                } else if ("importe" === clave) {
                     txt += "€";
                 }
                 var txtNode = document.createTextNode(txt);
@@ -214,3 +179,19 @@ function printMovimientos(movimientos) {
     }
 }
 
+function codigoCuentaCorrecto() {
+    campoCorrecto($("#codigoCuenta"));
+    $("#fechas").removeClass("oculto");
+    $("#check").removeClass("oculto");
+    $("#botonSiguiente").off("click");
+    $("#botonSiguiente").on("click", checkFechas);
+}
+
+function convertirFecha(fecha) {
+    var año = fecha.substr(0, 4);
+    var mes = fecha.substr(5, 2);
+    var dia = fecha.substr(8, 2);
+    var nuevaFecha = dia + "/" + mes + "/" + año;
+
+    return nuevaFecha;
+}

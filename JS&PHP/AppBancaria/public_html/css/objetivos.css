@@ -7,42 +7,41 @@ and open the template in the editor.
     Created on : 03-mar-2019, 23:58:51
     Author     : Los Prieto
 */
-
-#linea{
-    z-index: 1;
+#seccionObjetivos{
     position: fixed;
-    right: 70px;
-    margin-top: 80px;
-    width: 30px;
+    right: 62.5px;
+    z-index: 1;
+    top: 130px;
+}
+#lineaObjetivos{
+    height: 720px;
+    width: 25px;
     /*
     * Al definir el gradiente con porcentajes se pueden crear colores solidos
     * Se define donde empieza y acaba cada sección y de que color es
     */
-    background: linear-gradient(to bottom, rgba(73,218,240,0.3) 50% , white 50%, white 100%);
+    background: linear-gradient(to bottom, rgba(73,218,240,0.5) 50% , white 50%, white 100%);
     background-size: 100% 1000%;
     background-position-y: 55%;
     border-width: 0 2px;
     border-color: #666666;
-    border-style: solid;
-    height: 750px;
+    border-style: solid;    
     transition: background-position-y 1.2s;
 }
 
-#caminoMigas div{
+#objetivos div{
     z-index: 2;
     position: fixed;
     right: 25px;
     border-radius: 50%;
     border: 1px solid black;
-    width: 120px;
-    height: 120px;
-    background-size: 100% 200%;
+    width: 100px;
+    height: 100px;
     background-position: 0% 100%;
-    background-image: radial-gradient(circle, white, white);
     transition: background-size 1.2s;
 }
 
-#caminoMigas div::before{
+#objetivos div::before{
     content: attr(data-before);
     z-index: 2;
     position: absolute;
@@ -55,33 +54,21 @@ and open the template in the editor.
     border-bottom: 3px solid black;
 }
 
-#caminoMigas div::after{
-    content: "";
-    z-index: 3;
-    position: fixed;
-    right: 25px;
-    border-radius: 50%;
-    width: 120px;
-    height: 120px;
-    background-image: url("../resources/check.png");
-    background-repeat: no-repeat;
-    background-size: cover;
-    /*
-    *Hacer la imagen pequeña, de forma que con el size aumente el background entero pero no la imagen
-    * y después solo haría falta moverlo
-    */
+.objetivoVacio{
+    background-image: radial-gradient(circle, white, white);
+    background-size: 100% 200%;
+}
+.objetivoCompleto{
+    background-image: radial-gradient(circle, white 0.1%, greenyellow, #21E221, #28a745);
     background-size: 100% 100%;
-    background-position: 20% 20%;
 }
 
-body{
-    background-image: url("check.png");
+.objetivoFallido{
+    background-image: radial-gradient(circle, white 0.1%, red, crimson);
+    background-size: 100% 100%;
 }
-@keyframes Insideout{
-    0%{
-        background-size: 1% 1%;
-    }
-    0%{
-        background-size: 100% 100%;
-    }
+
+.objetivoOmitido{
+    background-image: radial-gradient(circle, white 0.1%, #89E8F5, grey);
+    background-size: 100% 100%;
 }

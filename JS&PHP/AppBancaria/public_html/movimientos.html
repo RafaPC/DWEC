@@ -20,7 +20,22 @@
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     </head>
     <body>
+        <!--Flecha a la izquierda que indica el menú desplegable-->
+        <i class="material-icons md-36" id="flecha">
+            arrow_back_ios
+        </i>
+        <!--Menú desplegable oculto a la izquierda-->
+        <div id="sidenav">
+            <a href="#" id="home">Home</a>
+            <a href="apertura_cuentas.html">Abrir cuentas</a>
+            <a href="ingresosYreintegros.html">Ingresos y reintegros</a>
+            <a href="movimientos.html" id="activo">Movimientos</a>
+            <a href="cierre_cuentas.html">Cerrar cuentas</a>
+        </div>
         <div class="container">
+            <div class="spinner-border" id="carga" role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
             <form>
                 <div class="form-group" id="codigoCuenta">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">

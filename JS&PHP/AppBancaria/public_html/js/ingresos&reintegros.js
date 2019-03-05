@@ -10,6 +10,8 @@ var dniPrimerTitular = null;
 var existeCliente1 = false, existeCliente2 = false;
 
 $(function () {
+    $("#input-codigoCuenta").focus();
+    
     botonSiguiente = $("#botonSiguiente");
     dni = $("#dni-1");
     datosCliente = $(".datos-cliente-1");

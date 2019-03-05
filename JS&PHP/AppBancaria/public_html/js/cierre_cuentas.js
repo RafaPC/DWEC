@@ -8,7 +8,9 @@ var inputsCliente;
 var segundoTitular = false;
 var dniPrimerTitular = null;
 var existeCliente1 = false, existeCliente2 = false;
+
 $(function () {
+    datosCliente = $(".datos-cliente-1");
     $("#input-codigoCuenta").focus();
 
     botonSiguiente = $("#botonSiguiente");
@@ -62,6 +64,8 @@ function buscarCuenta() {
         type: 'POST',
         dataType: 'json',
         success: function (respuesta) {
+            //AQUI MIRAR SI ESTA MOSTRADO, HACER OTRO CLONANDO Y METERLO EN #MENSAJES
+            
             $("#tabs").removeClass("oculto");
             //Mirar esto del parent parent que queda feo
             $("#saldo").parent().parent().removeClass("oculto");
@@ -69,17 +73,25 @@ function buscarCuenta() {
 
             campoCorrecto($(".datos-cliente-1"));
             for (var i = 0; i < 9; i++) {
-                var x = $(".datos-cliente-1");
-                x[i].value = respuesta.cliente1[i];
+                var valor = respuesta.cliente1[i];
+                if (i === 5 | i === 6) {
+                    valor = convertirFecha(valor);
+                }
+                datosCliente[i].value = valor;
             }
             if (!(typeof respuesta.cliente2 === 'undefined')) {
+                datosCliente = $(".datos-cliente-2");
                 //MIRAR ESTO APUNTADO EN WHATSAPP
                 $("#lista-primerCliente a").html("Primer titular");
                 //$("#lista-primerCliente span").html("Primer titular");
                 $("#lista-segundoCliente").removeClass("oculto");
                 campoCorrecto($(".datos-cliente-2"));
                 for (var i = 0; i < 9; i++) {
-                    $(".datos-cliente-2")[i].value = respuesta.cliente2[i];
+                    var valor = respuesta.cliente2[i];
+                    if (i === 5 | i === 6) {
+                        valor = convertirFecha(valor);
+                    }
+                    datosCliente[i].value = valor;
                 }
             }
             if (respuesta.saldo > 0) {
@@ -100,8 +112,9 @@ function setModal() {
     $("#boton-verMovimientos-si").click(function () {
         var codigoCuenta = $("#input-codigoCuenta").val();
         //Doy 8 segundos por si la página tarda en cargar
-        var tiempoActual = new Date(Date.now() + 8000);
-        document.cookie = "codigoCuenta=" + codigoCuenta + "; expires=" + tiempoActual + "; path=/";
+        var tiempoActual = new Date(Date.now() + 5000);
+        //En formato GTM string para que funcione en todos los navegadores
+        document.cookie = "codigoCuenta=" + codigoCuenta + "; expires=" + tiempoActual.toGMTString() + "; path=/";
         $(location).attr("href", "movimientos.html");
     });
 

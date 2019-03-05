@@ -8,22 +8,28 @@ var inputsCliente;
 var segundoTitular = false;
 var dniPrimerTitular = null;
 var existeCliente1 = false, existeCliente2 = false;
+var toast;
 
 $(function () {
     $("#input-codigoCuenta").focus();
-    
+
+    //Defino variables globales
     botonSiguiente = $("#botonSiguiente");
     dni = $("#dni-1");
     datosCliente = $(".datos-cliente-1");
     formularioDNI = $("#form-dni-1");
     inputsCliente = $("#inputs-cliente-1");
-
+    toast = $("#toast");
+    //Por si lo rellena automáticamente el navegador
     $("#num-cuentas-1").val("0");
     $("#num-cuentas-2").val("0");
+
     botonSiguiente.on("click", function () {
         var codCuenta = $("#input-codigoCuenta").val();
         comprobarCodigoCuenta(codCuenta);
     });
+
+    //Autocomplete de jQuery UI
     var conceptos = [
         "Comunidad",
         "Letra hipoteca",
@@ -32,6 +38,7 @@ $(function () {
         "Seguro coche",
         "Wallapop"
     ];
+
     $("#input-descripcion").autocomplete({
         source: conceptos
     });
@@ -55,6 +62,7 @@ function handleCodCuenta(codigoErr) {
         }
     }
 }
+
 function checkDescripcion() {
     var descripcion = $("#input-descripcion").val();
     if (descripcion.length === 0) {
@@ -67,13 +75,14 @@ function checkDescripcion() {
 
     }
 }
+
 function checkImporte() {
     var importe = parseInt($("#input-importe").val());
     if (importe !== 0) {
         if (importe < 0) {
             importeEsMayorQueSaldo();
         }
-        campoCorrecto($("#importe"));
+        //campoCorrecto($("#importe"));
         mandarDatos();
     } else {
         campoErroneo($("#importe"), "El importe tiene que ser distinto de 0.");
@@ -95,16 +104,21 @@ function mandarDatos() {
         // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
         success: function (resultado) {
-            console.log(resultado);
-            alert("llega");
+            if(toast.css("display") === "block"){
+               var otroToast = toast.clone();
+               otroToast.find(".toast-body").html("otro toast");
+            }
+            console.log($("#toast"));
+            toast.toast("show");
+            console.log($("#toast"));
+
+
         },
         error: function (xhr, status) {
             alert('Disculpe, existia un problema' + status);
             console.log(xhr);
-            console.log(status);
         },
         complete: function (xhr, status) {
-            alert("complete");
         }
     });
 }

@@ -75,7 +75,7 @@ $(function () {
 //        $("#fecha1").datepicker($.datepicker.regional["es"]);
 //        $("#fecha2").datepicker($.datepicker.regional["es"]);
     //----------------------FECHAS--------------------
-    var fecha = Date.now();
+    var fecha = new Date();
     var dia = fecha.getDate();
     var mes = fecha.getMonth() + 1;
     var año = fecha.getFullYear();
@@ -421,12 +421,17 @@ function setModal() {
         //No cierra el modal al presionar Esc
         keyboard: false
     });
-
-    $("#modal-segundoCliente").keypress(function (event) {
+    
+    //Hay otro evento para que cuando se presione "Enter" haga click en botonSiguiente
+    //Para evitar que se llame a ese evento en este caso, creo un escuchador
+    // que salta en la primera fase del evento y para su propagación, así 
+    // el otro escuchador no llega a cogerlo
+    $("#modal-segundoCliente").get(0).addEventListener("keypress", function (event) {
         if (event.key === "Enter") {
             $("#boton-segundoCliente-si").click();
+            event.stopPropagation();
         }
-    });
+    }, true);
     $("#modal-segundoCliente").keydown(function (event) {
         if (event.key === "Escape") {
             $("#boton-segundoCliente-no").click();

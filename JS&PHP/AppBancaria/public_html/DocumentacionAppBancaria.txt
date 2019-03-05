@@ -25,3 +25,6 @@ https://stackoverflow.com/questions/2504071/how-do-i-combine-a-background-image-
 
 //Referenciar colores de bootstrap con sass/less
 https://stackoverflow.com/questions/42573590/how-to-reference-bootstrap-colors-as-a-variable-in-css
+
+//Gradientes bonitos
+https://uigradients.com/#CrystalClear

@@ -12,13 +12,19 @@ $(function () {
     $("#input-codigoCuenta").focus();
 
     //Cuando se aprete enter se hará click al botón siguiente
+    //Funciona siempre
     $(document).keypress(function (event) {
         if (event.key === "Enter") {
-            $("#botonSiguiente").click();
+            //var cosa = $("button");
+            var elem = document.activeElement;
+            if (elem !== botonSiguiente[0]) {
+                $("#botonSiguiente").click();
+            }
         }
     });
 
     //Cuando se aprieta el enter se quita el focus del input
+    //Solo funciona en los inputs de fecha
     $("input").keydown(function (event) {
         if (event.key === "Escape") {
             if ($(this).hasClass("hasDatepicker")) {
@@ -27,12 +33,14 @@ $(function () {
         }
     });
 
-    //PONER
+    //Si el cursor está tocando el panel lateral y está a una altura 
+    //por la mitad de la ventana (aproximadamente), abrirá el panel cambiando su anchura  
     $("#sidenav").mousemove(function (event) {
+        //Coge altura de la ventana
         var posicionMouseY = event.clientY;
         if (posicionMouseY > min && posicionMouseY < max) {
-            //Si se tiene seleccionado un campo y sigue en foco cuando se muestra el menú,
-            //el campo aparecerá por encima del menú lateral
+            //Si se tiene seleccionado un campo y sigue en foco cuando se muestra el menú lateral,
+            //se quita el focus del campo para que no aparezca por encima del panel lateral
             $(":focus").blur();
             $("#sidenav a").css("cursor", "pointer");
             $("#sidenav").css("width", "250px");
@@ -45,8 +53,10 @@ $(function () {
     });
 
     //Si hay datepickers evita que se pueda escribir en ellos
+    //Detecta si existen datepickers en el DOM
     if ($(".hasDatepicker").length) {
         $(".hasDatepicker").keydown(function (event) {
+            //Deja apretar el Tabulador para pasar al siguiente campo
             if (event.key !== "Tab") {
                 event.preventDefault();
             }
@@ -84,6 +94,15 @@ function campoErroneo(campo, textoError) {
         campo.find("input").addClass("is-invalid");
     }
 }
+//Convierte fecha de yyyy-mm-dd a dd/mm/yyyy
+function convertirFecha(fecha) {
+    var año = fecha.substr(0, 4);
+    var mes = fecha.substr(5, 2);
+    var dia = fecha.substr(8, 2);
+    var nuevaFecha = dia + "/" + mes + "/" + año;
+
+    return nuevaFecha;
+}
 
 function setCarga() {
     $("#carga").css("display", "block");
@@ -92,3 +111,4 @@ function setCarga() {
 function unsetCarga() {
     $("#carga").css("display", "none");
 }
+

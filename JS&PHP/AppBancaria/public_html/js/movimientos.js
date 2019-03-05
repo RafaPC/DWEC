@@ -186,12 +186,3 @@ function codigoCuentaCorrecto() {
     $("#botonSiguiente").off("click");
     $("#botonSiguiente").on("click", checkFechas);
 }
-
-function convertirFecha(fecha) {
-    var año = fecha.substr(0, 4);
-    var mes = fecha.substr(5, 2);
-    var dia = fecha.substr(8, 2);
-    var nuevaFecha = dia + "/" + mes + "/" + año;
-
-    return nuevaFecha;
-}

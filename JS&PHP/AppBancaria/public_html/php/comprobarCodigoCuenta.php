@@ -4,6 +4,8 @@ $objetoRespuesta = new stdClass();
 
 if (isset($_POST['cod_cuenta'])) {
     $codCuenta = $_POST['cod_cuenta'];
+    
+    //AQUI PONER UN REGEXP, MELÓN
     if (strlen($codCuenta) === 10) {
         $ultimoNumero = substr($codCuenta, 9, 1);
         for ($i = 0, $acum = 0; $i < strlen($codCuenta) - 1; $i++) {

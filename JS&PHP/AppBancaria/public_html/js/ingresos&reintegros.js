@@ -1,24 +1,13 @@
 'use strict';
-var cliente = 1;
 var botonSiguiente;
-var dni;
-var datosCliente;
-var formularioDNI;
-var inputsCliente;
-var segundoTitular = false;
-var dniPrimerTitular = null;
-var existeCliente1 = false, existeCliente2 = false;
 var primerToast;
-
+var inputCuenta;
 $(function () {
-    $("#input-codigoCuenta").focus();
+    inputCuenta = $("#input-codigoCuenta");
+    inputCuenta.focus();
 
     //Defino variables globales
     botonSiguiente = $("#botonSiguiente");
-    dni = $("#dni-1");
-    datosCliente = $(".datos-cliente-1");
-    formularioDNI = $("#form-dni-1");
-    inputsCliente = $("#inputs-cliente-1");
     primerToast = $("#mensajes .toast").eq(0);
     primerToast.css("display", "none");
     //Por si lo rellena automáticamente el navegador
@@ -58,9 +47,23 @@ $(function () {
     });
 
     $("#input-codigoCuenta").get(0).addEventListener("blur", function () {
-
+        //Aqui para que compruebe la cuenta cuando haga el blur y asi no tenga que disblearse y eso
+        //Importante que esté a true para que se ejecute antes que el botón
+        //Como ajax es asincrono a lo mejor tengo que poner en el boton a que espere
+        //Al entrar aqui pongo la variable cuenta a false
+        //Y dentro del boton espero un tiempo a ver si se pone a true
     }, true);
 
+    //Mira si existe la cookie "codigoCuenta", si existe es que viene de cerrar cuentas
+    var codigoCuenta = getCookie("codigoCuenta");
+    var saldo = getCookie("saldo");
+    if (codigoCuenta !== null && saldo !== null) {
+        inputCuenta.val(codigoCuenta);
+        $("#input-concepto").val("Cierre de cuenta");
+        $("#input-importe").val(saldo);
+        botonSiguiente.off("click");
+        botonSiguiente.click(hacerMovimiento);
+    }
 
 });
 
@@ -68,8 +71,8 @@ function handleCodCuenta(codigoErr) {
     if (codigoErr === 1) {
         campoCorrecto($("#codigoCuenta"));
         $("#descripcion").removeClass("oculto");
-        $("#botonSiguiente").off("click");
-        $("#botonSiguiente").on("click", checkDescripcion);
+        botonSiguiente.off("click");
+        botonSiguiente.on (checkDescripcion);
     } else {
         if (codigoErr === -1) {
             campoErroneo($("#codigoCuenta"), "El código tiene que tener al menos 10 números.");
@@ -101,10 +104,12 @@ function checkImporte() {
     var importe = parseInt($("#input-importe").val());
     if (importe !== 0) {
         if (importe < 0) {
+            //Hay que checkear primero si el reintegro supera el sueldo de la cuenta
             importeEsMayorQueSaldo();
+        } else {
+            hacerMovimiento();
         }
         //campoCorrecto($("#importe"));
-        hacerMovimiento();
     } else {
         campoErroneo($("#importe"), "El importe tiene que ser distinto de 0.");
     }
@@ -121,7 +126,7 @@ function importeEsMayorQueSaldo() {
         data: {cod_cuenta: ncuenta},
         // especifica si sera una peticion POST o GET
         type: 'POST',
-        // el tipo de informaciÃ³n que se espera de respuesta
+        // el tipo de información que se espera de respuesta
         dataType: 'json',
         success: function (resultado) {
             if (typeof resultado.cod_err !== 'undefined') {
@@ -131,6 +136,7 @@ function importeEsMayorQueSaldo() {
                     campoErroneo($("#importe"), "El reintegro supera al saldo total de la cuenta");
                 } else {
                     campoCorrecto($("#importe"));
+                    hacerMovimiento();
                 }
             }
         },

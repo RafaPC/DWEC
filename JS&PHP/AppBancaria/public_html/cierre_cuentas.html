@@ -54,19 +54,18 @@ and open the template in the editor.
                 <span class="sr-only">Loading...</span>
             </div>
             <!-- Modal que pregunta si se quieren ver los movimientos del titular -->
-            <div class="modal fade" id="modal-verMovimientos" tabindex="-1" role="dialog" aria-labelledby="modal-verMovimientos-label" aria-hidden="true">
+            <div class="modal fade" id="modal-cierreCuenta" tabindex="-1" role="dialog" aria-labelledby="modal-cierreCuenta-label" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="modal-verMovimientos-label">Siguiente paso</h5>
+                            <h5 class="modal-title" id="modal-cierreCuenta-label">¿Qué quieres hacer?</h5>
                         </div>
                         <div class="modal-body">
                             ¿No se puede borrar la cuenta porque todavía tiene saldo?
-                            ¿Quiere ver sus movimientos del último mes?
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" id="boton-verMovimientos-si" data-dismiss="modal">Sí</button>
-                            <button type="button" class="btn btn-primary" id="boton-verMovimientos-no" data-dismiss="modal">No</button>
+                            <button type="button" class="btn btn-secondary" id="boton-verMovimientos" data-dismiss="modal">Ver movimientos del último mes</button>
+                            <button type="button" class="btn btn-primary" id="boton-sacarSaldo" data-dismiss="modal">Sacar todo el saldo de la cuenta</button>
                         </div>
                     </div>
                 </div>

@@ -4,6 +4,9 @@ var mouseY;
 var windowMaxY;
 var min, max;
 $(function () {
+    //Para limpiar el valor de todos los inputs, ya que "autocomplete=off" hace lo que quiere
+    $("input").val("");
+
     //Pongo focus al input de numero de cuenta
     $("#input-codigoCuenta").focus();
 
@@ -21,13 +24,11 @@ $(function () {
 
     //Cuando se aprieta el enter se quita el focus del input
     //Solo funciona en los inputs de fecha
-    $("input").keydown(function (event) {
-        if (event.key === "Escape") {
-            if ($(this).hasClass("hasDatepicker")) {
-                $(this).blur();
-            }
-        }
-    });
+//    $("input .hasDatepicker").keydown(function (event) {
+//        if (event.key === "Escape") {
+//            $(this).blur();
+//        }
+//    });
 
     //Si el cursor está tocando el panel lateral y está a una altura 
     //por la mitad de la ventana (aproximadamente), abrirá el panel cambiando su anchura  
@@ -57,15 +58,15 @@ $(function () {
     //Detecta si existen datepickers en el DOM
     if ($(".hasDatepicker").length) {
         $(".hasDatepicker").keydown(function (event) {
-            //Deja apretar el Tabulador para pasar al siguiente campo
-            if (event.key !== "Tab") {
+            //Deja apretar el escape para salir del campo
+            if (event.key === "Escape") {
+                $(this).blur();
+                //Deja apretar el Tabulador para pasar al siguiente campo
+            } else if (event.key !== "Tab") {
                 event.preventDefault();
             }
         });
     }
-
-    //Para limpiar el valor de todos los inputs, ya que "autocomplete=off" hace lo que quiere
-    $("input").val("");
 });
 
 
@@ -81,8 +82,6 @@ function campoCorrecto(campo) {
     campo.find(":input").removeClass("is-invalid");
     //Se le añade la clase is-valid
     campo.find(":input").addClass("is-valid");
-    //Se pone display:none al elemento invalid-feedback para ocultar los errores que hayan salido
-    campo.find(".invalid-feedback").css("display", "none");
 }
 
 function campoErroneo(campo, textoError) {
@@ -119,5 +118,28 @@ function setCarga() {
 
 function unsetCarga() {
     $("#carga").css("display", "none");
+}
+
+
+function setCookie(cname, cvalue, segundos) {
+    var d = new Date();
+    d.setTime(Date.now() + (segundos * 1000));
+    var expires = "expires=" + d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+    var name = cname + "=";
+    var ca = document.cookie.split(';');
+    for (var i = 0; i < ca.length; i++) {
+        var c = ca[i];
+        while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+        }
+        if (c.indexOf(name) === 0) {
+            return c.substring(name.length, c.length);
+        }
+    }
+    return null;
 }
 

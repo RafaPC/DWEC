@@ -55,10 +55,9 @@ $(function () {
     });
 
     //Mira si existe la cookie "codigoCuenta", si existe es que viene de cerrar cuentas
-    var cookie = document.cookie;
-    if (cookie.indexOf("codigoCuenta") !== -1) {
-        var comienzo = cookie.indexOf("codigoCuenta") + 13;
-        var codigoCuenta = cookie.substr(comienzo, 10);
+
+    var codigoCuenta = getCookie("codigoCuenta");
+    if (codigoCuenta !== null) {
         $("#input-codigoCuenta").val(codigoCuenta);
         codigoCuentaCorrecto();
         fechaInicio.datepicker("setDate", "-1m");
@@ -69,12 +68,11 @@ $(function () {
 
 //Para inicializar el slider
 $(function () {
-    //ESTO NO FUNCIONA
     $("#checkBox-importe").prop("checked", false);
     $("#slider-range").slider({
         range: true,
-        min: -2000,
-        max: 2000,
+        min: -1000,
+        max: 1000,
         values: [0, 100],
         slide: function (event, ui) {
             $("#amount").val("Entre " + ui.values[ 0 ] + "€ y " + ui.values[ 1 ] + "€");
@@ -87,8 +85,6 @@ $(function () {
 function checkFechas() {
     setCarga();
     var ncuenta = $("#input-codigoCuenta").val();
-//    var fecha1 = $("#fecha1").datepicker("getDate");
-//    var fecha2 = $("#fecha2").datepicker("getDate");
     var fecha1 = $("#fecha1").val();
     var fecha2 = $("#fecha2").val();
     $("caption").eq(0).html("Lista de movimientos del " + fecha1 + " al " + fecha2 + ".");
@@ -109,6 +105,7 @@ function checkFechas() {
         // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
         success: function (resultado) {
+
             printMovimientos(resultado.movimientos);
         },
         error: function (xhr, status) {
@@ -141,6 +138,7 @@ function printMovimientos(movimientos) {
     if (movimientos.length === 0) {
         alert("No hay ningún movimiento entre esas dos fechas");
     } else {
+        //what
         $(".table").removeClass("oculto");
         $(".table").css("display", "none");
 

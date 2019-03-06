@@ -1,26 +1,17 @@
 'use strict';
-var cliente = 1;
 var botonSiguiente;
-var dni;
+var inputCuenta;
+var saldo;
 var datosCliente;
-var formularioDNI;
-var inputsCliente;
-var segundoTitular = false;
-var dniPrimerTitular = null;
-var existeCliente1 = false, existeCliente2 = false;
-
 $(function () {
-    datosCliente = $(".datos-cliente-1");
-    $("#input-codigoCuenta").focus();
-
+    inputCuenta = $("#input-codigoCuenta");
+    inputCuenta.focus();
     botonSiguiente = $("#botonSiguiente");
-    dni = $("#dni-1");
-    datosCliente = $(".datos-cliente-1");
-    formularioDNI = $("#form-dni-1");
     botonSiguiente.on("click", function () {
-        var codCuenta = $("#input-codigoCuenta").val();
-        comprobarCodigoCuenta(codCuenta);
+        comprobarCodigoCuenta(inputCuenta.val());
     });
+    
+    datosCliente = $(".datos-cliente-1");
     $("#tabs").tabs({
         collapsible: true,
         hide: 'fold',
@@ -39,7 +30,6 @@ function handleCodCuenta(codigoErr) {
         botonSiguiente.off("click");
         //Pongo nuevo listener al botón de siguiente
         //botonSiguiente.on("click", checkCliente);
-
         buscarCuenta();
     } else {
         if (codigoErr === -1) {
@@ -49,7 +39,7 @@ function handleCodCuenta(codigoErr) {
         } else if (codigoErr === -3) {
             campoErroneo($("#codigoCuenta"), "El código de cuenta no está registrado.");
         } else if (codigoErr === -4) {
-            $(".invalid-feedback").html("Error del servidor");
+            campoErroneo($("#codigoCuenta"), "Error del servidor.");
         }
     }
 }
@@ -57,7 +47,7 @@ function handleCodCuenta(codigoErr) {
 function buscarCuenta() {
     setCarga();
     //Hacer llamada ajax para coger datos de la cuenta y rellenarlos
-    var ncuenta = $("#input-codigoCuenta").val();
+    var ncuenta = inputCuenta.val();
     $.ajax({
         url: 'php/getDatos&ClientesFromCuenta.php',
         data: {numCuenta: ncuenta},
@@ -65,12 +55,12 @@ function buscarCuenta() {
         dataType: 'json',
         success: function (respuesta) {
             //AQUI MIRAR SI ESTA MOSTRADO, HACER OTRO CLONANDO Y METERLO EN #MENSAJES
-            
+
             $("#tabs").removeClass("oculto");
             //Mirar esto del parent parent que queda feo
             $("#saldo").parent().parent().removeClass("oculto");
-            $("#saldo").val(respuesta.saldo);
-
+            saldo = respuesta.saldo;
+            $("#saldo").val(saldo);
             campoCompleto($(".datos-cliente-1"));
             for (var i = 0; i < 9; i++) {
                 var valor = respuesta.cliente1[i];
@@ -108,17 +98,20 @@ function buscarCuenta() {
 }
 
 function setModal() {
-    $("#modal-verMovimientos").modal();
-    $("#boton-verMovimientos-si").click(function () {
-        var codigoCuenta = $("#input-codigoCuenta").val();
-        //Doy 8 segundos por si la página tarda en cargar
-        var tiempoActual = new Date(Date.now() + 5000);
-        //En formato GTM string para que funcione en todos los navegadores
-        document.cookie = "codigoCuenta=" + codigoCuenta + "; expires=" + tiempoActual.toGMTString() + "; path=/";
+    $("#modal-cierreCuenta").modal();
+    $("#boton-verMovimientos").click(function () {
+        //Escribo cookie con el numero de cuenta para que se reciba en movimientos
+        setCookie("codigoCuenta", inputCuenta.val(), 5);
+        //Redirijo a movimientos
         $(location).attr("href", "movimientos.html");
     });
 
-    $("#boton-verMovimientos-no").click(function () {
+    $("#boton-sacarSaldo").click(function () {
+        setCookie("codigoCuenta", inputCuenta.val(), 60);
+        setCookie("saldo", saldo, 60);
+
+        $(location).attr("href", "ingresosYreintegros.html");
+
         //Quito los event listener puestos para las teclas "Escape" y "Enter"
         $("#modal-segundoCliente").off("keypress keydown");
         //HACER SCROLL O ALGO

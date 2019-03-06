@@ -127,3 +127,11 @@ header{
 .toast-retirado #toast-cuerpo{
     background-color: rgba(227,7,7,0.2);
 }
+
+.modal{
+    top: 30%;
+}
+
+#modal-cierreCuenta .modal-dialog{
+    max-width: 600px;
+}

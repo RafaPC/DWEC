@@ -3,6 +3,10 @@ var margenIzq;
 var mouseY;
 var windowMaxY;
 var min, max;
+var codigosErrores = {"-7": "Error en la conexión con el servidor.",
+    "-8": "Error del servidor.",
+    "-9": "Error en la conexión a la base de datos."
+};
 $(function () {
     //Para limpiar el valor de todos los inputs, ya que "autocomplete=off" hace lo que quiere
     $("input").val("");
@@ -14,22 +18,17 @@ $(function () {
     //Funciona siempre
     $(document).keypress(function (event) {
         if (event.key === "Enter") {
-            //var cosa = $("button");
+            //activeElement es el elemento activo o focuseado
             var elem = document.activeElement;
-            if (elem !== botonSiguiente[0]) {
+            //Si se ha presionado Enter teniendo seleccionado el botón
+            // ya cuenta como un click así que no se manda otro
+            //Se compara elemento de DOM con elemento de DOM
+            if (elem !== botonSiguiente.get(0)) {
                 $("#botonSiguiente").click();
             }
         }
     });
-
-    //Cuando se aprieta el enter se quita el focus del input
-    //Solo funciona en los inputs de fecha
-//    $("input .hasDatepicker").keydown(function (event) {
-//        if (event.key === "Escape") {
-//            $(this).blur();
-//        }
-//    });
-
+    //----------------PANEL LATERAL-------------------//
     //Si el cursor está tocando el panel lateral y está a una altura 
     //por la mitad de la ventana (aproximadamente), abrirá el panel cambiando su anchura  
     $("#sidenav").mousemove(function (event) {
@@ -62,6 +61,7 @@ $(function () {
             if (event.key === "Escape") {
                 $(this).blur();
                 //Deja apretar el Tabulador para pasar al siguiente campo
+                // para cualquier otra tecla detiene la acción predeterminada
             } else if (event.key !== "Tab") {
                 event.preventDefault();
             }
@@ -102,6 +102,7 @@ function campoErroneo(campo, textoError) {
     }
 }
 
+
 //Convierte fecha de yyyy-mm-dd a dd/mm/yyyy
 function convertirFecha(fecha) {
     var año = fecha.substr(0, 4);
@@ -111,6 +112,7 @@ function convertirFecha(fecha) {
 
     return nuevaFecha;
 }
+
 
 function setCarga() {
     $("#carga").css("display", "block");
@@ -143,3 +145,20 @@ function getCookie(cname) {
     return null;
 }
 
+function mostrarInfo(error = true, codigoError, textoAccion) {
+    if (error) {
+        //Si se introduce un mensaje
+        if (isNaN(parseInt(codigoError))) {
+            error = codigoError;
+        } else {
+            var error = codigosErrores[codigoError];
+            error = error.charAt(0).toLowerCase() + error.substring(1, error.length - 1);
+        }
+
+        var mensaje = "Ha ocurrido un " + error + " al intentar " + textoAccion + ". Vuelve a intentarlo en unos minutos o contacta con tu administrador.";
+    }else{
+        var mensaje = textoAccion;
+    }
+    $("#modal-body-info").html(mensaje);
+    $("#modal-info").modal();
+}

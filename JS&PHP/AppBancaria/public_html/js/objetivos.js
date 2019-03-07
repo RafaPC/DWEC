@@ -32,21 +32,22 @@ function migaCompleta() {
     lineaTop -= 2.3;
     linea.css("backgroundPositionY", lineaTop + "%");
     setTimeout(function () {
+        objetivos.eq(numeroMiga).removeClass("objetivoFallido");
         objetivos.eq(numeroMiga).removeClass("objetivoVacio");
         objetivos.eq(numeroMiga).addClass("objetivoCompleto");
         numeroMiga++;
-    }, 380);
+    }, 600);
 }
 
 function migaError() {
     //Cada vez se baja un 3 porciento el background
     lineaTop -= 3;
     linea.css("backgroundPositionY", lineaTop + "%");
+    lineaTop += 3;
     setTimeout(function () {
         objetivos.eq(numeroMiga).removeClass("objetivoVacio");
         objetivos.eq(numeroMiga).addClass("objetivoFallido");
-        numeroMiga++;
-    }, 380);
+    }, 600);
 }
 
 function migaOmitida() {
@@ -54,8 +55,9 @@ function migaOmitida() {
     lineaTop -= 3;
     linea.css("backgroundPositionY", lineaTop + "%");
     setTimeout(function () {
+        objetivos.eq(numeroMiga).removeClass("objetivoFallido");
         objetivos.eq(numeroMiga).removeClass("objetivoVacio");
         objetivos.eq(numeroMiga).addClass("objetivoOmitido");
         numeroMiga++;
-    }, 380);
+    }, 600);
 }

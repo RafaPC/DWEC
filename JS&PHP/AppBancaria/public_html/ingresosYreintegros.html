@@ -11,9 +11,9 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="js/ingresos&reintegros.js" type="text/javascript"></script>
-        <script src="js/comprobarCodigoCuenta.js" type="text/javascript"></script>
         <script src="js/funciones.js" type="text/javascript"></script>
+        <script src="js/ingresos&reintegros.js" type="text/javascript"></script>
+        <script src="js/comprobarCodigoCuenta.js" type="text/javascript"></script>      
         <link href="css/sideNav.css" rel="stylesheet" type="text/css"/>
         <link href="css/movimientos.css" rel="stylesheet" type="text/css"/>
         <link href="css/animaciones.css" rel="stylesheet" type="text/css"/>
@@ -51,7 +51,7 @@ and open the template in the editor.
             <a href="cierre_cuentas.html">Cerrar cuentas</a>
         </div>
         <div id="mensajes">
-            <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-autohide="false">
+            <div role="alert" aria-live="assertive" aria-atomic="true" class="toast" data-delay="10000">
                 <div class="toast-header">
                     <!--img src="..." class="rounded mr-2" alt="..."-->
                     <strong class="mr-auto" id="toast-titulo">Bootstrap</strong>
@@ -66,49 +66,88 @@ and open the template in the editor.
             </div>
         </div>
         <div class="container">
-            <div class="spinner-border" id="carga" role="status">
+            <div class="spinner-border text-info" id="carga" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
+            <div class="modal fade" id="modal-cierreCuenta" tabindex="-1" role="dialog" aria-labelledby="modal-cierreCuenta-label" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="modal-cierreCuenta-label">¿Estás seguro de que quieres borrar la cuenta?</h5>
+                        </div>
+                        <div class="modal-body">
+                            La cuenta ya no tiene saldo
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" id="boton-cerrarCuenta-si">Sí</button>
+                            <button type="button" class="btn btn-secondary" id="boton-cerrarCuenta-no" data-dismiss="modal">No</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <form>
-                <div class="form-group" id="codigoCuenta">
+                <div class="form-group" id="form-codigoCuenta">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
-                        <label for="ncuenta">Número de cuenta</label>
+                        <label for="input-codigoCuenta">Número de cuenta</label>
                         <div class="input-group">
-                            <input type="text" maxlength="10" class="form-control" id="input-codigoCuenta" aria-describedby="ncuentaHelp" placeholder="Ejemplo: 1234567890"> 
+                            <input type="text" maxlength="10" class="form-control" id="input-codigoCuenta" aria-describedby="help-codigoCuenta" placeholder="Ejemplo: 1234567890"> 
                             <div class="invalid-feedback">
                                 Por favor introduce in código de cuenta
                             </div>
                         </div>
-                        <small id="ncuentaHelp" class="form-text text-muted">Cadena de 10 dígitos</small>
+                        <small id="help-codigoCuenta" class="form-text text-muted">Cadena de 10 dígitos</small>
                     </div>
                 </div>
-                <div class="form-group oculto" id="descripcion">
+                <div class="form-group oculto" id="form-concepto">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
                         <label for="input-descripcion">Descripción</label>
                         <div class="input-group">
-                            <input type="text" class="form-control" id="input-descripcion" aria-describedby="descripcion-Help" placeholder="Seguro de vehículo"> 
+                            <input type="text" class="form-control campo" id="input-concepto" aria-describedby="descripcion-Help" placeholder="Seguro de vehículo"> 
                             <div class="invalid-feedback">
                                 El campo debe contener una descripción.
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="oculto" id="importe">
-                    <label for="input-importe">Importe de la operacion</label>
-                    <div class="input-group mb-3">
-                        <input type="text" maxlength="5" class="form-control" id="input-importe">
-                        <div class="invalid-feedback">
-                            El importe no puede ser 0.
-                        </div>
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">€</span>
+                <div class="form-group oculto" id="form-importe">
+                    <div class="input-field">
+                        <label for="input-importe">Importe de la operacion</label>
+                        <div class="input-group mb-3">
+                            <input type="text" maxlength="5" class="form-control campo" id="input-importe">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">€</span>
+                            </div>
+                            <div class="invalid-feedback">
+                                El importe no puede ser 0.
+                            </div>              
                         </div>
                     </div>
                 </div>
             </form>
             <button class="btn waves-effect waves-light" name="action" id="botonSiguiente">Siguiente
-                <i class="material-icons right">send</i>
+                <i class="material-icons right">send</i>          
             </button>
+            <div class="alert alert-danger fade show" id="errorAlert" role="alert">
+                El concepto y el importe tienen que ser correctos.
+            </div>
+            <div class="modal" tabindex="-1" role="dialog" id="modal-info">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Error en el servidor</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="modal-body-info">
+                            <p>Modal body text goes here.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Ok</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

@@ -4,15 +4,19 @@ var botonSiguiente;
 var inputFechaInicio, inputFechaFin;
 //Configuro los datepickers
 $(function () {
-    inputFechaInicio = $("#fecha1");
-    inputFechaFin = $("#fecha2");
+    inputFechaInicio = $("#input-fecha1");
+    inputFechaFin = $("#input-fecha2");
+
     botonSiguiente = $("#botonSiguiente");
+    //Pongo focus al primer input
     $("#input-codigoCuenta").focus();
 
-//        $("#fecha1").datepicker($.datepicker.regional["es"]);
-//        $("#fecha2").datepicker($.datepicker.regional["es"]);
+    //Guardo la tabla
+    $("#tabla").hide({duration: 0});
+
+    //------------DATEPICKERS DE JQUERY UI---------------//
     var dateFormat = "dd/mm/yy";
-    var fechaInicio = $("#fecha1").datepicker({
+    var fechaInicio = $("#input-fecha1").datepicker({
         defaultDate: "+1w",
         changeMonth: true,
         changeYear: true,
@@ -21,7 +25,7 @@ $(function () {
             .on("change", function () {
                 fechaFin.datepicker("option", "minDate", getDate(this));
             });
-    var fechaFin = $("#fecha2").datepicker({
+    var fechaFin = $("#input-fecha2").datepicker({
         defaultDate: "+1w",
         changeMonth: true,
         changeYear: true,
@@ -42,20 +46,35 @@ $(function () {
         return date;
     }
 
-//Añado listener al checkbox, al cambiar mostrará el rango de dinero
+    //------------SLIDER RANGE DE JQUERY UI------------------//
+    $("#checkBox-importe").prop("checked", false);
+    $("#slider-range").slider({
+        range: true,
+        min: -1000,
+        max: 1000,
+        values: [0, 100],
+        slide: function (event, ui) {
+            $("#amount").val("Entre " + ui.values[0] + "€ y " + ui.values[1] + "€");
+        }
+    });
+    $("#amount").val("Entre " + $("#slider-range").slider("values", 0) +
+            "€ y " + $("#slider-range").slider("values", 1) + "€");
+
+    //Añado listener al checkbox, al cambiar mostrará el rango de dinero
+    //Cuando cambia, cambio la variable global filtrarPorImporte y hago toggle al slider
+    //Si está oculto toggle lo hace aparecer y si ya aparecía lo oculta
     $("#checkBox-importe").change(function () {
         filtrarPorImporte = $("#checkBox-importe").checked;
         $("#sliderRangePrecio").toggleClass("oculto");
     });
 
-//Pongo evento al botón de Siguiente
+    //Pongo evento al botón de Siguiente
     botonSiguiente.on("click", function () {
         var codigoCuenta = $("#input-codigoCuenta").val();
         comprobarCodigoCuenta(codigoCuenta);
     });
 
     //Mira si existe la cookie "codigoCuenta", si existe es que viene de cerrar cuentas
-
     var codigoCuenta = getCookie("codigoCuenta");
     if (codigoCuenta !== null) {
         $("#input-codigoCuenta").val(codigoCuenta);
@@ -68,53 +87,67 @@ $(function () {
 
 //Para inicializar el slider
 $(function () {
-    $("#checkBox-importe").prop("checked", false);
-    $("#slider-range").slider({
-        range: true,
-        min: -1000,
-        max: 1000,
-        values: [0, 100],
-        slide: function (event, ui) {
-            $("#amount").val("Entre " + ui.values[ 0 ] + "€ y " + ui.values[ 1 ] + "€");
-        }
-    });
-    $("#amount").val("Entre " + $("#slider-range").slider("values", 0) +
-            "€ y " + $("#slider-range").slider("values", 1) + "€");
+
 });
 
 function checkFechas() {
-    setCarga();
-    var ncuenta = $("#input-codigoCuenta").val();
-    var fecha1 = $("#fecha1").val();
-    var fecha2 = $("#fecha2").val();
-    $("caption").eq(0).html("Lista de movimientos del " + fecha1 + " al " + fecha2 + ".");
-    var llamada = {numcuenta: ncuenta, fecha1: fecha1, fecha2: fecha2};
-    if ($("#checkBox-importe").prop("checked")) {
-        llamada.importeMinimo = $("#slider-range").slider("values", 0);
-        llamada.importeMaximo = $("#slider-range").slider("values", 1);
+    var faltanDatos;
+
+    var codCuenta = $("#input-codigoCuenta").val();
+    var fecha1 = inputFechaInicio.val();
+    var fecha2 = inputFechaFin.val();
+    if (fecha1 === "") {
+        inputFechaInicio.addClass("is-invalid");
+        faltanDatos = true;
+    } else {
+        inputFechaInicio.removeClass("is-invalid");
     }
-
-    $.ajax({
-        // la URL para la peticion
-        url: 'php/getMovimientos.php',
-        // la informacion a enviar
-        // (tambien es posible utilizar una cadena de datos)
-        data: llamada,
-        // especifica si sera una peticion POST o GET
-        type: 'POST',
-        // el tipo de informaciÃ³n que se espera de respuesta
-        dataType: 'json',
-        success: function (resultado) {
-
-            printMovimientos(resultado.movimientos);
-        },
-        error: function (xhr, status) {
-            alert('Disculpe, existia un problema');
-        },
-        complete: function (xhr, status) {
-            unsetCarga();
+    if (fecha2 === "") {
+        inputFechaFin.addClass("is-invalid");
+        faltanDatos = true;
+    } else {
+        inputFechaFin.removeClass("is-invalid");
+    }
+    if (!faltanDatos) {
+        setCarga();
+        $("caption").eq(0).html("Lista de movimientos del " + fecha1 + " al " + fecha2 + ".");
+        var llamada = {cod_cuenta: codCuenta, fecha1: fecha1, fecha2: fecha2};
+        if ($("#checkBox-importe").prop("checked")) {
+            llamada.importeMinimo = $("#slider-range").slider("values", 0);
+            llamada.importeMaximo = $("#slider-range").slider("values", 1);
         }
-    });
+
+        $.ajax({
+            // la URL para la peticion
+            url: 'php/getMovimientos.php',
+            // la informacion a enviar
+            data: llamada,
+            // especifica si sera una peticion POST o GET
+            type: 'POST',
+            // el tipo de informacion que se espera de respuesta
+            dataType: 'json',
+            success: function (respuesta) {
+                //Checkea si ha habido algún error en el servidor
+                if (typeof (respuesta.cod_err) === "undefined") {
+                    $("#tabla").hide("blind", {easing: "easeOutExpo"}, 500);
+                    if (respuesta.movimientos.length === 0) {
+                        alert("No hay ningún movimiento entre esas dos fechas");
+                    } else {
+                        printMovimientos(respuesta.movimientos);
+                    }
+                } else {
+                    mostrarErrorAjax(respuesta.cod_err, "coger los movimientos de la cuenta");
+                }
+
+            },
+            error: function () {
+                mostrarErrorAjax("-7", "coger los movimientos de la cuenta");
+            },
+            complete: function (xhr, status) {
+                unsetCarga();
+            }
+        });
+    }
 }
 
 function handleCodCuenta(codigoErr) {
@@ -127,54 +160,54 @@ function handleCodCuenta(codigoErr) {
             campoErroneo($("#codigoCuenta"), "El código no cumple el formato.");
         } else if (codigoErr === -3) {
             campoErroneo($("#codigoCuenta"), "El código no está registrado.");
-        } else if (codigoErr === -4) {
-            campoErroneo($("#codigoCuenta"), "Error del servidor.");
+        } else if (codigoErr <= 7) {
+            campoErroneo($("#codigoCuenta"), codigosErrores[codigoErr]);
         }
     }
 }
 
 function printMovimientos(movimientos) {
-    //Si no se ha devuelto ningun movimiento
-    if (movimientos.length === 0) {
-        alert("No hay ningún movimiento entre esas dos fechas");
-    } else {
-        //what
-        $(".table").removeClass("oculto");
-        $(".table").css("display", "none");
-
-        var tbody = $("#movimientos")[0];
-        //Si el tbody ya tiene elementos dentro los borra todos antes de escribir más
-        if (tbody.childElementCount > 0) {
-            while (tbody.firstChild) {
-                tbody.removeChild(tbody.firstChild);
-            }
+    var tbody = $("#movimientos")[0];
+    //Si el tbody ya tiene elementos dentro los borra todos antes de escribir más
+    if (tbody.childElementCount > 0) {
+        while (tbody.firstChild) {
+            tbody.removeChild(tbody.firstChild);
         }
-
-        for (var i = 0; i < movimientos.length; i++) {
-            var tr = document.createElement("tr");
-            if (movimientos[i]['importe'] > 0) {
-                tr.classList = "table-success";
-            } else {
-                tr.classList = "table-danger";
-            }
-
-            for (var clave in movimientos[i]) {
-                var td = document.createElement("td");
-                var txt = movimientos[i][clave];
-                if ("fecha" === clave) {
-                    txt = convertirFecha(txt);
-                } else if ("importe" === clave) {
-                    txt += "€";
-                }
-                var txtNode = document.createTextNode(txt);
-                td.appendChild(txtNode);
-                tr.appendChild(td);
-            }
-            tbody.appendChild(tr);
-        }
-
-        $(".table").show("fold", {easing: "easeOutExpo"}, 1000);
     }
+
+    for (var i = 0; i < movimientos.length; i++) {
+        var tr = document.createElement("tr");
+        if (movimientos[i]['importe'] > 0) {
+            tr.classList = "table-success";
+        } else {
+            tr.classList = "table-danger";
+        }
+
+        for (var clave in movimientos[i]) {
+            var td = document.createElement("td");
+            var txt = movimientos[i][clave];
+            if ("fecha" === clave) {
+                txt = convertirFecha(txt);
+            } else if ("importe" === clave) {
+                txt += "€";
+            } else if ("hora" === clave) {
+                //Le añade los dos (dos) puntos a la hora
+                txt = txt.substr(0, 2) + ":" + txt.substr(2, 2) + ":" + txt.substr(4, 2);
+            }
+            var txtNode = document.createTextNode(txt);
+            td.appendChild(txtNode);
+            tr.appendChild(td);
+        }
+        tbody.appendChild(tr);
+    }
+
+    $("#tabla").show("fold", {easing: "easeOutExpo"}, 1000);
+    setTimeout(function () {
+        //var x = $("#tabla :last-child");
+        $('html, body').animate({
+            scrollTop: ($("#tabla :last-child").offset().top)
+        }, 1100);
+    }, 1000);
 }
 
 function codigoCuentaCorrecto() {

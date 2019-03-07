@@ -31,7 +31,7 @@ $crearTablaCuentas = "CREATE TABLE cuentas(
 $crearTablaMovimientos = "CREATE TABLE movimientos (
 	cod_cuenta varchar(10) NOT NULL, 
 	fecha date NOT NULL, 
-        hora varchar(8) NOT NULL, 
+        hora varchar(6) NOT NULL, 
 	descripcion varchar(80) NOT NULL,
 	importe int(8) NOT NULL,
 	PRIMARY KEY (cod_cuenta, fecha, hora)

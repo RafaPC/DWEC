@@ -10,13 +10,19 @@ $(function () {
     botonSiguiente.on("click", function () {
         comprobarCodigoCuenta(inputCuenta.val());
     });
-    
+
     datosCliente = $(".datos-cliente-1");
     $("#tabs").tabs({
-        collapsible: true,
         hide: 'fold',
         show: 'fold'
     });
+
+    var codigoCuenta = getCookie("codigoCuenta");
+    if (codigoCuenta !== null) {
+        inputCuenta.val(codigoCuenta);
+        campoCompleto($("#form-codigoCuenta"));
+        buscarCuenta();
+    }
 });
 
 function handleCodCuenta(codigoErr) {
@@ -38,8 +44,8 @@ function handleCodCuenta(codigoErr) {
             campoErroneo($("#codigoCuenta"), "El código no cumple el formato.");
         } else if (codigoErr === -3) {
             campoErroneo($("#codigoCuenta"), "El código de cuenta no está registrado.");
-        } else if (codigoErr === -4) {
-            campoErroneo($("#codigoCuenta"), "Error del servidor.");
+        } else if (codigoErr <= 7) {
+            campoErroneo($("#codigoCuenta"), codigosErrores[codigoErr]);
         }
     }
 }
@@ -54,13 +60,10 @@ function buscarCuenta() {
         type: 'POST',
         dataType: 'json',
         success: function (respuesta) {
-            //AQUI MIRAR SI ESTA MOSTRADO, HACER OTRO CLONANDO Y METERLO EN #MENSAJES
-
             $("#tabs").removeClass("oculto");
-            //Mirar esto del parent parent que queda feo
-            $("#saldo").parent().parent().removeClass("oculto");
+            $("#form-saldo").removeClass("oculto");
             saldo = respuesta.saldo;
-            $("#saldo").val(saldo);
+            $("#input-saldo").val(saldo);
             campoCompleto($(".datos-cliente-1"));
             for (var i = 0; i < 9; i++) {
                 var valor = respuesta.cliente1[i];
@@ -69,11 +72,9 @@ function buscarCuenta() {
                 }
                 datosCliente[i].value = valor;
             }
-            if (!(typeof respuesta.cliente2 === 'undefined')) {
+            if (typeof (respuesta.cliente2) !== 'undefined') {
                 datosCliente = $(".datos-cliente-2");
-                //MIRAR ESTO APUNTADO EN WHATSAPP
                 $("#lista-primerCliente a").html("Primer titular");
-                //$("#lista-primerCliente span").html("Primer titular");
                 $("#lista-segundoCliente").removeClass("oculto");
                 campoCompleto($(".datos-cliente-2"));
                 for (var i = 0; i < 9; i++) {
@@ -84,9 +85,17 @@ function buscarCuenta() {
                     datosCliente[i].value = valor;
                 }
             }
+
             if (respuesta.saldo > 0) {
-                setModal();
+                botonSiguiente.click(setModal);
+            } else {
+                botonSiguiente.off();
+                botonSiguiente.click(borrarCuenta);
             }
+
+            $('html, body').animate({
+                scrollTop: (botonSiguiente.offset().top)
+            }, 800);
         },
         error: function (xhr, status) {
             console.log(xhr);
@@ -107,15 +116,35 @@ function setModal() {
     });
 
     $("#boton-sacarSaldo").click(function () {
-        setCookie("codigoCuenta", inputCuenta.val(), 60);
-        setCookie("saldo", saldo, 60);
+        setCookie("codigoCuenta", inputCuenta.val(), 5);
+        setCookie("saldo", saldo, 5);
 
         $(location).attr("href", "ingresosYreintegros.html");
-
-        //Quito los event listener puestos para las teclas "Escape" y "Enter"
-        $("#modal-segundoCliente").off("keypress keydown");
-        //HACER SCROLL O ALGO
     });
 }
 
-//No poner id a los inputs como tal, solo al div que los rodee y coger ese div por id y luego el input que haya dentro
+function borrarCuenta() {
+    var codCuenta = $("#input-codigoCuenta").val();
+    $.ajax({
+        url: 'php/cierreCuenta.php',
+        data: {cod_cuenta: codCuenta},
+        type: 'POST',
+        dataType: 'json',
+        success: function (respuesta) {
+            if (respuesta.cod_err === 1) {
+                mostrarInfo(false, 0, "Se ha cerrado la cuenta correctamente");
+                botonSiguiente.off();
+            } else if (respuesta.cod_err === -1) {
+                mostrarInfo(true, "fallo de la base de datos", "borrar una cuenta");
+            } else {
+                mostrarInfo(true, respuesta.cod_err, "borrar una cuenta");
+            }
+        },
+        error: function (xhr) {
+            mostrarInfo(true, "-7", "borrar una cuenta");
+        },
+        complete: function () {
+            unsetCarga();
+        }
+    });
+}

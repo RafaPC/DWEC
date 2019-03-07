@@ -43,8 +43,8 @@ function comprobarCodigoCuenta(codCuenta) {
                 handleCodCuenta(respuesta.cod_err);
             },
             error: function (xhr, status) {
-                //Error en el servidor
-                handleCodCuenta(-4);
+                //Error de conexión al servidor
+                handleCodCuenta(-7);
             },
             complete: function (xhr, status) {
                 unsetCarga();

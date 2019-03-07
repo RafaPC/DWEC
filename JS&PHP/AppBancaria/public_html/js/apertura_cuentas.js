@@ -54,6 +54,9 @@ $(function () {
         botonSiguiente.on("click", checkCliente);
         setTimeout(function () {
             dni.focus();
+            $('html, body').animate({
+                scrollTop: (botonSiguiente.offset().top)
+            }, 1200);
         }, 500);
     });
 
@@ -89,8 +92,6 @@ $(function () {
     }
     fechaActual = dia + "/" + mes + "/" + año;
     //Pongo de forma predeterminada las fechas de registro a la fecha actual
-    $("#fecha-registro-1").val(fechaActual);
-    $("#fecha-registro-2").val(fechaActual);
     var dateFormat = "dd/mm/yy";
     var nacimiento1 = $("#fecha-nacimiento-1").datepicker({
         defaultDate: null,
@@ -129,16 +130,15 @@ $(function () {
 
         return date;
     }
-    //Evita que se pueda escribir en los campos de fecha
-    //Así jqueryUI se ocupa de que no se sobrepase de ciertos límites
-    // y de que se escriba en buen formato
-    $("input[data-type = 'fecha']").keydown(function (event) {
-        event.preventDefault();
-    });
 
-    //----------------TABS DE JQUERY UI----------------- 
+    //----------------RELLENAR INPUTS------------------//
+    $("#fecha-registro-1").val(fechaActual);
+    $("#fecha-registro-2").val(fechaActual);
+    $("#num-cuentas-1").val(0);
+    $("#saldo-1").val(0);
+    $("#saldo-2").val(0);
+    //----------------TABS DE JQUERY UI----------------//
     $("#tabs").tabs({
-        collapsible: true,
         hide: 'fold',
         show: 'fold'
     });
@@ -149,7 +149,7 @@ function handleCodCuenta(codigoErr) {
         campoErroneo($("#codigoCuenta"), "El código de cuenta ya está registrado.");
     } else {
         if (codigoErr === -1) {
-            campoErroneo($("#codigoCuenta"), "El código tiene que tener al menos 10 números.");
+            campoErroneo($("#codigoCuenta"), "El código tiene que tener 10 números.");
         } else if (codigoErr === -2) {
             campoErroneo($("#codigoCuenta"), "El código no cumple el formato.");
         } else if (codigoErr === -3) {
@@ -161,7 +161,7 @@ function handleCodCuenta(codigoErr) {
             $("#dni-1").focus();
             $('html, body').animate({
                 scrollTop: (botonSiguiente.offset().top)
-            }, 800);
+            }, 1200);
             //En este caso, el mensaje de error -3, no existe usuario,
             //es el que da paso a las siguientes fases del formulario
             campoCompleto($("#codigoCuenta"));
@@ -171,8 +171,9 @@ function handleCodCuenta(codigoErr) {
             botonSiguiente.off("click");
             //Pongo nuevo listener al botón de siguiente
             botonSiguiente.on("click", checkCliente);
-        } else if (codigoErr === -4) {
-            $(".invalid-feedback").html("Error del servidor");
+        } else if (codigoErr <= -7) {
+            campoErroneo($("#codigoCuenta"), codigosErrores[codigoErr]);
+            migaError();
         }
     }
 }
@@ -202,7 +203,11 @@ function checkCliente() {
                     campoCompleto(inputsCliente);
                     var cliente = respuesta.cliente;
                     for (var i = 1; i < 9; i++) {
-                        datosCliente[i].value = cliente[i];
+                        var valor = cliente[i];
+                        if (i === 5 || i === 6) {
+                            valor = convertirFecha(valor);
+                        }
+                        datosCliente[i].value = valor;
                     }
                     dni.prop("disabled", true);
                     $("#modal-datosCliente").find(".modal-body").html("El titular ya está registrado.");
@@ -246,8 +251,8 @@ function checkCliente() {
                 $("#modal-datosCliente").modal("show");
             },
             error: function (xhr, status) {
-                console.log(xhr);
-                alert('Disculpe, existia un problema' + status);
+                mostrarInfo(true,"-7", "comprobar si existía un cliente en la base de datos");
+                migaError();
             },
             complete: function (xhr, status) {
                 unsetCarga();
@@ -375,7 +380,7 @@ function mandarDatos() {
     var llamada = new Object();
     var cliente1 = [];
     var cliente2 = [];
-    llamada.numCuenta = $("#input-codigoCuenta").val();
+    llamada.cod_cuenta = $("#input-codigoCuenta").val();
     llamada.existeCliente1 = existeCliente1;
     llamada.existeCliente2 = existeCliente2;
     for (var i = 0; i < $(".datos-cliente-1").length; i++) {
@@ -400,12 +405,17 @@ function mandarDatos() {
         type: 'POST',
         // el tipo de informaciÃ³n que se espera de respuesta
         dataType: 'json',
-        success: function (resultado) {
-            console.log(resultado);
-            migaCompleta();
+        success: function (respuesta) {
+            if (respuesta.cod_err === 1) {
+                migaCompleta();
+                mostrarInfo(false, 0, "Se ha creado la cuenta correctamente");
+                botonSiguiente.off();
+            } else {
+                mostrarInfo(true, respuesta.cod_err, "intentar abrir una cuenta");
+            }
         },
         error: function (xhr, status) {
-            alert('Disculpe, existia un problema' + status);
+            mostrarInfo(true, "-7", "introducir datos de la cuenta");
             migaError();
         },
         complete: function (xhr, status) {
@@ -421,7 +431,7 @@ function setModal() {
         //No cierra el modal al presionar Esc
         keyboard: false
     });
-    
+
     //Hay otro evento para que cuando se presione "Enter" haga click en botonSiguiente
     //Para evitar que se llame a ese evento en este caso, creo un escuchador
     // que salta en la primera fase del evento y para su propagación, así 

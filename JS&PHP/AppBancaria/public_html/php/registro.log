@@ -1,15 +1,352 @@
 
-Fecha: 13/2/2019-00:01:48
-        
+Fecha: 6/3/2019-23:48:59
+       
 Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
  
-Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
-#1 {main}
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(13): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(15): Singleton::getConex()
+#3 {main}
 ********************************************************
-Fecha: 13/2/2019-00:01:52
-        
+Fecha: 6/3/2019-23:49:44
+       
 Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
  
-Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
-#1 {main}
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(13): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(15): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 6/3/2019-23:52:49
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(13): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(23): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(15): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-00:07:20
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(13): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(24): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(14): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-00:07:30
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(13): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(24): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(14): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-00:10:03
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(10): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(21): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-00:17:10
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(10): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-00:17:48
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(24): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-00:19:54
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(26): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-00:20:02
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(26): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-00:20:09
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(26): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-00:23:25
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(23): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-00:23:38
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(23): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-01:07:19
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(23): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\getMovimientos.php(23): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-01:17:26
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(23): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\getMovimientos.php(23): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-01:18:02
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(23): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-01:18:24
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(23): Singleton->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\getMovimientos.php(23): Singleton::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-02:34:14
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(15): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:32:55
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(15): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:33:24
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:35:22
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(15): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:38:27
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(15): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:39:26
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:41:36
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:41:54
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(15): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:42:37
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(15): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:44:36
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(15): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:44:50
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(15): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:45:40
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:46:00
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(15): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:46:42
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\insertarMovimiento.php(15): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:47:36
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:48:34
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:53:31
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:54:14
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:54:52
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-03:55:27
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-04:06:22
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
+********************************************************
+Fecha: 7/3/2019-04:07:48
+       
+Mensaje: SQLSTATE[HY000] [2002] No se puede establecer una conexión ya que el equipo de destino denegó expresamente dicha conexión.
+ 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\comprobarCodigoCuenta.php(16): Conexion::getConex()
+#3 {main}
 ********************************************************

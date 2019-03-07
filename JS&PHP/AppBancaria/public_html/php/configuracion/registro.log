@@ -1,0 +1,9 @@
+
+Fecha: 7/3/2019-14:11:20
+       
+Mensaje: SQLSTATE[HY000] [1049] Unknown database 'banco' 
+Trace: #0 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(11): PDO->__construct('mysql:host=loca...', 'root', '1234')
+#1 C:\xampp\htdocs\AppBancaria\public_html\php\conexion.php(22): Conexion->__construct()
+#2 C:\xampp\htdocs\AppBancaria\public_html\php\configuracion\borrarBBBDD.php(6): Conexion::getConex()
+#3 {main}
+********************************************************

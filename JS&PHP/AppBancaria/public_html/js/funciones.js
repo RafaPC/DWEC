@@ -9,8 +9,10 @@ var codigosErrores = {"-7": "Error en la conexión con el servidor.",
 };
 $(function () {
     //Para limpiar el valor de todos los inputs, ya que "autocomplete=off" hace lo que quiere
-    $("input").val("");
-
+    if (limpiarInputs) {
+        $("input").val("");
+    }
+    
     //Pongo focus al input de numero de cuenta
     $("#input-codigoCuenta").focus();
 
@@ -69,13 +71,14 @@ $(function () {
     }
 });
 
-
+//Recibe un form-group, le pone is-valid al input de dentro y también lo deshabilita
 function campoCompleto(campo) {
     campoCorrecto(campo);
     //Se pone la propiedad disabled al input para que no se pueda cambiar
     campo.find(":input").prop("disabled", true);
 }
 
+//Recibe un form-group y le pone is-valid al input de dentro
 function campoCorrecto(campo) {
     //Se recibe un elemento de jQuery
     //Se coge el input de ese elemento y se le quita la clase is-invalid por si han saltado errores antes
@@ -84,6 +87,9 @@ function campoCorrecto(campo) {
     campo.find(":input").addClass("is-valid");
 }
 
+//Recibe un form-group, le pone is-invalid al input de dentro e introduce un mensaje de error
+//Si el campo ya estaba puesto como erróneo, le pone una animación para
+// que el usuario vea que se ha vuelto a checkear
 function campoErroneo(campo, textoError) {
     //Introduce el texto del error correspondiente
     campo.find(".invalid-feedback").html(textoError);
@@ -113,16 +119,17 @@ function convertirFecha(fecha) {
     return nuevaFecha;
 }
 
-
+//Hace aparecer la animación de carga
 function setCarga() {
     $("#carga").css("display", "block");
 }
 
+//Hace desaparecer la animación de carga
 function unsetCarga() {
     $("#carga").css("display", "none");
 }
 
-
+//Crea cookie
 function setCookie(cname, cvalue, segundos) {
     var d = new Date();
     d.setTime(Date.now() + (segundos * 1000));
@@ -130,6 +137,7 @@ function setCookie(cname, cvalue, segundos) {
     document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
+//Coge cookie
 function getCookie(cname) {
     var name = cname + "=";
     var ca = document.cookie.split(';');
@@ -145,6 +153,9 @@ function getCookie(cname) {
     return null;
 }
 
+//Muestra un mensaje de información en el modal-info del html
+//Si de primer parámetro se pone true, cogerá el segundo parámetro 
+//como un codigo de error de ajax
 function mostrarInfo(error = true, codigoError, textoAccion) {
     if (error) {
         //Si se introduce un mensaje
@@ -154,9 +165,10 @@ function mostrarInfo(error = true, codigoError, textoAccion) {
             var error = codigosErrores[codigoError];
             error = error.charAt(0).toLowerCase() + error.substring(1, error.length - 1);
         }
-
+        $("#moda-info-titulo").html("Error en el servidor.");
         var mensaje = "Ha ocurrido un " + error + " al intentar " + textoAccion + ". Vuelve a intentarlo en unos minutos o contacta con tu administrador.";
-    }else{
+    } else {
+        $("#moda-info-titulo").html("Información.");
         var mensaje = textoAccion;
     }
     $("#modal-body-info").html(mensaje);

@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <html>
     <head>
         <title>Cierre de cuentas</title>
@@ -11,8 +6,8 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <script src="js/jquery-3.3.1.js" type="text/javascript"></script>
         <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-        <script src="js/funciones.js" type="text/javascript"></script>
         <script src="js/cierre_cuentas.js" type="text/javascript"></script>
+        <script src="js/funciones.js" type="text/javascript"></script>      
         <script src="js/comprobarCodigoCuenta.js" type="text/javascript"></script>      
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"> 
@@ -20,7 +15,7 @@ and open the template in the editor.
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
         <link href="css/sideNav.css" rel="stylesheet" type="text/css"/>
-        <link href="css/movimientos.css" rel="stylesheet" type="text/css"/>
+        <link href="css/general.css" rel="stylesheet" type="text/css"/>
         <link href="css/animaciones.css" rel="stylesheet" type="text/css"/>
     </head>
     <body>
@@ -50,7 +45,7 @@ and open the template in the editor.
             <a href="cierre_cuentas.html" id="activo">Cerrar cuentas</a>
         </div>
         <div class="container">
-            <div class="spinner-grow" id="carga" role="status">
+            <div class="spinner-border text-info" id="carga" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
             <!-- Modal que pregunta si se quieren ver los movimientos del titular -->
@@ -70,8 +65,8 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>
-            <form>
-                <div class="form-group" id="form-codigoCuenta">
+            <form autocomplete="off">
+                <div class="form-group col-md-6 m-auto" id="form-codigoCuenta">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
                         <label for="ncuenta">Número de cuenta</label>
                         <div class="input-group">
@@ -83,7 +78,7 @@ and open the template in the editor.
                         <small id="ncuentaHelp" class="form-text text-muted">Cadena de 10 dígitos</small>
                     </div>
                 </div>
-                <div class="oculto" id="tabs">
+                <div class="m-auto oculto" id="tabs">
                     <ul>
                         <li id="lista-primerCliente"><i class="material-icons">
                                 account_circle
@@ -92,7 +87,7 @@ and open the template in the editor.
                                 account_circle
                             </i><a href="#inputs-cliente-2">Segundo titular</a></li>
                     </ul>
-                    <div id="inputs-cliente-1">
+                    <div class="col-md-6 m-auto" id="inputs-cliente-1">
                         <label for="dni-1">DNI</label>
                         <input type="text" maxlength="9" class="form-control datos-cliente-1" id="dni-1" disabled="disabled"> 
                         <label for="nombre-1">Nombre</label>
@@ -117,7 +112,7 @@ and open the template in the editor.
                             </div>
                         </div>
                     </div>
-                    <div id="inputs-cliente-2">
+                    <div class="col-md-6 m-auto" id="inputs-cliente-2">
                         <label for="dni-2">DNI</label>
                         <input type="text" maxlength="9" class="form-control datos-cliente-2" id="dni-2" disabled="disabled"> 
                         <label for="nombre-2">Nombre</label>
@@ -143,7 +138,7 @@ and open the template in the editor.
                         </div>
                     </div>
                 </div>
-                <div class="form-group oculto" id="form-saldo">
+                <div class="form-group col-md-6 m-auto oculto" id="form-saldo">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
                         <label for="saldo">Saldo</label>
                         <div class="input-group mb-3">
@@ -155,14 +150,16 @@ and open the template in the editor.
                     </div>
                 </div>
             </form>
-            <button class="btn waves-effect waves-light" name="action" id="botonSiguiente">Siguiente
-                <i class="material-icons right">send</i>
-            </button>
+            <div class="row">
+                <button class="btn btn-primary waves-effect waves-light m-auto" name="action" id="botonSiguiente">Siguiente
+                    <i class="material-icons right">send</i>          
+                </button>
+            </div>
             <div class="modal" tabindex="-1" role="dialog" id="modal-info">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Error en el servidor</h5>
+                            <h5 class="modal-title" id="moda-info-titulo">Error en el servidor</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

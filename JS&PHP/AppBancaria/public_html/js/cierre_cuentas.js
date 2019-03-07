@@ -1,4 +1,6 @@
 'use strict';
+//Si se entra por cookie se cambiará a false
+var limpiarInputs = true;
 var botonSiguiente;
 var inputCuenta;
 var saldo;
@@ -19,6 +21,7 @@ $(function () {
 
     var codigoCuenta = getCookie("codigoCuenta");
     if (codigoCuenta !== null) {
+        limpiarInputs = false;
         inputCuenta.val(codigoCuenta);
         campoCompleto($("#form-codigoCuenta"));
         buscarCuenta();
@@ -29,7 +32,7 @@ function handleCodCuenta(codigoErr) {
     if (codigoErr === 1) {
         //En este caso, el mensaje de error -3, no existe usuario,
         //es el que da paso a las siguientes fases del formulario
-        campoCompleto($("#codigoCuenta"));
+        campoCompleto($("#form-codigoCuenta"));
         //Quito la clase oculto al siguiente input para mostrarlo
         $("#datos-cuenta").removeClass("oculto");
         //Quito el listener que tenía el botón de Siguiente
@@ -39,13 +42,13 @@ function handleCodCuenta(codigoErr) {
         buscarCuenta();
     } else {
         if (codigoErr === -1) {
-            campoErroneo($("#codigoCuenta"), "El código tiene que tener al menos 10 números.");
+            campoErroneo($("#form-codigoCuenta"), "El código tiene que tener al menos 10 números.");
         } else if (codigoErr === -2) {
-            campoErroneo($("#codigoCuenta"), "El código no cumple el formato.");
+            campoErroneo($("#form-codigoCuenta"), "El código no cumple el formato.");
         } else if (codigoErr === -3) {
-            campoErroneo($("#codigoCuenta"), "El código de cuenta no está registrado.");
+            campoErroneo($("#form-codigoCuenta"), "El código de cuenta no está registrado.");
         } else if (codigoErr <= 7) {
-            campoErroneo($("#codigoCuenta"), codigosErrores[codigoErr]);
+            campoErroneo($("#form-codigoCuenta"), codigosErrores[codigoErr]);
         }
     }
 }
@@ -56,46 +59,51 @@ function buscarCuenta() {
     var ncuenta = inputCuenta.val();
     $.ajax({
         url: 'php/getDatos&ClientesFromCuenta.php',
-        data: {numCuenta: ncuenta},
+        data: {cod_cuenta: ncuenta},
         type: 'POST',
         dataType: 'json',
         success: function (respuesta) {
-            $("#tabs").removeClass("oculto");
-            $("#form-saldo").removeClass("oculto");
-            saldo = respuesta.saldo;
-            $("#input-saldo").val(saldo);
-            campoCompleto($(".datos-cliente-1"));
-            for (var i = 0; i < 9; i++) {
-                var valor = respuesta.cliente1[i];
-                if (i === 5 | i === 6) {
-                    valor = convertirFecha(valor);
-                }
-                datosCliente[i].value = valor;
-            }
-            if (typeof (respuesta.cliente2) !== 'undefined') {
-                datosCliente = $(".datos-cliente-2");
-                $("#lista-primerCliente a").html("Primer titular");
-                $("#lista-segundoCliente").removeClass("oculto");
-                campoCompleto($(".datos-cliente-2"));
+            if (typeof (respuesta.cod_err) === "undefined") {
+                $("#tabs").removeClass("oculto");
+                $("#form-saldo").removeClass("oculto");
+                saldo = respuesta.saldo;
+                $("#input-saldo").val(saldo);
+                campoCompleto($(".datos-cliente-1"));
                 for (var i = 0; i < 9; i++) {
-                    var valor = respuesta.cliente2[i];
+                    var valor = respuesta.cliente1[i];
                     if (i === 5 | i === 6) {
                         valor = convertirFecha(valor);
                     }
                     datosCliente[i].value = valor;
                 }
-            }
+                if (typeof (respuesta.cliente2) !== 'undefined') {
+                    datosCliente = $(".datos-cliente-2");
+                    $("#lista-primerCliente a").html("Primer titular");
+                    $("#lista-segundoCliente").removeClass("oculto");
+                    campoCompleto($(".datos-cliente-2"));
+                    for (var i = 0; i < 9; i++) {
+                        var valor = respuesta.cliente2[i];
+                        if (i === 5 | i === 6) {
+                            valor = convertirFecha(valor);
+                        }
+                        datosCliente[i].value = valor;
+                    }
+                }
 
-            if (respuesta.saldo > 0) {
-                botonSiguiente.click(setModal);
+                if (respuesta.saldo > 0) {
+                    botonSiguiente.click(setModal);
+                } else {
+                    botonSiguiente.off();
+                    botonSiguiente.click(borrarCuenta);
+                }
+
+                $('html, body').animate({
+                    scrollTop: (botonSiguiente.offset().top)
+                }, 800);
             } else {
-                botonSiguiente.off();
-                botonSiguiente.click(borrarCuenta);
+                mostrarInfo(true, respuesta.cod_err, "buscando los datos de la cuenta");
             }
 
-            $('html, body').animate({
-                scrollTop: (botonSiguiente.offset().top)
-            }, 800);
         },
         error: function (xhr, status) {
             console.log(xhr);

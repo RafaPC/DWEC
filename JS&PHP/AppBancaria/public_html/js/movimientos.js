@@ -1,4 +1,5 @@
 'use strict';
+var limpiarInputs = true;
 var filtrarPorImporte = false;
 var botonSiguiente;
 var inputFechaInicio, inputFechaFin;
@@ -8,6 +9,7 @@ $(function () {
     inputFechaFin = $("#input-fecha2");
 
     botonSiguiente = $("#botonSiguiente");
+    
     //Pongo focus al primer input
     $("#input-codigoCuenta").focus();
 
@@ -50,8 +52,8 @@ $(function () {
     $("#checkBox-importe").prop("checked", false);
     $("#slider-range").slider({
         range: true,
-        min: -1000,
-        max: 1000,
+        min: -1500,
+        max: 1500,
         values: [0, 100],
         slide: function (event, ui) {
             $("#amount").val("Entre " + ui.values[0] + "€ y " + ui.values[1] + "€");
@@ -68,26 +70,25 @@ $(function () {
         $("#sliderRangePrecio").toggleClass("oculto");
     });
 
-    //Pongo evento al botón de Siguiente
+    //Pongo escuchador al botón de Siguiente
     botonSiguiente.on("click", function () {
         var codigoCuenta = $("#input-codigoCuenta").val();
         comprobarCodigoCuenta(codigoCuenta);
     });
 
-    //Mira si existe la cookie "codigoCuenta", si existe es que viene de cerrar cuentas
+    //Mira si existe la cookie "codigoCuenta", si existe es que viene redirigido de cerrar cuentas
     var codigoCuenta = getCookie("codigoCuenta");
     if (codigoCuenta !== null) {
+        //Pongo a false limpiarInputs porque voy a rellenar automáticamente los campos
+        limpiarInputs = false;
         $("#input-codigoCuenta").val(codigoCuenta);
         codigoCuentaCorrecto();
+        //Utilizo una función del datepicker de jQuery UI para poner la fecha de un mes menos
         fechaInicio.datepicker("setDate", "-1m");
+        //Utilizo una función del datepicker de jQuery UI para poner la fecha de 0 dias, o sea,hoy
         fechaFin.datepicker("setDate", "0d");
         checkFechas();
     }
-});
-
-//Para inicializar el slider
-$(function () {
-
 });
 
 function checkFechas() {
@@ -96,6 +97,9 @@ function checkFechas() {
     var codCuenta = $("#input-codigoCuenta").val();
     var fecha1 = inputFechaInicio.val();
     var fecha2 = inputFechaFin.val();
+    //Checkea que haya algo en la fecha
+    //Como no se puede escribir en los campos de fecha, si hay
+    //algo escrito se ha encargado el datepicker y está en formato valido
     if (fecha1 === "") {
         inputFechaInicio.addClass("is-invalid");
         faltanDatos = true;
@@ -131,17 +135,17 @@ function checkFechas() {
                 if (typeof (respuesta.cod_err) === "undefined") {
                     $("#tabla").hide("blind", {easing: "easeOutExpo"}, 500);
                     if (respuesta.movimientos.length === 0) {
-                        alert("No hay ningún movimiento entre esas dos fechas");
+                        mostrarInfo(false, 0, "No hay ningún movimiento entre esas dos fechas");
                     } else {
                         printMovimientos(respuesta.movimientos);
                     }
                 } else {
-                    mostrarErrorAjax(respuesta.cod_err, "coger los movimientos de la cuenta");
+                    mostrarInfo(true, respuesta.cod_err, "coger los movimientos de la cuenta");
                 }
 
             },
-            error: function () {
-                mostrarErrorAjax("-7", "coger los movimientos de la cuenta");
+            error: function (xhr) {
+                mostrarInfo(true, "-7", "coger los movimientos de la cuenta");
             },
             complete: function (xhr, status) {
                 unsetCarga();
@@ -150,6 +154,7 @@ function checkFechas() {
     }
 }
 
+//Maneja el código de error mandado por comprobarCodigoCuenta
 function handleCodCuenta(codigoErr) {
     if (codigoErr === 1) {
         codigoCuentaCorrecto();
@@ -166,6 +171,7 @@ function handleCodCuenta(codigoErr) {
     }
 }
 
+//Recibe un array en el que cada valor es un array (movimiento)
 function printMovimientos(movimientos) {
     var tbody = $("#movimientos")[0];
     //Si el tbody ya tiene elementos dentro los borra todos antes de escribir más
@@ -174,7 +180,8 @@ function printMovimientos(movimientos) {
             tbody.removeChild(tbody.firstChild);
         }
     }
-
+    
+    //Recorre todos los movimientos
     for (var i = 0; i < movimientos.length; i++) {
         var tr = document.createElement("tr");
         if (movimientos[i]['importe'] > 0) {
@@ -182,16 +189,18 @@ function printMovimientos(movimientos) {
         } else {
             tr.classList = "table-danger";
         }
-
+        //Recorre todos los valores del movimiento
         for (var clave in movimientos[i]) {
             var td = document.createElement("td");
             var txt = movimientos[i][clave];
             if ("fecha" === clave) {
+                //Si está recorriendo la fecha, la convierte a formato dd/mm/yyyy
                 txt = convertirFecha(txt);
             } else if ("importe" === clave) {
+                //Si está recorriendo el importe, añade un símbolo de euro al final
                 txt += "€";
             } else if ("hora" === clave) {
-                //Le añade los dos (dos) puntos a la hora
+                //Si está recorriendo la hora, la convierte a formato hh:mm:ss
                 txt = txt.substr(0, 2) + ":" + txt.substr(2, 2) + ":" + txt.substr(4, 2);
             }
             var txtNode = document.createTextNode(txt);
@@ -201,15 +210,19 @@ function printMovimientos(movimientos) {
         tbody.appendChild(tr);
     }
 
+    //Muestra la tabla con una animación
     $("#tabla").show("fold", {easing: "easeOutExpo"}, 1000);
+    //Espera un tiempo a que se muestre la tabla
+    //Después hace scroll hasta el último elemento de la tabla
     setTimeout(function () {
-        //var x = $("#tabla :last-child");
         $('html, body').animate({
             scrollTop: ($("#tabla :last-child").offset().top)
         }, 1100);
     }, 1000);
 }
 
+//Pone como completo el campo del codigo de cuenta
+//Y prepara el botón para llamar a checkFechas
 function codigoCuentaCorrecto() {
     campoCompleto($("#codigoCuenta"));
     $("#fechas").removeClass("oculto");

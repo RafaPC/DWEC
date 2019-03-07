@@ -1,4 +1,5 @@
 'use strict';
+var limpiarInputs = true;
 var botonSiguiente;
 var dni;
 var datosCliente;
@@ -10,6 +11,8 @@ var existeCliente1 = false, existeCliente2 = false;
 var fechaActual;
 var regexps = [];
 var letrasDNI = [];
+//Array con el número y nombre de cada objetivo a cumplir
+//Este array se utiliza en "objetivos.js" para crear la lista de objetivos que aparece a la derecha
 var contenidoObjetivos = ["Comienzo", "Número de cuenta", "Primer titular", "Segundo titular", "Importe"];
 $(function () {
     //Regexps necesarios para checkear datos
@@ -25,9 +28,6 @@ $(function () {
     datosCliente = $(".datos-cliente-1");
     formularioDNI = $("#form-dni-1");
     inputsCliente = $("#inputs-cliente-1");
-    //Inicializa los numeros de cuentas a 0 para que el navegador no los autocomplete (creo que no hace falta)
-    $("#num-cuentas-1").val("0");
-    $("#num-cuentas-2").val("0");
     botonSiguiente.on("click", function () {
         var codCuenta = $("#input-codigoCuenta").val();
         comprobarCodigoCuenta(codCuenta);
@@ -36,23 +36,33 @@ $(function () {
     //---------------------VENTANAS MODALES--------------------
     //Si se clicka que se quiere incluir segundo titular
     $("#boton-segundoCliente-si").click(function () {
-        //Quito los event listener puestos para las teclas "Escape" y "Enter"
-        $("#modal-segundoCliente").off("keypress keydown");
-
-        $("#lista-segundoCliente").removeClass("oculto");
-        //Focus en el dni del primer cliente
-        $("#dni-2").focus();
-        //Abro el segundo panel de #tabs
-        $('#tabs').tabs("option", "active", 1);
-        //span para no borrar el icono
-        $("#lista-primerCliente span").html("Primer titular");
-        formularioDNI = $("#form-dni-2");
         segundoTitular = true;
+        //Cambio las variables para que referencien a los inputs del segundo cliente
         dni = $("#dni-2");
+        formularioDNI = $("#form-dni-2");
         datosCliente = $(".datos-cliente-2");
         inputsCliente = $("#inputs-cliente-2");
         botonSiguiente.on("click", checkCliente);
+
+        //Quito los escuchadores puestos para las teclas "Escape" y "Enter" para el modal
+        $("#modal-segundoCliente").off("keypress keydown");
+
+        //Desoculto el boton que abre el panel del segundo titular
+        $("#lista-segundoCliente").removeClass("oculto");
+
+        //Focus en el dni del segundo cliente
+        $("#dni-2").focus();
+
+        //Abro el segundo panel de #tabs
+        $('#tabs').tabs("option", "active", 1);
+
+        //Cambio el texto del primer panel de "Titular" a "Primer titular"
+        $("#lista-primerCliente span").html("Primer titular");
+
+
+        //Espera medio segundo, para que el segundo panel ya se haya abierto
         setTimeout(function () {
+            //
             dni.focus();
             $('html, body').animate({
                 scrollTop: (botonSiguiente.offset().top)
@@ -64,19 +74,12 @@ $(function () {
     $("#boton-segundoCliente-no").click(function () {
         //Quito los event listener puestos para las teclas "Escape" y "Enter"
         $("#modal-segundoCliente").off("keypress keydown");
-
-        migaOmitida();
+        
+        //Omito el objetivo porque no se ha puesto segundo titular
+        objetivoOmitido();
         descubrirImporte();
     });
 
-
-    $("#modal-segundoCliente").one("shown.bs.modal", function () {
-
-    });
-
-
-//        $("#fecha1").datepicker($.datepicker.regional["es"]);
-//        $("#fecha2").datepicker($.datepicker.regional["es"]);
     //----------------------FECHAS--------------------
     var fecha = new Date();
     var dia = fecha.getDate();
@@ -144,17 +147,18 @@ $(function () {
     });
 });
 
+//Maneja el código de error mandado por comprobarCodigoCuenta
 function handleCodCuenta(codigoErr) {
     if (codigoErr === 1) {
-        campoErroneo($("#codigoCuenta"), "El código de cuenta ya está registrado.");
+        campoErroneo($("#form-codigoCuenta"), "El código de cuenta ya está registrado.");
     } else {
         if (codigoErr === -1) {
-            campoErroneo($("#codigoCuenta"), "El código tiene que tener 10 números.");
+            campoErroneo($("#form-codigoCuenta"), "El código tiene que tener 10 números.");
         } else if (codigoErr === -2) {
-            campoErroneo($("#codigoCuenta"), "El código no cumple el formato.");
+            campoErroneo($("#form-codigoCuenta"), "El código no cumple el formato.");
         } else if (codigoErr === -3) {
-            //Completo la primera miga
-            migaCompleta();
+            //Completo el primer objetivo
+            objetivoCompleto();
             //Quito la clase oculto a #tabs
             $("#tabs").removeClass("oculto");
             //Focus en el dni del primer cliente
@@ -164,7 +168,7 @@ function handleCodCuenta(codigoErr) {
             }, 1200);
             //En este caso, el mensaje de error -3, no existe usuario,
             //es el que da paso a las siguientes fases del formulario
-            campoCompleto($("#codigoCuenta"));
+            campoCompleto($("#form-codigoCuenta"));
             //Quito la clase oculto al siguiente input para mostrarlo
             $("#lista-primerCliente").removeClass("oculto");
             //Quito el listener que tenía el botón de Siguiente
@@ -172,8 +176,8 @@ function handleCodCuenta(codigoErr) {
             //Pongo nuevo listener al botón de siguiente
             botonSiguiente.on("click", checkCliente);
         } else if (codigoErr <= -7) {
-            campoErroneo($("#codigoCuenta"), codigosErrores[codigoErr]);
-            migaError();
+            campoErroneo($("#form-codigoCuenta"), codigosErrores[codigoErr]);
+            objetivoError();
         }
     }
 }
@@ -197,9 +201,6 @@ function checkCliente() {
                 //Si existe el cliente
                 if (respuesta.cliente[0] !== undefined) {
                     dniPrimerTitular = valorDNI;
-                    //inputsCliente.prop("disabled", true);
-                    //datosCliente.addClass("is-valid");
-                    //datosCliente.prop("disabled", true);
                     campoCompleto(inputsCliente);
                     var cliente = respuesta.cliente;
                     for (var i = 1; i < 9; i++) {
@@ -213,15 +214,15 @@ function checkCliente() {
                     $("#modal-datosCliente").find(".modal-body").html("El titular ya está registrado.");
                     //alert("Titular ya registrado, no se necesita completar su información");
                     if (segundoTitular) {
-                        migaCompleta();
+                        objetivoCompleto();
                         $("#lista-segundoCliente").removeClass("oculto");
                         existeCliente2 = true;
                         $("#importe").removeClass("oculto");
                         botonSiguiente.off("click");
                         botonSiguiente.on("click", checkImporte);
                     } else {
-                        //Completo la miga
-                        migaCompleta();
+                        //Completo el objetivo
+                        objetivoCompleto();
                         existeCliente1 = true;
                         //Listener al modal que informa de que el usuario ya existe
                         // para que cuando se cierre abra el siguiente modal
@@ -234,8 +235,6 @@ function checkCliente() {
                     //Quito la propiedad disabled a todos los inputs
                     datosCliente.slice(1).prop("disabled", false);
                     //Pongo al input de fecha de registro la fecha actual
-                    console.log(datosCliente);
-                    datosCliente[6].value = fechaActual;
                     datosCliente.slice(6).prop("disabled", true);
                     datosCliente.slice(6).addClass("is-valid");
                     //Como antes del if ya se muestra el formulario no habría que hacer nada aquí aparentemente
@@ -251,8 +250,8 @@ function checkCliente() {
                 $("#modal-datosCliente").modal("show");
             },
             error: function (xhr, status) {
-                mostrarInfo(true,"-7", "comprobar si existía un cliente en la base de datos");
-                migaError();
+                mostrarInfo(true, "-7", "comprobar si existía un cliente en la base de datos");
+                objetivoError();
             },
             complete: function (xhr, status) {
                 unsetCarga();
@@ -263,7 +262,6 @@ function checkCliente() {
 
 function checkDatosCliente() {
     datosCliente.removeClass("is-invalid");
-    //datosCliente.removeClass("error-input");
     var error, errorInput;
     for (var i = 1; i <= 5; i++) {
         errorInput = false;
@@ -293,31 +291,20 @@ function checkDatosCliente() {
     if (error) {
         inputsCliente.find(".invalid-feedback").eq(1).css("display", "block");
         inputsCliente.find(".invalid-feedback").eq(1).addClass("error-feedback");
-        //inputsCliente.find(".invalid-feedback")[1].classList.remove("error");
         setTimeout(function () {
             inputsCliente.find(".invalid-feedback").eq(1).removeClass("error-feedback");
         }, 350);
     } else {
-        //En este trozillo de código intentaba quitar el estilo
-        // que pone por defecto el navegador para los campos autocompletados
-        alert($(datosCliente).css("backgroundImage"));
-        var atributo = $(datosCliente).css("backgroundImage");
-        atributo += "!important";
-        atributo = "none";
-        $(datosCliente).css("backgroundImage", atributo);
-        alert($(datosCliente).css("backgroundImage"));
-        //------
-
-        inputsCliente.find(".invalid-feedback").eq(1).css("display", "none");
+        //Deshabilito todos los campos del cliente actual (puede ser el primero )
         datosCliente.prop("disabled", true);
         botonSiguiente.off("click");
         alert("Datos completados");
         //Ha chequeado los datos del segundo titular
         if (segundoTitular) {
-            migaCompleta();
+            objetivoCompleto();
             descubrirImporte();
         } else {
-            migaCompleta();
+            objetivoCompleto();
             //El primer titular no existía, pero ya se han checkeado sus datos y son correctos
             //Por lo tanto el siguiente paso es preguntar si se quiere añadir un segundo titular
             setModal();
@@ -407,7 +394,7 @@ function mandarDatos() {
         dataType: 'json',
         success: function (respuesta) {
             if (respuesta.cod_err === 1) {
-                migaCompleta();
+                objetivoCompleto();
                 mostrarInfo(false, 0, "Se ha creado la cuenta correctamente");
                 botonSiguiente.off();
             } else {
@@ -416,7 +403,7 @@ function mandarDatos() {
         },
         error: function (xhr, status) {
             mostrarInfo(true, "-7", "introducir datos de la cuenta");
-            migaError();
+            objetivoError();
         },
         complete: function (xhr, status) {
             unsetCarga();

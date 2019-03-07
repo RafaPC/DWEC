@@ -27,7 +27,7 @@ $(function () {
     }
 });
 
-function migaCompleta() {
+function objetivoCompleto() {
     //Cada vez se baja un 3 porciento el background
     lineaTop -= 2.3;
     linea.css("backgroundPositionY", lineaTop + "%");
@@ -39,7 +39,7 @@ function migaCompleta() {
     }, 600);
 }
 
-function migaError() {
+function objetivoError() {
     //Cada vez se baja un 3 porciento el background
     lineaTop -= 3;
     linea.css("backgroundPositionY", lineaTop + "%");
@@ -50,7 +50,7 @@ function migaError() {
     }, 600);
 }
 
-function migaOmitida() {
+function objetivoOmitido() {
     //Cada vez se baja un 3 porciento el background
     lineaTop -= 3;
     linea.css("backgroundPositionY", lineaTop + "%");

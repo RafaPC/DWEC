@@ -1,30 +1,28 @@
+﻿//Estos son enlaces que he utilizado o que me han sido de ayuda
+
 Animaciones para hacer aparecer cosas
 https://jqueryui.com/show/
 
-Demostraciones de easings
+//Demostraciones de easings, las easings son funciones que definen la velocidad de una animacion con respecto del tiempo, de forma que vaya de rapido a lento, a la misma velocidad siempre...
 https://easings.net/es
 
+//Gradientes utilizados en el panel lateral
 Gradiente de color con animación
 https://generadordni.es/#dni
 
+//Función de jquery que se aplica a un conjunto de objetos jquery y se introduce un numero inicial y uno final, y devuelve el conjunto de objetos entre esos valores 
 JQuery slice
 https://api.jquery.com/slice/
 
-Crear un escuchador para cambios de estilos css
-https://stackoverflow.com/questions/2157963/is-it-possible-to-listen-to-a-style-change-event
-
-https://css-tricks.com/zooming-background-images/
-
+//Pasar fechas dd/mm/yyyy a yyyy/mm/dd
 https://stackoverflow.com/questions/10367790/php-date-string-format
 
 //Como cambiar el valor de pseudo elementos "via css"
+//Esto se aplica a los objetivos de la apertura de cuentas (las bolitas verdes), el texto que aparece al lado de cada bolita es un pseudo-elemento ::before que coge el contenido del atributo data-before de la bola correspondiente, con la funcion css attr(). Hago esto porque los pseudo-elementos como ::before o ::after no son accesibles desde el dom.
 https://stackoverflow.com/questions/10495243/how-change-content-value-of-pseudo-before-element-by-javascript/42000085#42000085
 
 //Meter un background con gradiente de color e imagen
 https://stackoverflow.com/questions/2504071/how-do-i-combine-a-background-image-and-css3-gradient-on-the-same-element
-
-//Referenciar colores de bootstrap con sass/less
-https://stackoverflow.com/questions/42573590/how-to-reference-bootstrap-colors-as-a-variable-in-css
 
 //Gradientes bonitos
 https://uigradients.com/#CrystalClear

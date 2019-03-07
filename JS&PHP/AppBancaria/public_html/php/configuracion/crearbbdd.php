@@ -1,10 +1,5 @@
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
 <?php
-include_once('../head.html');
+
 $crearTablaCliente = "CREATE TABLE clientes (
 	dni varchar(9) NOT NULL,
 	nombre varchar(50) NOT NULL,
@@ -37,22 +32,26 @@ $crearTablaMovimientos = "CREATE TABLE movimientos (
 	PRIMARY KEY (cod_cuenta, fecha, hora)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;";
 
-require_once 'constantes_bbdd.php';
+$conn = new mysqli('localhost', 'root', '1234');
+if (!$conn) {
+    die('No pudo conectarse: ');
+}
 
-try {
-    $conex = new PDO(DSN, USER, PASSWORD);
-} catch (PDOException $ex) {
-    die("Error!: " . $ex->getMessage() . "<br>");
+
+$sql = "CREATE DATABASE banco";
+if ($conn->query($sql) === TRUE) {
+    echo "Database created successfully";
+    $conn2 = new mysqli('localhost', 'root', '1234','banco');
+} else {
+    echo "Error creating database: " . $conn2->error;
 }
 
 
 //consulta
-$conex->query($crearTablaCliente);
-$conex->query($crearTablaCuentas);
-$conex->query($crearTablaMovimientos);
+$conn2->query($crearTablaCliente);
+$conn2->query($crearTablaCuentas);
+$conn2->query($crearTablaMovimientos);
 
 //cerrar conex
-$conex = null;
+$conn2 = null;
 ?>
-</body>
-</html>

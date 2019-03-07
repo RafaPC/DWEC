@@ -10,7 +10,7 @@
         <script src="js/funciones.js" type="text/javascript"></script>
         <script src="js/comprobarCodigoCuenta.js" type="text/javascript"></script>
         <link href="css/sideNav.css" rel="stylesheet" type="text/css"/>
-        <link href="css/movimientos.css" rel="stylesheet" type="text/css"/>
+        <link href="css/general.css" rel="stylesheet" type="text/css"/>
         <link href="css/animaciones.css" rel="stylesheet" type="text/css"/>
         <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
         <script src="js/i18n-datepicker-es.js"></script>
@@ -46,15 +46,15 @@
             <a href="cierre_cuentas.html">Cerrar cuentas</a>
         </div>
         <div class="container">
-            <div class="spinner-border" id="carga" role="status">
+            <div class="spinner-border text-info" id="carga" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
             <form>
-                <div class="form-group" id="codigoCuenta">
+                <div class="form-group col-md-6 m-auto" id="codigoCuenta">
                     <div class="input-field col l3 m3 s12 offset-l4 offset-m4">
                         <label for="ncuenta">Número de cuenta</label>
                         <div class="input-group">
-                            <input type="text" maxlength="10" class="form-control" id="input-codigoCuenta" aria-describedby="ncuentaHelp" placeholder="1234567890"> 
+                            <input type="text" maxlength="10" class="form-control" id="input-codigoCuenta" aria-describedby="ncuentaHelp" placeholder="Ejemplo: 1234567890"> 
                             <div class="invalid-feedback">
                                 Por favor introduce un código de cuenta
                             </div>
@@ -62,18 +62,18 @@
                         <small id="ncuentaHelp" class="form-text text-muted">Cadena de 10 dígitos</small>
                     </div>
                 </div>
-                <div class="oculto" id="check">
+                <div class="oculto col-md-6 m-auto" id="check">
                     <div class="form-check form-check-inline" id="checkBox">
                         <input class="form-check-input" type="checkbox" id="checkBox-importe" value="">
                         <label class="form-check-label" for="checkBox-importe">Filtrar por rango de importe</label>
                     </div>
                 </div>
-                <div class="oculto" id="sliderRangePrecio">
+                <div class="oculto col-md-6 m-auto" id="sliderRangePrecio">
                     <label for="amount">Rango de importe:</label>
                     <input type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;">
                     <div id="slider-range"></div>
                 </div>
-                <div class="oculto" id="fechas">
+                <div class="oculto col-md-6 m-auto" id="fechas">
                     <div class="form-group col-md-6 m-auto" id="form-fecha1">
                         <div class="input-field">
                             <label for="input-fecha1">Desde:</label>
@@ -98,14 +98,16 @@
                     </div>
                 </div>
             </form>
-            <button class="btn btn-primary" id="botonSiguiente">Siguiente
-                <i class="material-icons right">send</i>
-            </button>
-            <table class="table table-bordered table-hover" id="tabla">
+            <div class="row">
+                <button class="btn btn-primary waves-effect waves-light m-auto" name="action" id="botonSiguiente">Siguiente
+                    <i class="material-icons right">send</i>          
+                </button>
+            </div>
+            <table class="table table-bordered table-hover col-md-8 m-auto" id="tabla">
                 <caption></caption>
                 <thead class="thead-dark">
                     <tr>    
-                        <th>Codigo</th>
+                        <th>Código</th>
                         <th>Fecha de operación</th>
                         <th>Hora</th>
                         <th>Concepto</th>
@@ -118,7 +120,7 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Error en el servidor</h5>
+                            <h5 class="modal-title" id="moda-info-titulo">Error en el servidor</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>

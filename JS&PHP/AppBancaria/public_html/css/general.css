@@ -7,6 +7,7 @@ and open the template in the editor.
     Created on : 16-ene-2019, 22:47:42
     Author     : Los Prieto
 */
+
 header{
     position: relative;
     z-index: 1000;
@@ -14,8 +15,6 @@ header{
     height: 115px;
     width: 100%;
     background-image: linear-gradient(70deg,black, #085DFB, #0BB9FD,#0BB9FD,#0B8CFD, #085DFB,#08AEFB);
-    /*background: url("../resources/fondoBanco3azul.png") no-repeat right center, linear-gradient(45deg,black, #03DAFB, #03DAFB);
-    background-image: url("../resources/fondoBanco2.png");*/
 }
 
 #imagenFondo{
@@ -26,33 +25,8 @@ header{
     height: 100%;
 }
 
-.container{
-
-}
-#titulo{
-
-}
-
-#subtitulo{
-
-}
-
-#x{
-    background: linear-gradient(-45deg,#1abc9c,#2ecc71,#3498db,#9b59b6,#16a085,#27ae60,#2980b9,#8e44ad,#f1c40f,#e67e22,#95a5a6);
-    background-size: 1100% 100%;
-    -webkit-animation: Gradient 30s linear infinite;
-    -moz-animation: Gradient 30s linear infinite;
-    animation: Gradient 30s linear infinite;
-}
-#prueba{
-    display: inline-block;
-    position: absolute;
-    width: 200px;
-    height: 200px;
-    background-size: 500% 500%;
-    border-radius: 100%;
-    background: radial-gradient(circle,#1abc9c,#2ecc71,#3498db,#9b59b6,#16a085,#27ae60,#2980b9,#8e44ad,#f1c40f,#e67e22,#95a5a6);
-    animation: Prueba 4s linear infinite;
+#botonSiguiente{
+    margin-top: 50px !important;
 }
 
 .error-feedback{
@@ -70,14 +44,13 @@ header{
     width: 6rem; height: 6rem;
     z-index: 999;
 }
-.animacionCarga{
-    animation: Carga 1s linear infinite, Carga2 4s linear infinite;
-}
 
 .oculto{
     display: none;
 }
 
+
+/* SOBREESCRITURA DE JQUERY UI*/
 .ui-tabs .ui-tabs-nav li{
     border-bottom-width: 1px;
     margin-bottom: 5px;
@@ -93,6 +66,13 @@ header{
     border: 1px solid blue !important;
 }
 
+
+.container{
+    margin-top: 50px;
+}
+
+
+/* TOAST BOOTSTRAP */
 
 #mensajes{
     position: fixed;
@@ -124,6 +104,10 @@ header{
     background-color: rgba(227,7,7,0.2);
 }
 
+#toast-titulo{
+    color: black !important;
+}
+/* MODAL BOOTSTRAP */
 .modal{
     top: 30%;
 }

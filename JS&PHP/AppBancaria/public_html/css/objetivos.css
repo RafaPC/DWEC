@@ -41,7 +41,9 @@ and open the template in the editor.
     transition: background-size 1.2s;
 }
 
+/*Por cada div de #objetivos, o sea, por cada bola, se crea un pseudo-elemento ::before*/
 #objetivos div::before{
+    /*Coge de contenido el valor del atributo data-before del div*/
     content: attr(data-before);
     z-index: 2;
     position: absolute;
@@ -68,6 +70,7 @@ and open the template in the editor.
     background-size: 100% 100%;
 }
 
+/*Cuando se omite un paso, como cuando no se pone segundo titular*/
 .objetivoOmitido{
     background-image: radial-gradient(circle, white 0.1%, #89E8F5, grey);
     background-size: 100% 100%;

@@ -24,18 +24,14 @@ DELETE FROM movimientos WHERE cod_cuenta = OLD.cod_cuenta";
 $triggerDeleteClientes = "CREATE OR REPLACE TRIGGER delete_clientes_after_update AFTER UPDATE ON clientes
 FOR EACH ROW
 DELETE FROM clientes WHERE numero_cuentas = 0";
+
 //#1235 - Esta versión de MariaDB no soporta todavia 'multiple triggers with the same action time and event for one table'
 $triggerReducirSaldoCuenta = "CREATE OR REPLACE TRIGGER update_saldo_clientes_after_delete_cuenta AFTER DELETE ON cuentas
 FOR EACH ROW
 UPDATE clientes SET saldo = saldo - OLD.saldo WHERE dni = OLD.dni1 or dni = OLD.dni2";
 
-require_once 'constantes_bbdd.php';
-
-try {
-    $conex = new PDO(DSN, USER, PASSWORD);
-} catch (PDOException $ex) {
-    die("Error!: " . $ex->getMessage() . "<br>");
-}
+require_once '../conexion.php';
+$conex = Conexion::getConex();
 
 //consulta
 $conex->query($triggerAumentarNCuentas);
@@ -43,7 +39,8 @@ $conex->query($triggerReducirNCuentas);
 $conex->query($triggerAumentarSaldoCuenta);
 $conex->query($triggerAumentarSaldoCliente);
 $conex->query($triggerDeleteMovimientos);
-//$conex->query($triggerDeleteClientes);
+$conex->query($triggerDeleteClientes);
+
 //cerrar conex
 $conex = null;
 ?>

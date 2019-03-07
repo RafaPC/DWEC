@@ -28,6 +28,8 @@
     /*background: linear-gradient(-45deg,#1abc9c,#2ecc71,#3498db,#9b59b6,#16a085,#27ae60,#2980b9,#8e44ad,#f1c40f,#e67e22,#95a5a6);*/
     background: linear-gradient(-45deg, #159957, #155799,#159957, #155799,#159957, #155799,#159957, #155799); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
     background-size: 1100% 100%;
+    -webkit-animation: Gradient 12s linear infinite;
+    -moz-animation: Gradient 12s linear infinite;
     animation: Gradient 12s linear infinite;
 }
 
@@ -36,6 +38,8 @@
     color: white !important;
     background: linear-gradient(-45deg,#1abc9c,#2ecc71,#3498db,#9b59b6,#16a085,#27ae60,#2980b9,#8e44ad,#f1c40f,#e67e22,#95a5a6);
     background-size: 1100% 100%;
+    -webkit-animation: Gradient 15s linear infinite;
+    -moz-animation: Gradient 15s linear infinite;
     animation: Gradient 15s linear infinite;
     margin-bottom: 80px;
     font-size: 48px;
@@ -52,12 +56,6 @@
     right: 25px;
     font-size: 36px;
     margin-left: 50px;
-}
-
-/* Style page content - use this if you want to push the page content to the right when you open the side navigation */
-.container {
-    transition: margin-left .8s;
-    padding: 20px;
 }
 
 /* On smaller screens, where height is less than 450px, change the style of the sidenav (less padding and a smaller font size) */

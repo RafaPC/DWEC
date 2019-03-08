@@ -20,6 +20,7 @@ and open the template in the editor.
 //        //INSERTAR
         $imagen = dirname(__FILE__) . '/foto.jpg';
         $blob = fopen($imagen, 'rb');
+        //Meter $binario en la query, no $imagen que creo que lo he hecho antes
         $binario = addslashes(file_get_contents($imagen));
         //echo '<img src="data:image/jpeg;base64,' . base64_encode($binario) . '" width="300px" height="300px"/>';
         $query = "INSERT INTO `imagenes`(`binario`, `nombre`) VALUES (:imagen,:nombre)";

@@ -6,7 +6,7 @@ if (!extension_loaded('sockets')) {
 
 
 $host = "127.0.0.1";
-$port = 12345;
+$port = 25003;
 
 // don't timeout!
 set_time_limit(0);

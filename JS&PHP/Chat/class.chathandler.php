@@ -2,6 +2,7 @@
 
 class ChatHandler {
 
+    //Manda un mensaje que le llegue a todas las conexiones
     function send($message) {
         global $clientSocketArray;
         $messageLength = strlen($message);
@@ -78,6 +79,7 @@ class ChatHandler {
         socket_write($client_socket_resource, $buffer, strlen($buffer));
     }
 
+    //Crea el mensaje de conexión nueva y lo devuelve en formato json y empaquetado
     function newConnectionACK($client_ip_address) {
         $message = 'New client ' . $client_ip_address . ' joined';
         $messageArray = array('message' => $message, 'message_type' => 'chat-connection-ack');

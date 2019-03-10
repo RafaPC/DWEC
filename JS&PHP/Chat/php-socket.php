@@ -35,10 +35,17 @@ while (true) {
 
         //Lee 1024 bytes de la petición del cliente para coger la cabecera
         $header = socket_read($newSocket, 1024);
-
+        
+        //Escribe el apretón de manos en el nuevo socket
         $chatHandler->doHandshake($header, $newSocket, HOST_NAME, PORT);
-
+        
+        //Le introduce un socket y devuelve en el segundo parámetro el host/puerto (podría devolver una ruta de sistema de archivos UNIX)
         socket_getpeername($newSocket, $client_ip_address);
+        
+        //Crea el mensaje de conexión nueva
+        
+        ////MIRAR AQUI, CON EL GETPEERNAME SE PUEDE COGER EL IP ADRESS-------------------------------------------------------------------------------------------------------------------------------------
+        //MIRAR EN SEND QUE EN EL FOR HAGA ESO Y SOLO MANDE UN MENSAJE CUANDO LA IP ADRESS SEA X
         $connectionACK = $chatHandler->newConnectionACK($client_ip_address);
 
         $chatHandler->send($connectionACK);
@@ -60,6 +67,7 @@ while (true) {
         //$socketData = @socket_read($newSocketArrayResource, 1024, PHP_NORMAL_READ);
         $socketData = @socket_read($newSocketArrayResource, 1024, PHP_NORMAL_READ);
         
+        //Si se ha desconectado
         if ($socketData === false) {
             socket_getpeername($newSocketArrayResource, $client_ip_address);
             $connectionACK = $chatHandler->connectionDisconnectACK($client_ip_address);

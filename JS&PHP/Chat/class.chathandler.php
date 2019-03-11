@@ -3,34 +3,43 @@
 class ChatHandler {
 
     //Manda un mensaje que le llegue a todas las conexiones
-    function send($message) {
+    function send($mensaje) {
         global $clientSocketArray;
-        $messageLength = strlen($message);
+        $messageLength = strlen($mensaje);
         foreach ($clientSocketArray as $clientSocket) {
-            @socket_write($clientSocket, $message, $messageLength);
+            //socket_getpeername($clientSocket, $ip);
+//            if ($ip == "192.168.103.190") {
+//                @socket_write($clientSocket, $message, $messageLength);
+//            }
+
+            @socket_write($clientSocket, $mensaje, $messageLength);
         }
         return true;
     }
 
-    function unseal($socketData) {
-        $length = ord($socketData[1]) & 127;
+    //Desempaqueta los datos recibidos
+    function unseal($datosSocket) {
+        var_dump($datosSocket);
+        $length = ord($datosSocket[1]) & 127;
+        echo $length;
         if ($length == 126) {
-            $masks = substr($socketData, 4, 4);
-            $data = substr($socketData, 8);
+            $masks = substr($datosSocket, 4, 4);
+            $data = substr($datosSocket, 8);
         } elseif ($length == 127) {
-            $masks = substr($socketData, 10, 4);
-            $data = substr($socketData, 14);
+            $masks = substr($datosSocket, 10, 4);
+            $data = substr($datosSocket, 14);
         } else {
-            $masks = substr($socketData, 2, 4);
-            $data = substr($socketData, 6);
+            $masks = substr($datosSocket, 2, 4);
+            $data = substr($datosSocket, 6);
         }
-        $socketData = "";
+        $datosSocket = "";
         for ($i = 0; $i < strlen($data); ++$i) {
-            $socketData .= $data[$i] ^ $masks[$i % 4];
+            $datosSocket .= $data[$i] ^ $masks[$i % 4];
         }
-        return $socketData;
+        return $datosSocket;
     }
 
+    //Empaqueta el mensaje de una forma u otra dependiendo de su longitud para no perder los datos al mandarlos
     function seal($socketData) {
         $b1 = 0x80 | (0x1 & 0x0f);
         $length = strlen($socketData);
@@ -46,18 +55,18 @@ class ChatHandler {
     }
 
     //Escribe en el socket recibido el apretón de manos que se necesita mandar para establecer la conexión
-    function doHandshake($received_header, $client_socket_resource, $host_name, $port) {
+    function doHandshake($headerRecibido, $socketCliente, $nombreHost, $puerto) {
         $headers = array();
         //Mete la cabecera recibida en el array $lines, dividida por \r y \n
-        $lines = preg_split("/\r\n/", $received_header);
+        $lineas = preg_split("/\r\n/", $headerRecibido);
         //Recorre las lineas del header y recoge las cadenas "Clave: valor."
-        foreach ($lines as $line) {
+        foreach ($lineas as $linea) {
             //Quita los espacios en blanco al final del string
-            $line = chop($line);
+            $linea = chop($linea);
             //\A comienzo del sujeto
             //\S cualquier carácter menos espacio en blanco
             //\z final del sujeto
-            if (preg_match('/\A(\S+): (.*)\z/', $line, $matches)) {
+            if (preg_match('/\A(\S+): (.*)\z/', $linea, $matches)) {
                 //$matches[1] es el texto que coincide con el primer sub-patrón entre paréntesis capturado
                 // o sea (\S+)
                 //$matches[2] por tanto es lo que coincide con (.*)
@@ -65,39 +74,50 @@ class ChatHandler {
             }
         }
 
-        $secKey = $headers['Sec-WebSocket-Key'];
+        $keySocket = $headers['Sec-WebSocket-Key'];
         //Genera el hash de la clave con el algoritmo sha1
         //Convierte el resultado del paso anterior a una binaria en formato hexadecimal
         //Codifica el resultado del paso anterior en base64
-        $secAccept = base64_encode(pack('H*', sha1($secKey . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
+        $secAccept = base64_encode(pack('H*', sha1($keySocket . '258EAFA5-E914-47DA-95CA-C5AB0DC85B11')));
         $buffer = "HTTP/1.1 101 Web Socket Protocol Handshake\r\n" .
                 "Upgrade: websocket\r\n" .
                 "Connection: Upgrade\r\n" .
-                "WebSocket-Origin: $host_name\r\n" .
-                "WebSocket-Location: ws://$host_name:$port/demo/shout.php\r\n" .
+                "WebSocket-Origin: $nombreHost\r\n" .
+                //"WebSocket-Location: ws://$host_name:$port/demo/shout.php\r\n" .
+                "WebSocket-Location: ws://$nombreHost:$puerto\r\n" .
                 "Sec-WebSocket-Accept:$secAccept\r\n\r\n";
-        socket_write($client_socket_resource, $buffer, strlen($buffer));
+        socket_write($socketCliente, $buffer, strlen($buffer));
     }
 
     //Crea el mensaje de conexión nueva y lo devuelve en formato json y empaquetado
-    function newConnectionACK($client_ip_address) {
-        $message = 'New client ' . $client_ip_address . ' joined';
-        $messageArray = array('message' => $message, 'message_type' => 'chat-connection-ack');
-        $ACK = $this->seal(json_encode($messageArray));
+    function newConnectionACK($ipCliente) {
+        $mensaje = 'El usuario ' . $ipCliente . ' se acaba de unir!';
+        //$messageArray = array('message' => $message, 'message_type' => 'chat-connection-ack');
+        $arrayMensaje = array('mensaje' => $mensaje, 'tipo_mensaje' => 'conexion');
+        $ACK = $this->seal(json_encode($arrayMensaje));
         return $ACK;
     }
 
-    function connectionDisconnectACK($client_ip_address) {
-        $message = 'Client ' . $client_ip_address . ' disconnected';
-        $messageArray = array('message' => $message, 'message_type' => 'chat-connection-ack');
-        $ACK = $this->seal(json_encode($messageArray));
+    function connectionDisconnectACK($ipCliente) {
+        $message = 'El usuario ' . $ipCliente . ' se ha desconectado.';
+        $arrayMensaje = array('mensaje' => $message, 'tipo_mensaje' => 'desconexion');
+        $ACK = $this->seal(json_encode($arrayMensaje));
         return $ACK;
     }
 
-    function createChatBoxMessage($chat_user, $chat_box_message) {
-        $message = $chat_user . ": <div class='chat-box-message'>" . $chat_box_message . "</div>";
-        $messageArray = array('message' => $message, 'message_type' => 'chat-box-html');
-        $chatMessage = $this->seal(json_encode($messageArray));
+    function createChatBoxMessage($usuario, $mensajeChat, $esAdmin) {
+        $mensaje = $mensajeChat;
+
+        //Si la variable recibida $esAdmin está a true, se cambiará el tipo  de mensaje para que tenga una apariencia distinta
+        if ($esAdmin) {
+            $tipoMensaje = 'mensaje-admin';
+        } else {
+            $tipoMensaje = 'mensaje';
+        }
+
+        $arrayMensaje = array('usuario' => $usuario, 'mensaje' => $mensaje, 'tipo_mensaje' => $tipoMensaje);
+
+        $chatMessage = $this->seal(json_encode($arrayMensaje));
         return $chatMessage;
     }
 

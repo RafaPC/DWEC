@@ -1,0 +1,86 @@
+span{
+    display: block;
+}
+.jumbotron{
+    background: #f6fffe;
+    padding: 20px;
+    border-radius: 14px;
+    border: 2px;
+    border-style: ridge;
+}
+.mensaje{
+    color: black;
+}
+.mensaje-admin{/* mensaje de un administrador*/
+    font-weight: bold;
+}
+.nombre{/*Nombre del usuario*/
+    color:black;
+    font-size: 17px;
+}
+body{/*cuerpo tamaño*/
+    padding: 30px;
+    font-family:Comic Sans;
+}
+.error {/*mensaj de error*/
+    color:red;
+}
+
+.conexion{ /*mensaje de conexion exito*/
+    color: #00cc33;
+}
+.desconexion{
+    color: #F32020;
+}
+
+#btnSend {/* boton enviar*/
+    background: #0099cc;
+    border: white 1px solid;
+    border-radius: 14px;
+    color: white;
+    display: block;
+    padding: 10px 30px;
+    cursor: pointer;
+}
+#btnSend:hover{/*boton hover*/
+    background: #00cccc;
+}
+#chat-box {/*tabla chat*/
+    background: #ddffed;
+    border: 3px solid #ffdddd;
+    border-right: 3px;
+    border-top:  3px;
+    border-radius: 14px;
+    max-height: 250px;
+    padding: 15px;
+    overflow: auto;
+    margin: 30px;
+}
+.chat-box-html{/*USUARIO*/
+    color: red;
+    margin: 10px 0px;
+    font-size:0.8em;
+}
+.chat-box-message{/*burbuja de mensaje*/
+    color: black;
+    padding: 5px 15px;
+    background-color: #fff;
+    border: 1px solid #ffdddd;
+    border-radius:14px;
+    display:inline-block;}
+.chat-input{/*inputs*/
+    border: 3px solid #ffdddd;
+    border-right: 3px;
+    border-top:  3px;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 10px 8px;
+    display: block;
+    border-radius: 15px;
+}
+.centrado{
+    text-align: center;
+}
+.aux{
+    margin: 100px 0px;
+}

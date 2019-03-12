@@ -1,66 +1,42 @@
-<html>
+<!DOCTYPE html>
+<html lang="es">
     <head>
-        <style>
-            body{width:600px;font-family:calibri;}
-            .error {color:#FF0000;}
-            .chat-connection-ack{color: #26af26;}
-            .chat-message {border-bottom-left-radius: 4px;border-bottom-right-radius: 4px;
-            }
-            #btnSend {background: #26af26;border: #26af26 1px solid;	border-radius: 4px;color: #FFF;display: block;margin: 15px 0px;padding: 10px 50px;cursor: pointer;
-            }
-            #chat-box {background: #fff8f8;border: 1px solid #ffdddd;border-radius: 4px;border-bottom-left-radius:0px;border-bottom-right-radius: 0px;min-height: 300px;padding: 10px;overflow: auto;
-            }
-            .chat-box-html{color: #09F;margin: 10px 0px;font-size:0.8em;}
-            .chat-box-message{color: #09F;padding: 5px 10px; background-color: #fff;border: 1px solid #ffdddd;border-radius:4px;display:inline-block;}
-            .chat-input{border: 1px solid #ffdddd;border-top: 0px;width: 100%;box-sizing: border-box;padding: 10px 8px;color: #191919;
-            }
-        </style>	
-        <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
-        <script>
-            function showMessage(messageHTML) {
-                $('#chat-box').append(messageHTML);
-            }
-
-            $(document).ready(function () {
-                var websocket = new WebSocket("ws://<?php echo gethostbyname(gethostname()); ?>:8090");
-                websocket.onopen = function (event) {
-                    showMessage("<div class='chat-connection-ack'>Connection is established!</div>");
-                };
-                websocket.onmessage = function (event) {
-                    var Data = JSON.parse(event.data);
-                    showMessage("<div class='" + Data.message_type + "'>" + Data.message + "</div>");
-                };
-
-                websocket.onerror = function (event) {
-                    showMessage("<div class='error'>Problem due to some Error</div>");
-                };
-                websocket.onclose = function (event) {
-                    showMessage("<div class='chat-connection-ack'>Connection Closed</div>");
-                };
-
-                $('#frmChat').on("submit", function (event) {
-                    event.preventDefault();
-                    $('#chat-user').attr("type", "hidden");
-                    var messageJSON = {
-                        chat_user: $('#chat-user').val(),
-                        chat_message: $('#chat-message').val()
-                    };
-                    websocket.send(JSON.stringify(messageJSON));
-                    $('#chat-message').val('');
-                });
-            });
-
-
-
-
-        </script>
+        <title>Chat</title>
+        <meta charset="UTF-8">
+        <meta name="description" content="Chat Local Dwes">
+        <meta name="keywords" content="HTML,CSS,XML,JavaScript">
+        <meta name="autor" content="Rafa Anthony Kiko">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <link href="recursos/css/index_css.css" rel="stylesheet" type="text/css"/>
+        <script src="recursos/jquery/jquery-3.3.1.js" type="text/javascript"></script><!-- BOOTSTRAP LOCAL -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <link href="recursos/bootstrap/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" type="text/css"/><!-- JQUERY LOCAL -->
+        <script>var host = "<?php echo gethostbyname(gethostname()); ?>";</script>
+        <script src="recursos/js/socket.js" type="text/javascript"></script>
     </head>
     <body>
-        <form name="frmChat" id="frmChat">
-            <div id="chat-box"></div>
-            <input type="text" name="chat-user" id="chat-user" placeholder="Name" class="chat-input" required />
-            <input type="text" name="chat-message" id="chat-message" placeholder="Message"  class="chat-input chat-message" required />
-            <input type="submit" id="btnSend" name="send-chat-message" value="Send" >
-        </form>
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12 col-m-5">
+                    <h1 class="page-header centrado">Chat Local</h1>
+                    <div class="jumbotron">
+                        <form name="frmChat" id="frmChat">
+                            <div id="chat-box"></div>
+                            <div class="form-group">
+                                <input type="text" name="usuario" id="input-user" placeholder="Nombre" class="chat-input form-control" required="required" />
+                                <small id="ayudaNombre" class="form-text text-muted">Introduce el nombre que quieres tener en el chat.</small>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" name="mensaje" id="input-mensaje" placeholder="Mensaje"  class="chat-input form-control" required="required" />
+                                <small id="ayudaNombre" class="form-text text-muted">Introduce el mensaje a enviar.</small>
+                            </div>
+                            <input type="submit" name="enviar-mensaje" class="btn btn-primary" id="btnSend" value="Enviar">
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </body>
 </html>

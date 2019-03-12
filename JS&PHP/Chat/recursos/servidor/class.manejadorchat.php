@@ -2,26 +2,20 @@
 
 class ChatHandler {
 
-    //Manda un mensaje que le llegue a todas las conexiones
-    function send($mensaje) {
+    //Manda un mensaje a todas las conexiones
+    function enviar($mensaje) {
         global $clientSocketArray;
         $messageLength = strlen($mensaje);
         foreach ($clientSocketArray as $clientSocket) {
-            //socket_getpeername($clientSocket, $ip);
-//            if ($ip == "192.168.103.190") {
-//                @socket_write($clientSocket, $message, $messageLength);
-//            }
-
             @socket_write($clientSocket, $mensaje, $messageLength);
         }
         return true;
     }
 
     //Desempaqueta los datos recibidos
-    function unseal($datosSocket) {
-        var_dump($datosSocket);
+    //Seguramente sería mejor empaquetar los datos con la función pack(), al igual que se desempaquetan con unpack()
+    function desempaquetar($datosSocket) {
         $length = ord($datosSocket[1]) & 127;
-        echo $length;
         if ($length == 126) {
             $masks = substr($datosSocket, 4, 4);
             $data = substr($datosSocket, 8);
@@ -34,13 +28,16 @@ class ChatHandler {
         }
         $datosSocket = "";
         for ($i = 0; $i < strlen($data); ++$i) {
+            //^ es un operador de bit
+            //Concatena a $datosSocket los bits que solo están activados a uno de los lados (solo en $data o $masks, pero no ambos)
             $datosSocket .= $data[$i] ^ $masks[$i % 4];
         }
+        
         return $datosSocket;
     }
 
-    //Empaqueta el mensaje de una forma u otra dependiendo de su longitud para no perder los datos al mandarlos
-    function seal($socketData) {
+    //Empaqueta el mensaje de una forma u otra dependiendo de su longitud para no perder datos al mandarlos
+    function empaquetar($socketData) {
         $b1 = 0x80 | (0x1 & 0x0f);
         $length = strlen($socketData);
 
@@ -55,7 +52,7 @@ class ChatHandler {
     }
 
     //Escribe en el socket recibido el apretón de manos que se necesita mandar para establecer la conexión
-    function doHandshake($headerRecibido, $socketCliente, $nombreHost, $puerto) {
+    function hacerApretonDeManos($headerRecibido, $socketCliente, $nombreHost, $puerto) {
         $headers = array();
         //Mete la cabecera recibida en el array $lines, dividida por \r y \n
         $lineas = preg_split("/\r\n/", $headerRecibido);
@@ -89,25 +86,24 @@ class ChatHandler {
         socket_write($socketCliente, $buffer, strlen($buffer));
     }
 
-    //Crea el mensaje de conexión nueva y lo devuelve en formato json y empaquetado
-    function newConnectionACK($ipCliente) {
-        $mensaje = 'El usuario ' . $ipCliente . ' se acaba de unir!';
-        //$messageArray = array('message' => $message, 'message_type' => 'chat-connection-ack');
-        $arrayMensaje = array('mensaje' => $mensaje, 'tipo_mensaje' => 'conexion');
-        $ACK = $this->seal(json_encode($arrayMensaje));
-        return $ACK;
+    //Crea el mensaje de conexión nueva y lo devuelve en formato json y sellado
+    function nuevaConexion($ipCliente) {
+        $textoMensaje = 'El usuario ' . $ipCliente . ' se acaba de unir!';
+        $arrayMensaje = array('mensaje' => $textoMensaje, 'tipo_mensaje' => 'conexion');
+        $mensajeConexion = $this->empaquetar(json_encode($arrayMensaje));
+        return $mensajeConexion;
+    }
+    
+    //Crea el mensaje de cierre de conexión y lo devuelve en formato json y sellado
+    function cierreConexion($ipCliente) {
+        $textoMensaje = 'El usuario ' . $ipCliente . ' se ha desconectado.';
+        $arrayMensaje = array('mensaje' => $textoMensaje, 'tipo_mensaje' => 'desconexion');
+        $mensajeDesconexion = $this->empaquetar(json_encode($arrayMensaje));
+        return $mensajeDesconexion;
     }
 
-    function connectionDisconnectACK($ipCliente) {
-        $message = 'El usuario ' . $ipCliente . ' se ha desconectado.';
-        $arrayMensaje = array('mensaje' => $message, 'tipo_mensaje' => 'desconexion');
-        $ACK = $this->seal(json_encode($arrayMensaje));
-        return $ACK;
-    }
-
-    function createChatBoxMessage($usuario, $mensajeChat, $esAdmin) {
-        $mensaje = $mensajeChat;
-
+    //Crea un mensaje en formato json y lo empaqueta
+    function crearMensajeChat($usuario, $textoMensaje, $esAdmin) {
         //Si la variable recibida $esAdmin está a true, se cambiará el tipo  de mensaje para que tenga una apariencia distinta
         if ($esAdmin) {
             $tipoMensaje = 'mensaje-admin';
@@ -115,12 +111,9 @@ class ChatHandler {
             $tipoMensaje = 'mensaje';
         }
 
-        $arrayMensaje = array('usuario' => $usuario, 'mensaje' => $mensaje, 'tipo_mensaje' => $tipoMensaje);
-
-        $chatMessage = $this->seal(json_encode($arrayMensaje));
-        return $chatMessage;
+        $arrayMensaje = array('usuario' => $usuario, 'mensaje' => $textoMensaje, 'tipo_mensaje' => $tipoMensaje);
+        $mensaje = $this->empaquetar(json_encode($arrayMensaje));
+        return $mensaje;
     }
-
 }
-
 ?>

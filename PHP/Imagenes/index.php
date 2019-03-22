@@ -17,25 +17,29 @@ and open the template in the editor.
 
         mysqli_select_db($conex, "imagenes")
                 or die("No se ha podido seleccionar la base de datos");
-//        //INSERTAR
-        $imagen = dirname(__FILE__) . '/foto.jpg';
-        $blob = fopen($imagen, 'rb');
-        //Meter $binario en la query, no $imagen que creo que lo he hecho antes
-        $binario = addslashes(file_get_contents($imagen));
-        //echo '<img src="data:image/jpeg;base64,' . base64_encode($binario) . '" width="300px" height="300px"/>';
-        $query = "INSERT INTO `imagenes`(`binario`, `nombre`) VALUES (:imagen,:nombre)";
-        $qry = $conex->prepare($query);
 
+        select($conex);
 
+        function insertar($conex) {
+            $imagen = dirname(__FILE__) . '/foto.jpg';
+            $binario = addslashes(file_get_contents($imagen));
+            $query = "INSERT INTO `imagenes`(`binario`, `nombre`) VALUES ('$binario','cepeda')";
+            $insert = $conex->query($query);
+            if ($insert) {
+                echo 'insert bien';
+            } else {
+                echo 'insert mal';
+            }
+        }
 
+        function select($conex) {
+            $consulta = $conex->query("SELECT `binario` FROM `imagenes`;");
+            $binario = $consulta->fetch_all();
+            echo 'Cogida de base de datos';
+            echo '<img src="data:image/jpeg;base64,' . base64_encode($binario[0][0]) . '" width="300px" height="300px"/>';
+        }
 
-
-
-
-//SELECT
-//        $consulta = $conex->query("SELECT `binario` FROM `imagenes`;");
-//        $binario = $consulta->fetch_all();
-//cerrar conex
+        //cerrar conex
         mysqli_close($conex);
         ?>
     </body>
